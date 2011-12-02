@@ -5,6 +5,25 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
+# vini
+gem 'authlogic'
+gem 'formtastic'
+# gem 'validation_reflection'
+gem 'will_paginate'
+gem 'carrierwave'
+gem 'rmagick'
+gem 'meta_search'
+gem 'hirb'
+gem 'paper_trail'
+gem 'wicked_pdf'
+# gem 'hpricot'
+# gem 'contacts'
+gem 'acts_as_commentable'
+gem "simple-navigation"
+gem "flash_render"
+gem 'web-app-theme', '~> 0.8.0'
+
+# not vini
 gem 'sqlite3'
 
 

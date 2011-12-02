@@ -3,5 +3,16 @@
 #
 # Examples:
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
+#   Mayor.create(:name => 'Daley', :city => cities.first)
+
+admin = User.create( :name => "Admin", :login => "admin", :password => "admin", :password_confirmation => "admin", :email => "admin@admin.com", :admin => true )
+blah = User.create( :name => "Blah", :login => "blah", :password => "blah", :password_confirmation => "blah", :email => "admin@admin.com", :admin => true )
+#Preference.create( :user => admin )
+
+Contact.create(:name => "Habib Asseiss Neto", :email => "habibasseiss@gmail.com", :user => admin)
+Contact.create(:name => "Youssif Domingos", :email => "youssifdomingos@gmail.com", :user => admin)
+Contact.create(:name => "Ricardo Assis Domingos", :email => "ricardodomingos55@hotmail.com", :user => admin)
+Contact.create(:name => "Samuel Benjoino Ferraz", :email => "samuelbferraz@gmail.com", :user => admin)
+Contact.create(:name => "Ana Beatriz", :user => admin)
+Contact.create(:name => "Sílvia da Silva", :user => admin)

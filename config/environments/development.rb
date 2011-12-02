@@ -12,6 +12,7 @@ Logistica::Application.configure do
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
+  #config.action_view.debug_rjs             = true  
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
@@ -27,4 +28,5 @@ Logistica::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
 end

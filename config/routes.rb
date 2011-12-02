@@ -1,4 +1,81 @@
 Logistica::Application.routes.draw do
+  resources :suit_status_changes
+
+  resources :protocols
+
+  resources :suits
+
+  resources :events
+
+  resources :categories
+  
+  resources :comments, :only => [:destroy]
+
+  resources :users do
+    collection do
+      put :update_profile
+    end
+  end
+
+  resources :contacts do
+    resources :notes do
+      member do
+        post :comment
+      end
+    end
+    member do
+      get :confirm_destroy
+      get :avatar
+      put :favorite
+    end
+    collection do
+      post :print
+    end
+  end
+
+  resources :preferences do
+    collection do
+      get :profile
+      get :dashboard
+      put :update_dashboard
+    end
+  end
+
+  resources :tasks do
+    member do
+      put :complete
+      post :comment
+      post :postpone
+    end
+    collection do
+      get :get_tasks
+      get :week
+      get :next_week
+      get :completed
+    end
+  end
+  # match '/tasks(/:option)' => 'tasks#index'
+  
+  # match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
+  
+  match '/calendar' => 'calendar#index', :as => :calendar
+  match '/summary' => 'home#summary', :as => :summary
+  match '/profile' => 'users#profile', :as => :profile
+  
+  # autocomplete search
+  match '/search' => 'home#search', :as => :search
+  match '/search/city' => 'home#search_city', :as => :search_city
+  match '/search/occupation' => 'home#search_occupation', :as => :search_occupation
+  match '/search/weather' => 'home#search_weather', :as => :search_weather
+
+  resources :user_sessions, :only => [:new, :create, :destroy]
+  resources :home, :only => [:index]
+
+  match 'login' => 'user_sessions#new', :as => :login
+  match 'logout' => 'user_sessions#destroy', :as => :logout
+
+  root :to => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
