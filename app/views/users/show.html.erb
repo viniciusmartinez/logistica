@@ -1,0 +1,55 @@
+<div class="block">
+  <div class="secondary-navigation">
+    <ul class="wat-cf">
+      <li class="first"><%= link_to "#{t("application.list", :default => "List")}", users_path  %></li>
+      <li><%= link_to "#{t("application.new", :default => "New")}", new_user_path %></li>
+      <li class="active"><%= link_to "#{t("application.show", :default => "Show")}", user_path %></li>
+    </ul>
+  </div>          
+  <div class="content">
+    <div class="inner">
+	
+      <div class="column_left">
+        <p>
+          <b><%= t("activerecord.attributes.user.name") %>:</b>
+          <%= @user.name %>
+        </p>
+
+        <p>
+          <b><%= t("activerecord.attributes.user.email") %>:</b>
+          <%= @user.email %>
+        </p>
+		<p>
+          <b><%= t("activerecord.attributes.user.phone") %>:</b>
+          <%= @user.phone %>
+        </p>
+		<p>
+          <b><%= t("activerecord.attributes.user.mobile", :default => t("activerecord.labels.mobile", :default => "Mobile")) %>:</b>
+          <%= @user.mobile %>
+        </p>
+      </div>
+
+      <div class="column_right">
+		<p>
+          <b><%= t("activerecord.attributes.user.address") %>:</b>
+          <%= @user.address.html_safe if @user.address.present? %>
+        </p>
+		<p>
+			<b><%= t("activerecord.attributes.user.avatar") %>:</b>
+			<%= image_tag(@user.avatar.thumb.url) if @user.avatar? %>
+		</p>
+      </div>
+
+      <div class="clear"></div>
+      
+      <p><hr/></p>
+      <p></p>
+      <div class="wat-cf">
+        <%= link_to image_tag("web-app-theme/icons/application_edit.png", :alt => "#{t("application.edit", :default=> "Edit")}") + " " + t("application.edit", :default=> "Edit"), edit_user_path(@user), :class => "button" %> 
+        <%= link_to image_tag("web-app-theme/icons/cross.png", :alt => "#{t("application.delete", :default=> "Delete")}") + " " + t("application.delete", :default => "Delete"), user_path(@user), :method => "delete", :class => "button", :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

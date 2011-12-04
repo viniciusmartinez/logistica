@@ -1,0 +1,129 @@
+<%= content_for :javascript do %>
+	$(function() {
+		
+		$("#new_task_dialog").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: 630,
+			height: 370,
+			modal: true,
+			close: function(event, ui) {
+				$("#task_options").removeClass("hidden");
+				$("#task_date_select").addClass("hidden");
+			}
+		});
+		
+		$("#open_new_task_dialog").live("click", function(e){
+			e.preventDefault();
+			$("#new_task_dialog").dialog("open");
+		});
+		
+		$(".contact_show_list li").live("mouseover mouseout", function(event){
+			if (event.type == 'mouseover') {
+				$(this).find(".list_options").show();
+			} else {
+				$(this).find(".list_options").hide();
+			}
+		});
+		$("form#favorite_contact img").live("click", function(e){
+			var my_form = $(this).parents("form").filter(':first');
+			var submit_button = my_form.find("#favorite_button");
+			var on_off = my_form.find("#on_off");
+			if(submit_button.hasClass("favorite_on")) {
+				submit_button.removeClass("favorite_on");
+				submit_button.addClass("favorite_off");
+				on_off.val("f");
+			} else {
+				submit_button.removeClass("favorite_off");
+				submit_button.addClass("favorite_on");
+				on_off.val("t");
+			}
+			my_form.submit();
+		})
+	});
+<% end %>
+<div class="block">
+	<div class="content">
+		<div class="content-header">
+			<div class="column_left" style="width:65%">
+				<div class="avatar">
+					<%= contact_avatar(@contact) %>
+				</div>
+				<h2>
+				<%= @contact.name %>
+				
+				<%= form_for @contact, :html => { :id => "favorite_contact", :style => "display:inline" }, :url => favorite_contact_path(@contact), :remote => true do |form| %>
+				<%= form.hidden_field :favorite, :id => "on_off" %>
+				<% fav_on_off = @contact.favorite ? "favorite_on" : "favorite_off" %>
+				<%= inline_ui_icon("color #{fav_on_off}", :style => "cursor:pointer", :id => "favorite_button", :title => t("application.contact.add_remove_favorite")) %>
+				<% end %>
+				</h2>
+				<p class="medium dark_gray"><%= @contact.occupation %></p>
+			</div>
+			<div class="column_right" style="width:35%">
+				<p class="medium">
+					<%= "#{inline_ui_icon("mail")} #{@contact.email}".html_safe if @contact.email.present? %>
+				</p>
+				<p class="medium">
+					<%= "#{inline_ui_icon("phone")} #{formatted_phones(@contact)}".html_safe if formatted_phones(@contact).present? %>
+				</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="inner show">
+			<div class="column_left" style="width:55%;">
+				
+				<div id="note_inline_form">
+					<%= render :partial => "notes/inline_form" %>
+				</div>
+				
+				<hr class="clear" style="margin-top: 10px;" />
+				
+				<div id="note_list">
+					<%= render :partial => "notes/list" %>
+				</div>
+				
+			</div>
+			<div class="column_right column_border_left contact_show_info" style="width:40%;">
+				<table class="other_info">
+					<% if @contact.birthday.present? %>
+					<tr>
+						<td class="title">
+							<%= t("activerecord.attributes.contact.birthday") %>
+						</td>
+						<td>
+							<%= I18n.l @contact.birthday, :format => :birthday %>
+						</td>
+					</tr>
+					<% end %>
+					<% if formatted_address(@contact).present? %>
+					<tr>
+						<td class="title">
+							<%= t("activerecord.attributes.contact.address") %>
+						</td>
+						<td>
+							<%= formatted_address(@contact) %>
+						</td>
+					</tr>
+					<% end %>
+				</table>
+				
+				<div class="clear space"></div>
+				<hr class="clear" />
+				
+				<div id="task_list">
+					<%= render :partial => "tasks/list", :locals => { :tasks => @last_tasks } %>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<div id="new_task_dialog" title="<%= t("texts.contact.new_task_for", :name => @contact.first_name) %>">
+	<div id="task_inline_form">
+		<%= render :partial => "tasks/inline_form" %>
+	</div>
+</div>
+
+<%= content_for :sidebar, render(:partial => "sidebar") %>

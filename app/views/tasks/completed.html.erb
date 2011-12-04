@@ -1,0 +1,27 @@
+<% content_for :javascript, render(:partial => "javascript") %>
+
+<div class="block">
+	<div class="content">
+		<div class="content-header">
+			<div class="control">
+				<%= link_to_new(Task) %>
+			</div>
+			<h2 class="title">
+				<%= t("application.tasks", :default => "Tasks")  %>
+			</h2>
+		</div>
+		<div class="inner">
+			<div id="data_view">
+				<% if @completed.size > 0 %>
+					<%= render :partial => "full_list", :locals => { :tasks => @completed, :title => t("application.task.completed"), :completed => true } %>
+				<% end %>
+			</div>
+			<div id="data_pagination">
+				<%= render :partial => "pagination", :locals => { :tasks => @completed } %>
+			</div>
+			<div class='wat-cf'></div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') %>

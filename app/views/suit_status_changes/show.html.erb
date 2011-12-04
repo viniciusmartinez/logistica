@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Momento:</b>
+  <%= @suit_status_change.momento %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @suit_status_change.status %>
+</p>
+
+<p>
+  <b>Comentario:</b>
+  <%= @suit_status_change.comentario %>
+</p>
+
+<p>
+  <b>Suit:</b>
+  <%= @suit_status_change.suit_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_suit_status_change_path(@suit_status_change) %> |
+<%= link_to 'Back', suit_status_changes_path %>

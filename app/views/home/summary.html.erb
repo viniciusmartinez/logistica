@@ -1,0 +1,69 @@
+<% content_for :javascript do %>
+	$(function(){
+		$("form select").change(function(){
+			$(this).parents("form").filter(":first").submit();
+		});
+	});
+<% end %>
+
+<div class="block">
+	<div class="content"> 
+		<div class="content-header">
+			<div class="control">
+				<% form_tag do %>
+					<%= select_tag "when", options_for_select([["Este mês", "1"], ["Mês passado", "2"], ["Dois meses atrás", "3"]], @when) %>
+				<% end %>
+			</div>
+			<h2>
+				<span class="header_icon clock"></span>
+				<%= t("application.home.time_summary") %>
+			</h2>
+		</div>
+		<div class="inner summary">
+			<h2 class="nice_blue">
+				<%=l @start %> - <%=l @end %>
+			</h2>
+
+			<h3 class="space_t">Contatos cadastrados</h3>
+			<hr class="space" />
+			
+			<ul class="home_list">
+			<% @contacts.each do |c| %>
+				<li><%= link_to c.name, contact_path(c) %></li>
+			<% end %>
+			</ul>
+			
+			<h3 class="space_t">Notas cadastradas</h3>
+			<hr class="space" />
+			
+			<table class="home_list">
+				<% @notes.each do |n| %>
+				<tr>
+					<td class="arrow"></td>
+					<td style="width: 50px">
+						<strong><%= l(n.date, :format => :short) %></strong>
+					</td>
+					<td>
+						<%= link_to truncate(n.name, :length => 80), contact_note_path(n.contact, n) %>
+					</td>
+					<td>
+						<span class="gray_small"><%= link_to(n.contact.name, contact_path(n.contact)) %> <img src="/images/icons/user-card.png" style="vertical-align:text-bottom"/></span>
+					</td>
+				</tr>
+				<% end %>
+			</table>
+			
+			<h3 class="space_t">Tarefas</h3>
+			<hr class="space" />
+			
+			<ul class="home_list">
+			<% @tasks.each do |t| %>
+				<li><a href="<%= task_path(t) %>" class="<%= t.completed ? "strike" : "" %>"><strong><%= l(t.due_at, :format => :short) %></strong> <%= truncate(t.name, :length => 80) %></a></li>
+			<% end %>
+			</ul>
+			
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

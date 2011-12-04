@@ -1,0 +1,35 @@
+<% content_for :stylesheets do %>
+body {
+	width: 757px;
+	/*height: 945px;*/
+	margin: 8px;
+	margin-top: 59px;
+}
+.label_item {
+	float: left;
+	height: 189px;
+}
+
+.label_item.even {
+	width: 53%;
+}
+
+.label_item.odd {
+	width: 47%;
+}
+<% end %>
+
+<% @contacts.each_with_index do |c, i| %>
+<% if i%2 == 0 %>
+	<div class="label_item even">
+<% else %>
+	<div class="label_item odd">
+<% end %>
+	<div class="break" style="text-transform: uppercase;">
+		<%= c.name %><br />
+		<%= c.address %><br />
+		<%= c.zip_code %> &nbsp;&nbsp;&nbsp; <%= c.city %> - <%= c.state %><br />
+	</div>
+</div>
+<% end %>
+<div style="clear:both"></div>

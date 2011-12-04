@@ -1,0 +1,32 @@
+<table class = "table">
+	<tr>
+		<th>
+			<%= t("activerecord.attributes.request.description", :default => "Description")  %>
+		</th>
+		<th>
+			<%= t("activerecord.attributes.request.deadline", :default => "Deadline")  %>
+		</th>
+		<th>
+			<%= t("activerecord.attributes.request.completed", :default => "Completed")  %>
+		</th>
+		<th class  = "last">&nbsp;</th>
+	</tr>
+	<% requests.each do |request| %>
+	<tr class   = "<%= cycle("odd", "even") %>">
+		<td>
+			<%= link_to truncate(request.description.gsub(/<\/?[^>]*>/, ""), :length => 70, :omission => "...").html_safe, edit_contact_request_path(request.contact, request) %>
+		</td>
+		<td>
+			<%= I18n.l request.deadline, :format => :long %>
+		</td>
+		<td>
+			<%= request.completed ? t("application.bool_yes") : t("application.bool_no") %>
+		</td>
+		<td class  = "last">
+			<%= link_to "#{t("application.show", :default => "Show")}", contact_request_path(request.contact, request) %> |
+			<%= link_to "#{t("application.edit", :default => "Edit")}", edit_contact_request_path(request.contact, request) %> |
+			<%= link_to "#{t("application.delete", :default => "Delete")}", contact_request_path(request.contact, request), :remote => true, :method => :delete, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
+		</td>
+	</tr>          
+	<% end -%>
+</table>

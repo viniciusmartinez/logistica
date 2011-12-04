@@ -1,0 +1,45 @@
+<% content_for :javascript do %>
+	$(function(){
+		$.datepicker.setDefaults( $.datepicker.regional[ "<%= I18n.locale %>" ] );
+		$( "#datepicker" ).datepicker({
+			altField: "#alternate",
+			altFormat: "yy-mm-dd",
+			showOtherMonths: true,
+			selectOtherMonths: false,
+			changeMonth: true,
+			changeYear: true
+		});
+		
+		$("#timepicker").mask("99:99");
+		
+		$("#task_options a").live("click", function(e){
+			e.preventDefault();
+			$(this).parent().addClass("hidden");
+			$("#task_date_select").removeClass("hidden");
+		});
+	});
+<% end %>
+
+<% semantic_form_for @task, :html => { :class => "inline" }, :remote => true do |form| %>
+
+	<%= form.inputs :class => "column_left right_border", :style => "width: 270px; margin-right: 20px;" do %>
+		<%= form.hidden_field :contact_id, :value => @contact.id %>
+		<%= form.hidden_field :due_at_date, :id => "alternate" %>
+		<%= form.input :due_at_date, :as => :hidden, :input_html => { :id => "alternate" } %>
+		<li>
+			<%= form.label :due_at_date %>
+			<div id="datepicker" style="width: 250px"></div>
+		</li>
+		<span id="task_options" class="inline-options underline float_left"><a href="#"><%= t"application.set_time" %></a></span>
+		<span id="task_date_select" class="hidden float_left">
+		<label><%= t"application.at_time" %></label> <%= form.text_field :due_at_time, :id => "timepicker", :style => "width: 60px", :autocomplete => "off" %>
+	<% end %>
+	
+	<%= form.inputs :class => "column_left", :style => "" do %>
+		<%= form.input :name, :input_html => { :rows => 4 } %>
+	<% end %>
+	<hr class="clear" />
+	<div class="group navform wat-cf right">
+	  <%= submit_button :back => :none, :icon => "add", :label => t("application.add") %>
+	</div>
+<% end %>

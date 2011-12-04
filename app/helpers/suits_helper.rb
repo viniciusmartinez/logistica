@@ -1,0 +1,2 @@
+module SuitsHelper
+end

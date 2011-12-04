@@ -1,0 +1,447 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+pt-BR:
+  application_name: Seção de Voto Informatizado
+  application:
+    authentication: Autenticação
+    users: Usuários
+    contacts: Contatos
+    calendar: Calendário
+    categories: Categorias
+    tasks: Tarefas
+    dashboard: Painel
+    last_taks: Últimas tarefas
+    incomplete_tasks: Tarefas não finalizadas
+    this_week: Esta semana
+    next_week: Próxima semana
+    about: sobre
+    notes: Notas
+    today: Hoje
+    save: Salvar
+    cancel: Cancel
+    list: Listar
+    edit: Alterar
+    new: Cadastrar
+    show: Exibir
+    data_m: dados
+    delete: Remover
+    confirm: Tem certeza que deseja continuar?
+    created_at: Criado em
+    all: Todos
+    all_m: todos
+    all_m_f: todas
+    add: Adicionar
+    see: Ver
+    or: ou
+    at_time: Às
+    cancel: Cancelar
+    back: Voltar
+    home: Início
+    preferences: Preferências
+    users: Usuários
+    logout: Sair
+    male: Masculino
+    female: Feminino
+    bool_yes: Sim
+    bool_no: Não
+    to_select: Selecionar
+    to_complete_task: Concluir tarefa
+    options: Opções
+    set_time: Definir um horário
+    set_date: Alterar a data
+    if_note_not_for_today: se esta nota não for referente a hoje
+    useful_links: Links úteis
+    no_results: Nenhum resultado
+    search: Buscar
+    search_title: "Consulta"
+    search_everything: "Pesquisar contatos, notas e tarefas..."
+    select_all: Selecionar todos
+    profile: Perfil
+    edit_profile: Dados pessoais
+    permission_error: Erro de permissão
+    general: Geral
+    details: Detalhes
+    postpone: Adiar
+    home:
+      summary: Resumo
+      time_summary: Resumo por período
+      no_birthday: Nenhum aniversário registrado
+      no_task: Nenhuma tarefa em aberto
+      no_favorite_contact: Nenhum contato marcado como favorito
+    preference:
+      general: Geral
+    contact:
+      filter: Filtrar contatos
+      generate_labels: Imprimir etiquetas
+      add_remove_favorite: "Adicionar/remover como favorito"
+    note:
+      back_to_contact: Voltar ao contato
+      add_comment: Adicionar comentário sobre esta nota
+      comments: Comentários sobre esta nota
+    comment:
+      remove: Remover este comentário
+    task:
+      comments: Comentários sobre esta tarefa
+      postpone_title: Adiar esta tarefa
+      postpone: Adiar tarefa
+      overdue: Tarefa atrasada
+      overdue_plural: Atrasadas
+      show_overdue: Atrasada
+      today: Para hoje
+      completed: Já concluídas
+      incomplete: Todas a cumprir
+      this_week: Para esta semana
+      next_week: Para semana que vem
+      later: Depois
+      no_pending: Nenhuma tarefa pendente
+      see_all_tasks: Ver todas as tarefas
+      see_task: Ver tarefa
+      reopen: Reabrir
+      complete: Concluir tarefa
+      confirm_reopen: "Esta tarefa será reaberta e a data de prazo será mantida. Tem certeza que deseja continuar?"
+    suit:
+        pendente: Pendente
+        pendentes: Pendentes
+        deferido: Deferido
+        deferidos: Deferidos
+        indeferido: Indeferido
+        indeferidos: Indeferidos
+        em_atendimento: Em Atendimento
+        atendido: Atendido
+        atendidos: Atendidos
+        cancelado: Cancelado
+        cancelados: Cancelados
+      
+  pagination:
+    previous: "&larr; Anterior"
+    next: "Próximo &rarr;"
+
+  # date and time names and formats
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%d/%m"
+      short_desc: "%d de %B"
+      long: "%d de %B de %Y"
+      long_week: "%A, %d de %B de %Y"
+      weekday: "%A"
+      birthday: "%d de %B"
+      month_year: "%B %Y"
+    day_names: [Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado]
+    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
+    month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_month_names: [~, Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
+    order: [ :day, :month, :year ]
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      time: "%H:%M"
+      short: "%d/%m"
+      short_with_year: "%d/%m/%Y"
+      datepicker: "%Y-%m-%d"
+      long: "%A, %d de %B de %Y às %H:%M"
+      long_no_time: "%A, %d de %B de %Y"
+      long_no_time_no_year: "%A, %d de %B"
+      simple: "%d de %B de %Y"
+      simple_no_year: "%d de %B"
+    am: "am"
+    pm: "pm"
+  datepicker:
+    format: "dd/mm/yy"
+    locale: "pt-BR"
+  fullcalendar:
+    time_agenda: "HH:mm{ - HH:mm}" # 17:00 - 18:30 or "h:mm t{ - h:mm t}" for 5:00 p - 6:30 p
+    time_other: "H'h'(mm)" # 17 or "h(:mm) t" for 5pm
+    axis_format: "HH'h'(mm)" # 'h(:mm)tt' for 5:30am
+    column_month: "ddd" # Seg
+    column_week: "ddd, dd/MM"
+    column_day: "dddd, dd/MM"
+    title_month: "MMMM 'de' yyyy"
+    title_week: "d[ MMM][ yyyy]{ '&#8212;' d MMM yyyy}"
+    title_day: "dddd, d 'de' MMMM 'de' yyyy"
+    today: "Hoje"
+    all_day: "o dia todo"
+
+  # time distance in words
+  datetime:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      date: "%d/%m/%Y"
+      time: "%H:%M"
+    distance_in_words:
+      today: 'hoje'
+      half_a_minute: 'meio minuto'
+      less_than_x_seconds:
+        one: 'menos de 1 segundo'
+        other: 'menos de %{count} segundos'
+      x_seconds:
+        one: '1 segundo'
+        other: '%{count} segundos'
+      less_than_x_minutes:
+        one: 'menos de um minuto'
+        other: 'menos de %{count} minutos'
+      x_minutes:
+        one: '1 minuto'
+        other: '%{count} minutos'
+      about_x_hours:
+        one: 'aproximadamente 1 hora'
+        other: 'aproximadamente %{count} horas'
+      x_days:
+        one: '1 dia'
+        other: '%{count} dias'
+      about_x_months:
+        one: 'aproximadamente 1 mês'
+        other: 'aproximadamente %{count} meses'
+      x_months:
+        one: '1 mês'
+        other: '%{count} meses'
+      about_x_years:
+        one: 'aproximadamente 1 ano'
+        other: 'aproximadamente %{count} anos'
+      over_x_years:
+        one: 'mais de 1 ano'
+        other: 'mais de %{count} anos'
+      almost_x_years:
+        one: 'quase 1 ano'
+        other: 'quase %{count} anos'
+    prompts:
+      year:   "Ano"
+      month:  "Mês"
+      week:   "Semana"
+      day:    "Dia"
+      hour:   "Hora"
+      minute: "Minuto"
+      second: "Segundos"
+  
+  # numbers
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+
+    currency:
+      format:
+        format: "%u %n"
+        unit: "R$"
+        separator: ","
+        delimiter: "."
+        precision: 2
+        significant: false
+        strip_insignificant_zeros: false
+
+    percentage:
+      format:
+        delimiter: "."
+
+    precision:
+      format:
+        delimiter: "."
+
+    human:
+      format:
+        delimiter: ""
+        precision: 3
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+      decimal_units:
+        format: "%n %u"
+        units:
+          unit: ""
+          thousand: mil
+          million:
+            one: milhão
+            other: milhões
+          billion:
+            one: bilhão
+            other: bilhões
+          trillion:
+            one: trilhão
+            other: trilhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+  
+  incomplete_tasks:
+    unit:
+      zero: ""
+      one: "tarefa pendente"
+      other: "tarefas pendentes"
+  overdue_tasks:
+    unit:
+      zero: ""
+      one: "tarefa atrasada"
+      other: "tarefas atrasadas"
+  
+  # formtastic specific
+  formtastic:
+    required: campo obrigatório
+    actions:
+      create: "Cadastrar"
+      update: "Salvar"
+      
+  # authlogic authentication messages
+  authlogic: 
+    error_messages: 
+      login_blank: "não pode estar em branco"
+      login_not_found: "não é válido"
+      login_invalid: "deve conter apenas letras e números"
+      consecutive_failed_logins_limit_exceeded: "Limite de tentativas atingido. Cadastro suspenso."
+      email_invalid: "deve ser um e-mail válido"
+      password_blank: "não pode estar em branco"
+      password_invalid: "não é válida"
+      not_active: "Sua conta não está ativa"
+      not_confirmed: "Sua conta não está confirmada" 
+      not_approved: "Sua conta não foi aprovada"
+      no_authentication_details: "Você não informou os dados para autenticação"
+      require_user: "Você deve fazer login para continuar"
+      require_no_user: "Você deve sair de sua conta para continuar"
+
+  genders:
+    user: o
+    contact: o
+    note: a
+    task: a
+
+  # models and attributes
+  activerecord:
+    models:
+      user: Usuário
+      contact: Contato
+      category: Categoria
+      task: Tarefa
+      note: Nota
+      preference: Preferências
+      suit: Pedido
+    attributes:
+      attribute_commons: &commons
+        login: Login
+        name: Nome
+        email: "E-mail"
+        password: "Senha"
+        password_confirmation: "Confirmação de senha"
+        address: "Endereço"
+        address_number: "Número"
+        address_extra: "Complemento"
+        neighborhood: "Bairro"
+        zip_code: "CEP"
+        city: "Cidade"
+        state: "Estado"
+        phone: "Telefone"
+        mobile: "Celular"
+        avatar: Foto
+      user:
+        <<: *commons
+      contact:
+        <<: *commons
+        description: Informações gerais
+        birthday: Aniversário
+        birthday_date: Data de nascimento
+        occupation: Profissão
+        age: Idade
+        remove_avatar: Remover foto
+      task:
+        name: Descrição
+        due_at: Prazo
+        due_at_date: Data prevista
+        due_at_time: Horário
+        completed: Tarefa concluída
+      category:
+        name: Nome
+        color: Cor
+      note:
+        name: Descrição
+        date: Data
+        date_string: Data
+        created_at: Criada em
+        updated_at: Última modificação em
+      preference:
+        weather_location_name: Buscar localidade
+        weather_location: Código da localidade
+    errors:
+      messages:
+        inclusion: "não está incluído na lista"
+        exclusion: "não está disponível"
+        invalid: "não é válido"
+        email_invalid: "deve ser um e-mail válido"
+        confirmation: "não está de acordo com a confirmação"
+        accepted: "deve ser aceito"
+        empty: "não pode ficar vazio"
+        blank: "não pode ficar em branco"
+        too_long: "deve ter, no máximo, %{count} caracteres"
+        too_short: "deve ter, no mínimo, %{count} caracteres"
+        wrong_length: "deve ter %{count} caracteres"
+        taken: "já está em uso"
+        not_a_number: "não é um número"
+        not_an_integer: "não é um número inteiro"
+        greater_than: "deve ser maior do que %{count}"
+        greater_than_or_equal_to: "deve ser maior ou igual a %{count}"
+        equal_to: "deve ser igual a %{count}"
+        less_than: "deve ser menor do que %{count}"
+        less_than_or_equal_to: "deve ser menor ou igual a %{count}"
+        odd: "deve ser ímpar"
+        even: "deve ser par"
+        record_invalid: "A validação falhou: %{errors}"
+
+  meta_search:
+    predicates:
+      contains: "%{attribute}"
+
+  # used in Array.to_sentence
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "
+
+  # general messages
+  messages:
+    task:
+      completed: Tarefa concluída com sucesso
+      postponed: Tarefa adiada com sucesso
+    note:
+      removed: Nota removida com sucesso
+    comment:
+      created: Comentário adicionado com sucesso
+    created: Cadastro realizado com sucesso
+    updated: Dados atualizados com sucesso
+    removed: Cadastro removido com sucesso
+    logged_in: Autenticado com suceeso
+    login_error: Falha na autenticação. Confira os dados fornecidos
+
+  texts:
+    contact:
+      edit_data: "Alterar dados de %{name}"
+      edit_avatar: "Alterar foto de %{name}"
+      new_note: "Adicionar uma nota sobre %{name}"
+      new_note_desc: "Você pode adicionar notas sobre ligações, reuniões ou conversas que você teve com essa pessoa. Notas são ótimas para manter um histórico de interação com alguém."
+      new_task: "Adicionar uma tarefa"
+      new_task_for: "Adicionar uma tarefa relacionada a %{name}"
+      confirm_remove: "Deseja realmente remover este contato?"
+      remove_explain: "Todo o conteúdo relacionado a %{name}, como notas e tarefas, também será removido."
+      remove_explain_2: "Não será possível desfazer essa ação no futuro. A remoção é permanente."
+      remove_button: "Remover este contato"
+      filter: "Utilize os seguintes campos para filtrar contatos. Se deseja encontrar, por exemplo, advogados de Campo Grande, digite 'Advogado' no campo Profissão e 'Campo Grande' no campo Cidade."
+    note:
+      about_this: sobre esta nota
+      has_comments: Esta nota possui comentários
+    task:
+      about_this: sobre esta tarefa
+      has_comments: Esta tarefa possui comentários
+    comment:
+      new: Adicionar comentário
+    preference:
+      add_weather_desc: "Digite a cidade no campo abaixo para buscar a localização para a previsão do tempo."

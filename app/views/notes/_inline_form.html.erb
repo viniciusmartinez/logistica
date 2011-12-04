@@ -1,0 +1,21 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$("#note_options a").live("click", function(e){
+			e.preventDefault();
+			$(this).parent().addClass("hidden");
+			$("#note_date_select").removeClass("hidden");
+		});
+	});
+<% end %>
+
+<h3><%= t "texts.contact.new_note", :name => @contact.first_name %></h3>
+<p id="note_intro"><%= t "texts.contact.new_note_desc" if @contact.notes.size == 0 %></p>
+
+<% semantic_form_for [@contact, @note], :html => {:id => "add_new_note", :class => "inline"}, :remote => true do |form| %>
+	<%= form.inputs do %>
+	<%= form.input :name, :label => false, :input_html => { :rows => 2 } %>
+	<span id="note_options" class="inline-options underline float_left"><a href="#"><%= t"application.set_date" %></a> (<%= t"application.if_note_not_for_today" %>)</span>
+	<span id="note_date_select" class="hidden float_left"><%= form.date_select :date %></span>
+	<div class="right"><%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %></div>
+	<% end %>
+<% end %>

@@ -1,0 +1,68 @@
+<% content_for :javascript do %>
+$(function()
+{
+	$("input[@name=suit_status_decisao]:radio").change(
+	function()
+	{
+		if ( $("#suit_status_decisao_1").attr("checked") ) { $("#escondidinho").css("display", "block"); }
+		else { $("#escondidinho").css("display", "none"); }
+	});
+});
+<% end %>
+
+<%= form_for(@suit) do |f| %>
+  <% if @suit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@suit.errors.count, "error") %> prohibited this suit from being saved:</h2>
+
+      <ul>
+      <% @suit.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<%= f.fields_for :protocol do |p| %>
+		<div class="field">
+    		<%= p.label :numero, "Protocolo" %><br />
+			<%= p.text_field :numero %> <%= p.date_select :data %>
+		</div>
+	<% end %>
+	
+
+  <div class="field">
+    <%= f.label :entidade %><br />
+    <%= f.text_field :entidade %>
+  </div>
+  <div class="field">
+    <%= f.label :representante %><br />
+    <%= f.text_field :representante %>
+  </div>
+
+  <div class="field">
+    <%= f.label :status_decisao, "Quanto a Decisao:" %> 
+
+	<% StatusPedido::statuses_decisao.each do |status| %>
+			<%= f.radio_button :status_decisao, StatusPedido::numero_status_decisao(status) %> <%= f.label :status_decisao, status, :value => StatusPedido::numero_status_decisao(status) %>
+	<% end %>
+  </div>
+
+	<% if @suit.sera_atendido? %>
+	<div id="escondidinho" class="field">
+	<% else %>
+	<div id="escondidinho" class="field" style="display: none" >
+	<% end %>
+  
+    <%= f.label :status_atendimento, "Quanto ao Atendimento:" %> 
+
+	<% StatusPedido::statuses_atendimento.each do |status| %>
+			<%= f.radio_button :status_atendimento, StatusPedido::numero_status_atendimento(status) %> <%= f.label :status_atendimento, status, :value => StatusPedido::numero_status_atendimento(status) %>
+	<% end %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

@@ -1,0 +1,26 @@
+<table class="table" style="width: 90%; margin: 0 auto;">
+	<% contacts.each do |contact| %>
+	<tr class="">
+		<td class="checkbox">
+			<%= check_box_tag "contact_ids[]", contact.id %>
+		</td>
+		<td class="avatar">
+			<%= link_to contact_avatar(contact), contact_path(contact) %>
+		</td>
+		<td class="contact">
+			<h3><%= link_to contact.name, contact_path(contact) %></h3>
+			<h5><%= contact.occupation %></h5>
+		</td>
+		<td class="contact_info">
+			<h5><%= contact.email %></h5>
+			<h5><%= formatted_phones contact %></h5>
+		</td>
+		<td class="tasks">
+			<% @incomplete_tasks = contact.tasks.not_overdue %>
+		    <% @overdue_tasks = contact.tasks.overdue %>
+			<p><%= number_to_human @incomplete_tasks.size, :units => :incomplete_tasks if @incomplete_tasks.size > 0 %></p>
+			<p class="red"><%= number_to_human @overdue_tasks.size, :units => :overdue_tasks if @overdue_tasks.size > 0 %></p>
+		</td>
+	</tr>          
+	<% end %>
+</table>

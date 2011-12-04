@@ -1,0 +1,29 @@
+<h1>Listing suit_status_changes</h1>
+
+<table>
+  <tr>
+    <th>Momento</th>
+    <th>Status</th>
+    <th>Comentario</th>
+    <th>Suit</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @suit_status_changes.each do |suit_status_change| %>
+  <tr>
+    <td><%= suit_status_change.momento %></td>
+    <td><%= suit_status_change.status %></td>
+    <td><%= suit_status_change.comentario %></td>
+    <td><%= suit_status_change.suit_id %></td>
+    <td><%= link_to 'Show', suit_status_change %></td>
+    <td><%= link_to 'Edit', edit_suit_status_change_path(suit_status_change) %></td>
+    <td><%= link_to 'Destroy', suit_status_change, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Suit status change', new_suit_status_change_path %>

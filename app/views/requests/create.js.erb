@@ -1,0 +1,7 @@
+<% @request_dom = dom_id(@request) %>
+<% @request = Request.new(:deadline => Date.today) %>
+$("#request_form form").replaceWith("<%= escape_javascript(render(:partial => "requests/inline_form"))%>")
+$("#request_list").html("<%= escape_javascript(render(:partial => "requests/list"))%>")
+$("#request_form form").get(0).reset();
+$("#request_form").dialog("close");
+$("#<%= @request_dom %>").effect("highlight", {}, 3000);

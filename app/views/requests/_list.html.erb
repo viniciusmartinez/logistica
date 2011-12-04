@@ -1,0 +1,16 @@
+<%= content_for :javascript do %>
+	$(function() {
+		
+	});
+<% end %>
+
+<ul class="contact_show_list">
+	<% @requests.each do |request| %>
+		<li>
+			<a id="<%= dom_id request %>" href="<%= edit_contact_request_path(@contact, request) %>" data-remote="true">
+				<h4><%=l request.deadline %></h4>
+				<%= request.description %>
+			</a>
+		</li>
+	<% end %>
+</ul>

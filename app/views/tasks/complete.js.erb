@@ -1,0 +1,21 @@
+<% @object_dom = dom_id(@task) %>
+$("#<%= @object_dom %>").find("input.complete").removeAttr("disabled");
+<% if @task.completed %>
+$("#<%= @object_dom %>").fadeTo("slow", 0.5);
+$("#<%= @object_dom %>").find(".task_content .text").css("text-decoration", "line-through");
+<% else %>
+$("#<%= @object_dom %>").fadeTo("slow", 1);
+$("#<%= @object_dom %>").find(".task_content .text").css("text-decoration", "none");
+<% end %>
+
+//$("#<%= @object_dom %>").fadeThenSlideUp(2000);
+
+// var frame = $("#<%= @object_dom %>").parents("ul.full_list").filter(':first').parent();
+// if(frame) {
+// 	var size = frame.find("li").size() - 1;
+// 	if(size == 0) {
+// 		setTimeout(function(){
+// 		frame.hide();
+// 		}, 2500);
+// 	}
+// }

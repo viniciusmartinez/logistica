@@ -1,0 +1,25 @@
+<div class="block">       
+  <div class="content">
+	<div class="content-header">
+		<% if @task.contact.present? %>
+    		<h2><%= t("application.edit", :default => "Edit") %> <%= t("activerecord.models.task", :default => "Task").downcase %> <%= t "application.about" %> <%= link_to @task.contact.name, @task.contact %></h2>
+		<% else %>
+			<h2><%= t("application.edit", :default => "Edit") %> <%= t("activerecord.models.task", :default => "Task").downcase %></h2>
+		<% end %>
+	</div>
+    <div class="inner">
+        <%= render :partial => "form" %>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar do %>
+	<div class="block notice">
+		<ul class="navigation">
+			<% if @task.contact.present? %>
+			<li><%= link_to "#{t("application.see")} #{t("activerecord.models.contact").downcase}", @task.contact %></li>
+			<% end %>
+			<li class="last"><%= link_to t("application.task.see_all_tasks"), tasks_path %></li>
+		</ul>
+	</div>
+<% end %>

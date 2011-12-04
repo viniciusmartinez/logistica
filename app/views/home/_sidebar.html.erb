@@ -1,0 +1,41 @@
+<% content_for :javascript do %>
+	$(function(){
+		<% if current_user.preference.present? and current_user.preference.weather_location.present? %>
+			$(".weather").weatherfeed(['<%= current_user.preference.weather_location %>']);
+		<% end %>
+		
+		$(".search_results_wrapper").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: "60%",
+			minWidth: 300,
+			height: 360,
+			minHeight: 360,
+			modal: true
+		});
+	});
+<% end %>
+
+<div class="notice block">
+  <h3><%= t"application.dashboard" %></h3>
+  <ul class="navigation">
+    <%= sidebar_home %>
+  </ul>
+</div>
+
+<div class="today">
+	<div class="day">
+		<%= "%02d" % Date.today.day.to_i %>
+	</div>
+	<div class="caption">
+		<%= l(Date.today, :format => :weekday) %>
+	</div>
+	<div class="caption2">
+		<%= l(Date.today, :format => :month_year) %>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<% if current_user.preference.present? and current_user.preference.weather_location.present? %>
+	<div class="weather"></div>
+<% end %>

@@ -1,0 +1,46 @@
+<%= semantic_form_for @user, :html => { :multipart => true } do |form| %>
+	<%= form.inputs :class => "column_left" do %>
+		<%= form.input :name %>
+		<%= form.input :phone %>
+	<% end %>
+	<%= form.inputs :class => "column_right" do %>
+		<%= form.input :email %>
+		<%= form.input :mobile %>
+	<% end %>
+		
+	<fieldset></fieldset>
+	<hr />
+
+	<%= form.inputs :class => "column_left" do %>
+		<%= form.input :address %>
+		<%= form.input :address_extra %>
+		<%= form.input :city %>
+		<%= form.input :zip_code %>
+	<% end %>
+	<%= form.inputs :class => "column_right" do %>
+		<%= form.input :address_number %>
+		<%= form.input :neighborhood %>
+		<%= form.input :state %>
+	<% end %>
+
+	<fieldset></fieldset>
+	<hr />
+	
+	<%= form.inputs :class => "column_left" do %>
+		<%= form.input :login %>
+		<%= image_tag(@user.avatar.thumb.url) if @user.avatar? %>
+		<%= form.input :avatar, :as => :file %>
+		<%= form.input :avatar_cache, :as => :hidden %>
+	<% end %>
+	<%= form.inputs :class => "column_right" do %>
+		<%= form.input :password, :required => true %>
+		<%= form.input :password_confirmation, :required => true %>
+	<% end %>
+	
+	<fieldset></fieldset>
+	<hr />
+	
+	<div class="group navform wat-cf">
+	  <%= submit_button %>
+	</div>
+<% end %>

@@ -1,0 +1,53 @@
+<div class="search_results">
+
+	<div class="home_column border">
+	<% if @search_contacts %>
+		<h3><%= t"application.contacts" %></h3>
+		<ul class="home_list">
+			<% @search_contacts.each do |contact| %>
+			<li><%= link_to contact.name, contact_path(contact) %></li>
+			<% end %>
+		</ul>
+		<% if @search_contacts.size == 0 %>
+		<p class="italic"><%= t"application.no_results" %></p>
+		<% end %>
+	<% end %>
+	</div>
+
+	<div class="home_column border">
+	<% if @search_tasks %>
+		<h3><%= t"application.tasks" %></h3>
+		<ul class="home_list">
+			<% @search_tasks.each do |task| %>
+			<li>
+				<% if task.contact.present? %>
+				<%= link_to truncate(task.name, :length => 60), contact_path(task.contact) %>
+				<span class="gray_small">(<%= task.contact.name %>)</span>
+				<% else %>
+				<%= link_to truncate(task.name, :length => 60), tasks_path %>
+				<% end %>
+			</li>
+			<% end %>
+		</ul>
+		<% if @search_tasks.size == 0 %>
+		<p class="italic"><%= t"application.no_results" %></p>
+		<% end %>
+	<% end %>
+	</div>
+
+	<div class="home_column">
+	<% if @search_notes %>
+		<h3><%= t"application.notes" %></h3>
+		<ul class="home_list">
+			<% @search_notes.each do |note| %>
+			<li><%= link_to truncate(note.name, :length => 50), contact_path(note.contact) %> <span class="gray_small">(<%= note.contact.name %>)</span></li>
+			<% end %>
+		</ul>
+		<% if @search_notes.size == 0 %>
+		<p class="italic"><%= t"application.no_results" %></p>
+		<% end %>
+	<% end %>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>

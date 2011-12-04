@@ -1,0 +1,15 @@
+$(function() {
+	$(".contact_show_list li").live("mouseover mouseout", function(event){
+		if (event.type == 'mouseover') {
+			$(this).find(".list_options").show();
+		} else {
+			$(this).find(".list_options").hide();
+		}
+	});
+	$("form input.complete").removeAttr("disabled");
+	$("form input.complete").attr('checked', false);
+	$("form input.complete").live("click", function(e){
+		$(this).parents("form").filter(':first').submit();
+		$(this).attr("disabled", true);
+	});	
+});

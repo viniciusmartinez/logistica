@@ -1,0 +1,29 @@
+<%= content_for :javascript do %>
+	$(function() {
+	});
+<% end %>
+
+<% if @notes.size > 0 %>
+<h3><%= inline_ui_icon("color user") %> <%= t "application.notes" %></h3>
+<% end %>
+
+<ul class="contact_show_list notes">
+	<% @notes.each do |note| %>
+		<li id="<%= dom_id note %>">
+			<div class="list_options">
+				<a href="<%= contact_note_path(@contact, note) %>" class="list_option show"><%=t "application.details" %></a>
+			</div>
+			<h4>
+				<% if note.date.year == Date.today.year %>
+					<%=l note.date, :format => :simple_no_year %>
+				<% else %>
+					<%=l note.date, :format => :simple %>
+				<% end %>
+				<% unless note.comments.empty? %>
+					<%= inline_ui_icon("comment", :title => t("texts.note.has_comments")) %>
+				<% end %>
+			</h4>
+			<p><%= note.name %></p>
+		</li>
+	<% end %>
+</ul>

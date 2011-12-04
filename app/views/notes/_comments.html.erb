@@ -1,0 +1,26 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$(".comments .comment").live("mouseover mouseout", function(event){
+			if (event.type == 'mouseover') {
+				$(this).find(".list_options").show();
+			} else {
+				$(this).find(".list_options").hide();
+			}
+		});
+	});
+<% end %>
+
+<% unless @note.comments.empty? %>
+<h3 class="nice_blue"><%=t "application.note.comments" %></h3>
+<% end %>
+<% @note.comments.each do |c| %>
+<div id="<%= dom_id(c) %>" class="comment">
+	<h3>
+		<span class="gray_medium"><%=l c.created_at %></span>
+
+		<%= link_to inline_ui_icon("remove", :title => t("application.comment.remove")), comment_path(c), :class => "list_options inline", :method => :delete, :remote => true, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
+
+	</h3>
+	<%= simple_format(c.comment) %>
+</div>
+<% end %>

@@ -1,0 +1,37 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$("textarea").elastic();
+		
+		$.datepicker.setDefaults( $.datepicker.regional[ "<%= I18n.locale %>" ] );
+		$( "#datepicker" ).datepicker({
+			altField: "#alternate",
+			altFormat: "yy-mm-dd",
+			showOtherMonths: true,
+			selectOtherMonths: false,
+			changeMonth: true,
+			changeYear: true,
+			dateFormat: "yy-mm-dd",
+			defaultDate: "<%=l @note.date, :format => :datepicker %>"
+		});
+	});
+<% end %>
+
+<% semantic_form_for [@contact, @note] do |form| %>
+
+	<%= form.inputs :class => "column_left right_border", :style => "width: 270px; margin-right: 20px;" do %>
+		<%= form.input :date_string, :as => :hidden, :input_html => { :id => "alternate" } %>
+		<li>
+			<%= form.label :date_string %>
+			<div id="datepicker" style="width: 250px"></div>
+		</li>
+	<% end %>
+	<%= form.inputs :class => "column_left" do %>
+		<%= form.input :name, :input_html => { :rows => 4 } %>
+	<% end %>
+	
+	<fieldset></fieldset>
+	<hr />
+	<div class="group navform wat-cf">
+	  <%= submit_button %>
+	</div>
+<% end %>

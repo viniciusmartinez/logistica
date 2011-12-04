@@ -1,0 +1,35 @@
+<%= content_for :javascript do %>
+	$(function() {		
+		
+	});
+<% end %>
+
+<div class="block">          
+  <div class="content">
+	
+	<div class="content-header">    
+	    <h2 class="title">
+			<span class="header_icon preferences"></span>
+			<%= t("application.preferences", :default => "Preferences") %> &raquo; <%= t("application.preference.general", :default => "General") %>
+		</h2>
+	</div>
+	
+    <div class="inner">
+		<div id="data_view" class="underline">
+			<%= semantic_form_for @preference do |form| %>
+				<%= form.inputs :class => "column_left" do %>
+					<%= form.input :email_task_alert %>
+					<%= form.input :email_birthday_alert %>
+				<% end %>
+				<div class="clear"></div>
+				
+				<div class="group navform wat-cf">
+				  <%= submit_button :back => :none %>
+				</div>
+			<% end %>
+		</div>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar, render(:partial => "sidebar") %>

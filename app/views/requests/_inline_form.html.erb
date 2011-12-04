@@ -1,0 +1,14 @@
+<% semantic_form_for [@contact, @request], :html => { :class => "inline" }, :remote => true do |form| %>
+
+	<%= form.inputs :class => "" do %>
+		<%= form.input :description, :input_html => { :rows => 3 } %>
+
+		<%= form.input :deadline %>
+		<%= form.input :completed %>
+	<% end %>
+
+	<div class="group navform wat-cf">
+		<button class="button" type="submit">
+			<%= submit_button :back => contact_path(@contact), :close_class => "close" %>
+	</div>
+<% end %>

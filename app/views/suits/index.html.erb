@@ -1,0 +1,168 @@
+<div class="block">
+	<div class="content"> 
+		<div class="content-header">
+			<div class="control">
+				<%= link_to_new(Suit) %>
+			</div>
+			<h2 class="title">
+				<span class="header_icon suits"></span>
+				<%= t("application.suits", :default => "Pedidos")  %>
+			</h2>
+		</div>
+		
+		<div class="inner">
+
+			<%# if @overdue_tasks.size == 0 and @today_tasks.size == 0 && @this_week_tasks.size == 0 %>
+				<!--p class="gray_small"><%= t("application.home.no_task")%></p-->
+			<%# end %>
+			
+			<p>Quanto à <strong class="red">decisão:</strong></p>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color tasks") %> &nbsp;<%= t"application.suit.pendentes" %></h3>
+				</div>
+				<div class="inner">
+					<% if @pendentes.size > 0 %>	
+					<ul class="home_list">
+						<% @pendentes.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header"><h3><img src="/images/icons/calendar.png" /> &nbsp;<%= t"application.suit.deferidos" %></h3></div>
+				<div class="inner">
+					<% if @deferidos.size > 0 %>	
+					<ul class="home_list">
+						<% @deferidos.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> &nbsp;<%= t"application.suit.indeferidos" %></h3>
+				</div>
+				<div class="inner">
+					<% if @indeferidos.size > 0 %>	
+					<ul class="home_list">
+						<% @indeferidos.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+
+			<div class="clear"></div>
+			
+			<p>Quanto ao <strong class="red">atendimento:</strong></p>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> &nbsp;<%= t"application.suit.em_atendimento" %></h3>
+				</div>
+				<div class="inner">
+					<% if @em_atendimento.size > 0 %>	
+					<ul class="home_list">
+						<% @em_atendimento.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> &nbsp;<%= t"application.suit.atendidos" %></h3>
+				</div>
+				<div class="inner">
+					<% if @atendidos.size > 0 %>	
+					<ul class="home_list">
+						<% @atendidos.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> &nbsp;<%= t"application.suit.cancelados" %></h3>
+				</div>
+				<div class="inner">
+					<% if @cancelados.size > 0 %>	
+					<ul class="home_list">
+						<% @cancelados.each do |pedido| %>
+						<li>
+							<%= link_to truncate(pedido.entidade, :length => 50), pedido %>
+							<%#= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%#= l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<% #content_for :sidebar, render(:partial => 'sidebar') -%>
+
+<h1>Listing suits</h1>
+
+<table>
+  <tr>
+    <th>Entidade</th>
+    <th>Representante</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @suits.each do |suit| %>
+  <tr>
+    <td><%= suit.entidade %></td>
+    <td><%= suit.representante %></td>
+    <td><%= link_to 'Show', suit %></td>
+    <td><%= link_to 'Edit', edit_suit_path(suit) %></td>
+    <td><%= link_to 'Destroy', suit, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Suit', new_suit_path %>

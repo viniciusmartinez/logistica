@@ -1,0 +1,71 @@
+<%= content_for :javascript do %>
+	$(function() {		
+		$(".weather_autocomplete").autocomplete({
+			minLength: 0,
+			selectFirst: true,
+			source: "<%= search_weather_path %>",
+			select: function(event, ui) {
+				$("input#preference_weather_location").val(ui.item.id);
+			}
+		});
+		
+		$(".popup_form").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: 500,
+			height: 240,
+			modal: true
+		});
+		$("#add_weather_location").click(function(e){
+			e.preventDefault();
+			$(".popup_form").dialog("open");
+		});
+	});
+<% end %>
+
+<div class="block">          
+  <div class="content">
+	
+	<div class="content-header">    
+	    <h2 class="title">
+			<span class="header_icon preferences"></span>
+			<%= t("application.preferences", :default => "Preferences") %> &raquo; <%= t("application.dashboard", :default => "Dashboard") %>
+		</h2>
+	</div>
+	
+    <div class="inner">
+		<div id="data_view" class="underline">
+			
+			<div class="simulate_form">
+				<form class="popup formtastic preference">
+					<fieldset>
+					<legend>Previsão do tempo</legend>
+					<ol>
+						<li>
+							<label>Localização:</label> <%= @preference.weather_location_name %> <%= "Nenhuma" unless @preference.weather_location_name.present? %>
+						</li>
+						<li>
+							<label></label> <a href="#" id="add_weather_location" class="nice_blue">Alterar localização</a>
+						</li>
+					</ol>
+					</fieldset>
+				</form>
+			</div>
+			<div class="popup_form" title="Previsão do tempo">
+			<%= semantic_form_for @preference, :url => update_dashboard_preferences_path, :html => { :class => "popup wide_labels" } do |form| %>
+				<%= form.inputs t("texts.preference.add_weather_desc"), :class => "" do %>
+					<%= form.input :weather_location_name, :input_html => { :class => "weather_autocomplete" } %>
+					<%= form.input :weather_location, :input_html => { :readonly => true, :class => "readonly" } %>
+				<% end %>
+				<div class="clear"></div>
+				<div class="group navform wat-cf">
+				  <%= submit_button :back => :none %>
+				</div>
+			<% end %>
+			</div>
+		</div>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar, render(:partial => "sidebar") %>

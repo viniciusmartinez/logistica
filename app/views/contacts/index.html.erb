@@ -1,0 +1,200 @@
+<%= content_for :javascript do %>
+	function sync_checkbox_classes(form) {
+		form.find("input[type=checkbox]").each(function(){
+			if( $(this).is(":checked") ) {
+				$(this).parents("tr").filter(':first').addClass("selected");
+			} else {
+				$(this).parents("tr").filter(':first').removeClass("selected");
+			}
+		});
+	}
+	$(function() {
+		$("form#select_all input").attr('checked', false);
+		$("form#select_all input").live("click", function(event){
+			if( $(this).is(":checked") ) {
+				$(this).parents("tr").filter(':first').addClass("selected");
+			} else {
+				$(this).parents("tr").filter(':first').removeClass("selected");
+			}
+		});
+		$("#submit_multiple_print").click(function(e){
+			e.preventDefault();
+			var print_form = $("form#select_all");
+			if(print_form.find("input[type=checkbox]:checked").size() == 0) {
+				// nenhum contato selecionado
+				$("#dialog-nothing-selected").dialog("open");
+			} else {
+				$("#dialog-print-labels").dialog("open");
+				//print_form.submit();
+			}
+		});
+		$("#submit_print_labels").click(function(e){
+			e.preventDefault();
+			$("form#select_all").attr("action", "<%= print_contacts_path(:format => "pdf") %>");
+			$("form#select_all").attr("target", "_blank");
+			$("form#select_all").submit();
+		})
+		
+		$("a#toggle_select_all").toggle(function(e){
+			e.preventDefault();
+			$("form#select_all input[type=checkbox]").attr('checked', true);
+			sync_checkbox_classes($("form#select_all"));
+		}, function(e){
+			e.preventDefault();
+			$("form#select_all input[type=checkbox]").attr('checked', false);
+			sync_checkbox_classes($("form#select_all"));
+		});
+		
+		$("#data_search").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: 500,
+			height: 340,
+			modal: true
+		});
+
+		$("#dialog-nothing-selected").dialog({
+			autoOpen: false,
+			resizable: false,
+			height:'auto',
+			modal: true,
+			buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		
+		$("#dialog-print-labels").dialog({
+			autoOpen: false,
+			resizable: false,
+			width: 500,
+			height:'auto',
+			modal: true,
+			buttons: {
+				"Cancelar": function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		
+		$("#filter_contacts").click(function(e){
+			e.preventDefault();
+			$("#data_search").dialog("open");
+		});
+	});
+<% end %>
+<div class="block">          
+  <div class="content">
+	
+	<div class="content-header">
+		<div class="control">
+			<%= link_to_new(Contact) %>
+		</div>      
+	    <h2 class="title">
+			<span class="header_icon contacts"></span>
+			<%= t("application.contacts", :default => "Contacts")  %>
+		</h2>
+	</div>
+	
+    <div class="inner">
+		<% if @contacts.empty? and !params[:search].present? %>
+		<div id="empty_data" class="contacts">
+			
+			<div class="icon"><%= image_tag "empty_contacts.jpg" %></div>
+			<div class="arrow"></div>
+			<div class="text">
+				<h1>Nenhum contato cadastrado</h1>
+				<p>Store every conversation, email, call, meeting, document, and deal you’ve ever had with a contact. With Highrise you’ll always know who you talked to, what was said, and when to follow-up next.</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<% end %>
+		
+		<div id="data_view">
+			<% if params[:search].present? %>
+			<div id="data_params">
+				<% if !params[:search].select{ |x| x[1].present? }.empty? # search returned empty %>
+					<p>
+					Buscando
+					<%= params[:search].select{ |x| x[1].present? }.collect{ |x| "<span>#{x[1]}</span>" }.to_sentence.html_safe %>.
+					<%= link_to "Cancelar busca", contacts_path %>
+					</p>
+					<% if @contacts.empty? %>
+						<p class="italic">A busca não gerou resultados.</p>
+					<% end %>
+				<% end %>
+			</div>
+			<% end %>
+			
+			<% if !@contacts.empty? %>
+			<ul class="inline letters">
+				<% ("a".."z").each do |l| %>
+					<li<%= ' class="last" '.html_safe if l == "z" %>><%= link_to l.upcase, ('#' + l) %></li>
+				<% end %>
+			</ul>
+			<% end %>
+			
+			<% form_for :contact, :html => { :id => "select_all", :method => :post } do %>
+				<% @contacts.group_by(&:initial).each do |initial, contacts| %>
+				<a name="<%= initial.downcase %>"><h3><%= initial %></h3></a>
+				<%= render :partial => "table", :locals => { :contacts => contacts } %>
+				<% end %>
+			<% end %>
+		</div>
+		<div id="data_pagination">
+			
+		</div>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar do %>
+<div class="block notice">
+	<h3><%= t "application.options" %></h3>
+	<ul class="navigation">
+		<li><a href="#" id="filter_contacts"><%= t("application.contact.filter") %></a></li>
+		<li><a href="#" id="toggle_select_all"><%= t("application.select_all") %></a></li>
+		<li class="last"><a href="#" id="submit_multiple_print"><%= t("application.contact.generate_labels") %></a></li>
+	</ul>
+</div>
+
+<div class="block">
+	<ul class="navigation">
+		<li><a href="#">Importar contatos</a></li>
+		<li><a href="#">Exportar contatos</a></li>
+	</ul>
+</div>
+<% end %>
+
+<div id="data_search" title="<%= t("application.contact.filter") %>">
+	<p class="legend"><%= t("texts.contact.filter") %></p>
+	<%= semantic_form_for @search, :html => { :class => "popup" } do |form| %>
+		<%= form.inputs :class => "" do %>
+			<%= form.input :name_contains, :required => false %>
+			<%= form.input :occupation_contains, :required => false %>
+			<%= form.input :city_contains, :required => false %>
+			<%= form.input :email_contains, :required => false %>
+		<% end %>
+		<div class="group navform wat-cf">
+		  <%= submit_button :label => t("application.search"), :back => :none, :icon => :none %>
+		</div>
+	<% end %>
+</div>
+
+<div id="dialog-nothing-selected" title="Nenhum contato selecionado">
+	<p>Por favor, selecione algum contato para continuar.</p>
+</div>
+
+<div id="dialog-print-labels" title="Selecione um formato para impressão">
+	<p>Selecione um formato para impressão de etiquetas.</p>
+	<div class="center">
+		<div class="vertical_icon">
+			<a href="#" id="submit_print_labels"><%= image_tag "labels/pimaco_6083.gif" %></a>
+			<div class="caption">
+				<p>Pimaco 6083</p>
+				<p>10 etiquetas</p>
+			</div>
+		</div>
+	</div>
+</div>

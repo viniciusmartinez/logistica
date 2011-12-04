@@ -1,0 +1,18 @@
+<div class="block">
+	<h2><%= t "texts.contact.confirm_remove" %></h2>
+	<div class="content">
+		<% form_for @contact, :url => contact_path(@contact), :html => { :method => :delete } do |form| %>
+		<p>
+			<%= t "texts.contact.remove_explain", :name => @contact.name %>
+		</p>
+		<p>
+			<%= t "texts.contact.remove_explain_2" %>
+		</p>
+		<hr />
+		<p>
+			<%= submit_button :label => t("texts.contact.remove_button"), :icon => "remove" %>
+		</p>
+		<% end %>
+		<div class="clear"></div>
+	</div>
+</div>

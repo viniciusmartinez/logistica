@@ -1,0 +1,49 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$(".datemask").mask("99/99/9999");
+		
+		$(".city_autocomplete").autocomplete({
+			minLength: 0,
+			selectFirst: true,
+			source: "<%= search_city_path %>"
+		});
+		
+		$(".occupation_autocomplete").autocomplete({
+			minLength: 1,
+			selectFirst: true,
+			source: "<%= search_occupation_path %>"
+		});
+
+		$("form#new_contact :input:visible:enabled:first").focus();
+	});
+<% end %>
+
+<%= semantic_form_for @contact, :html => { :multipart => true }, :validate => true do |form| %>
+	
+	<%= form.inputs :class => "column fancy_form fancy_fields" do %>
+		<%= form.input :name %>
+		<%= form.input :email, :as => :string %>
+		<%= form.input :phone, :as => :string %>
+		<%= form.input :mobile %>
+		<%= form.input :occupation, :input_html => { :class => "occupation_autocomplete" } %>
+		<%= form.input :birthday_date, :input_html => { :class => "datemask" } %>
+	<% end %>
+
+	<%= form.inputs :id => "address_replace", :class => "column fancy_form address_fields defaultvalue" do %>
+		<li class="text optional">
+			<%= form.label :address %>
+			<%= form.text_area :address, :rows => 2, :rel => "#{t("activerecord.attributes.contact.address")}" %>
+		</li>
+		<li class="string optional three_fields">
+		<label></label>
+		<%= form.text_field :zip_code, :rel => "#{t("activerecord.attributes.contact.zip_code")}" %>
+		<%= form.text_field :city, :class => "city_autocomplete", :autocomplete => :off, :rel => "#{t("activerecord.attributes.contact.city")}" %>
+		<%= form.text_field :state, :rel => "#{t("activerecord.attributes.contact.state")}" %>
+		</li>
+		<hr />
+	<% end %>
+		
+	<div class="group navform wat-cf">
+	  <%= submit_button %>
+	</div>
+<% end %>

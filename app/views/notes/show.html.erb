@@ -1,0 +1,53 @@
+<div class="block">       
+	<div class="content">
+		<div class="content-header">
+			<h2><%= t("activerecord.models.note", :default => "Note") %> <%= t "application.about" %> <%= link_to @note.contact.name, @note.contact %></h2>
+		</div>
+		<div class="inner">
+			<h4 class="nice_blue">
+				<% if @note.date.year == Date.today.year %>
+					<%=l @note.date, :format => :simple_no_year %>
+				<% else %>
+					<%=l @note.date, :format => :simple %>
+				<% end %>
+			</h4>
+			
+			<%= simple_format @note.name %>
+			
+			<hr />
+			<div class="data_details gray_small">
+				<p><strong><%=t "activerecord.attributes.note.created_at" %>:</strong> <%=l @note.created_at %></p>
+				<% if @note.created_at != @note.updated_at %>
+				<p><strong><%=t "activerecord.attributes.note.updated_at" %>:</strong> <%=l @note.updated_at %></p>
+				<% end %>
+			</div>
+			<hr />
+			
+			<div class="comment_form">
+				<h3><%= t "texts.comment.new" %> <%= t "texts.note.about_this" %></h3>
+
+				<% semantic_form_for [@comment], :html => {:id => "add_new_comment", :class => "inline"}, :url => comment_contact_note_path(@contact, @note), :remote => true do |form| %>
+					<%= form.inputs do %>
+					<%= form.input :comment, :label => false, :input_html => { :rows => 2 } %>
+					<div class="right"><%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %></div>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="clear"></div>
+			<hr />
+			<div class="comments">
+				<%= render :partial => "comments" %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar do %>
+	<div class="block notice">
+		<ul class="navigation">
+			<li><%= link_to t("application.note.back_to_contact"), @note.contact %></li>
+			<li><%= link_to "Alterar nota", edit_contact_note_path(@note.contact, @note) %></li>
+			<li class="last"><%= link_to "Remover nota", contact_note_path(@note.contact, @note), :method => :delete, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %></li>
+		</ul>
+	</div>
+<% end %>

@@ -1,0 +1,24 @@
+<table class="table">
+	<tr>             
+		<th class="first">ID</th>
+		<th>
+			<%= t("activerecord.attributes.category.name", :default => t("activerecord.labels.name", :default => "Name")) %>
+		</th>
+		<th class="last">&nbsp;</th>
+	</tr>
+	<% @categories.each do |category| -%>
+	<tr class="<%= cycle("odd", "even") %>">
+		<td>
+			<%= category.id %>
+		</td>
+		<td>
+			<%= link_to category.name, category_path(category) %>
+		</td>
+		<td class="last">
+			<%= link_to "#{t("application.show", :default => "Show")}", category_path(category) %> |
+			<%= link_to "#{t("application.edit", :default => "Edit")}", edit_category_path(category) %> |
+			<%= link_to "#{t("application.delete", :default => "Delete")}", category_path(category), :method => :delete, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
+		</td>
+	</tr>          
+	<% end -%>
+</table>

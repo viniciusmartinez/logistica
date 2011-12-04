@@ -1,0 +1,23 @@
+<%= content_for :javascript do %>
+	$(document).ready(function() {
+		
+	});
+<% end %>
+
+<%= semantic_form_for @category do |form| %>
+	<%= form.inputs :class => "column_left" do %>
+		<%= form.input :name %>
+	<% end %>
+	<%= form.inputs :class => "column_right" do %>
+	<% end %>
+
+	<hr class="clear" />
+	
+	<div class="group navform wat-cf">
+	  <button class="button" type="submit">
+	    <%= image_tag("web-app-theme/icons/tick.png", :alt => "#{t("application.save", :default => "Save")}") %> <%= t("application.save", :default => "Save") %>
+	  </button>
+	  <span class="text_button_padding"><%= t("application.or", :default => "or") %></span>
+		<%= link_to t("application.cancel", :default => "Cancel"), categories_path, :class => "text_button_padding link_button" %>
+	</div>
+<% end %>

@@ -1,0 +1,3 @@
+$("#data_view").html("<%= escape_javascript( render(:partial => "table") ) %>");
+$("#data_pagination").html("<%= escape_javascript( render(:partial => "pagination") ) %>");
+$(".pagination a").attr('data-remote', 'true');

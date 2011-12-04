@@ -1,0 +1,8 @@
+<% @object_dom = dom_id(@note) %>
+<% @note = Note.new(:date => Time.now) %>
+
+$("#note_inline_form").replaceWith("<%= escape_javascript(render(:partial => "notes/inline_form"))%>");
+$('.formtastic').valtastic();
+
+$("#note_list").html("<%= escape_javascript(render(:partial => "notes/list"))%>");
+$("#<%= @object_dom %>").effect("highlight", {}, 1500);

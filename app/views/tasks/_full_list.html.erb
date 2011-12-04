@@ -1,0 +1,49 @@
+<% if defined?(title) and tasks.size > 0 %>
+<h3 class="general_border_radius task <%= "overdue" if defined?(overdue) %> <%= "today" if defined?(today) %>"><%= (defined?(overdue) and tasks.size > 1) ? title.pluralize : title %></h3>
+<% end %>
+
+<ul class="contact_show_list tasks full_list" style="width: 70%; margin: 0 auto;">
+	<% tasks.each do |task| %>
+		<li id="<%= dom_id task %>">
+			<table>
+			<tr>
+			<% unless defined?(completed) %>
+			<td class="complete_task ">
+				<%= form_for task, :html => { :class => "edit_task" }, :url => complete_task_path(task), :remote => true do |form| %>
+				<%= form.check_box :completed, :class => "complete", :title => t("application.to_complete_task") %>
+				<% end %>
+			</td>
+			<% end %>
+			<td class="task_content">
+				<div class="list_options">
+					<a href="<%= task_path(task) %>" class="list_option"><%=t "application.details" %></a>
+				</div>
+				<div class="text">
+					<h4>
+						<% if task.due_at.present? %>
+							<% if task.due_at.year == Date.today.year %>
+							<%= I18n.l task.due_at, :format => :long_no_time_no_year %>
+							<% else %>
+							<%= I18n.l task.due_at, :format => :long_no_time %>
+							<% end %>
+						<% end %>
+						<% unless task.comments.empty? %>
+							<%= inline_ui_icon("comment", :title => t("texts.task.has_comments")) %>
+						<% end %>
+					</h4>
+				<p>
+					<% if task.overdue? %>
+					<img src="/images/icons/exclamation.png" title="<%= t "application.task.overdue" %>" class="tooltip"/>
+					<% end %>
+					<%= task.name %>
+					<% if task.contact.present? %>
+					<span class="gray_small"><%= link_to(task.contact.name, contact_path(task.contact)) %> <img src="/images/icons/user-card.png" style="vertical-align:text-bottom"/></span>
+					<% end %>
+				</p>
+				</div>
+			</td>
+			</tr>
+			</table>
+		</li>
+	<% end %>
+</ul>

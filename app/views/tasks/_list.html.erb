@@ -1,0 +1,58 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$(".tasks form input.complete").removeAttr("disabled");
+		$(".tasks form input.complete").attr('checked', false);
+		$(".tasks form input.complete").live("click", function(e){
+			$(this).parents("form").filter(":first").submit();
+			$(this).attr("disabled", true);
+		});
+	});
+<% end %>
+
+<div class="quick_links right">
+	<ul>
+		<li><a href="#" id="open_new_task_dialog"><%= t "texts.contact.new_task" %></a>
+	</ul>
+</div>
+<h3><%= inline_ui_icon("color tasks") %> <%= t "application.tasks" %></h3>
+
+<ul class="contact_show_list tasks">
+	<% tasks.each do |task| %>
+		<li id="<%= dom_id task %>">
+			<table>
+			<tr>
+			<td class="complete_task">
+				<%= form_for task, :html => { :class => "edit_task" }, :url => complete_task_path(task), :remote => true do |form| %>
+				<%= form.check_box :completed, :class => "complete", :title => t("application.to_complete_task") %>
+				<% end %>
+			</td>
+			<td class="task_content">
+				<div class="list_options">
+					<a href="<%= task_path(task) %>" class="list_option"><%=t "application.details" %></a>
+				</div>
+				<div class="text">
+				<h4 class="<%= "overdue" if task.overdue? %>">
+				<% if task.due_at.present? %>
+					<% if task.due_at.year == Date.today.year %>
+					<%= I18n.l task.due_at, :format => :short %>
+					<% else %>
+					<%= I18n.l task.due_at, :format => :short_with_year %>
+					<% end %>
+				<% end %>
+				<% unless task.comments.empty? %>
+					<%= inline_ui_icon("comment", :title => t("texts.task.has_comments")) %>
+				<% end %>
+				</h4>
+				<p>
+				<% if task.overdue? %>
+				<img src="/images/icons/exclamation.png" title="<%= t "application.task.overdue" %>" class="tooltip"/>
+				<% end %>
+				<%= task.name %>
+				</p>
+				</div>
+			</td>
+			</tr>
+			</table>
+		</li>
+	<% end %>
+</ul>

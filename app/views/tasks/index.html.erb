@@ -1,0 +1,49 @@
+<% content_for :javascript, render(:partial => "javascript") %>
+
+<div class="block">
+	<div class="content">
+		<div class="content-header">
+			<div class="control">
+				<%= link_to_new(Task) %>
+			</div>
+			<h2 class="title">
+				<span class="header_icon tasks"></span>
+				<%= t("application.tasks", :default => "Tasks")  %>
+			</h2>
+		</div>
+		<div class="inner">
+			<% if @empty %>
+			<div id="empty_data" class="tasks">
+
+				<div class="icon"><%= image_tag "empty_tasks.jpg" %></div>
+				<div class="arrow"></div>
+				<div class="text">
+					<h1>Nenhuma tarefa em aberto</h1>
+					<p>Store every conversation, email, call, meeting, document, and deal you’ve ever had with a contact. With Highrise you’ll always know who you talked to, what was said, and when to follow-up next.</p>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<% end %>
+			
+			<div id="data_view">
+				<div id="overdue_frame">
+				<%= render :partial => "full_list", :locals => { :title => t("application.task.show_overdue"), :tasks => @overdue, :overdue => true } %>
+				</div>
+				<div id="today_frame">
+				<%= render :partial => "full_list", :locals => { :title => t("application.task.today"), :tasks => @today, :today => true } %>
+				</div>
+				<div id="this_week_frame">
+				<%= render :partial => "full_list", :locals => { :title => t("application.task.this_week"), :tasks => @week } %>
+				</div>
+				<div id="next_week_frame">
+				<%= render :partial => "full_list", :locals => { :title => t("application.task.next_week"), :tasks => @next_week } %>
+				</div>
+				<div id="later_frame">
+				<%= render :partial => "full_list", :locals => { :title => t("application.task.later"), :tasks => @later } %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') %>

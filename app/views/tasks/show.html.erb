@@ -1,0 +1,107 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$("#dialog-postpone").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: 500,
+			height: 160,
+			modal: true
+		});
+		
+		$("#postpone_link").click(function(e){
+			e.preventDefault();
+			$("#dialog-postpone").dialog("open");
+		});
+	});
+<% end %>
+<div class="block">       
+  <div class="content">
+	<div class="content-header">
+		<% if @task.contact.present? %>
+    		<h2><%= t("activerecord.models.task", :default => "Task") %> <%= t "application.about" %> <%= link_to @task.contact.name, contact_path(@contact) %></h2>
+		<% else %>
+			<h2><%= t("activerecord.models.task", :default => "Task") %></h2>
+		<% end %>
+	</div>
+    <div class="inner">
+        <h4 class="nice_blue">
+			<strong><%=t "activerecord.attributes.task.due_at" %>:</strong>
+			<% if @task.due_at.time == @task.due_at.at_midnight.time %>
+			<%=l @task.due_at, :format => :short_with_year %>
+			<% else %>
+			<%=l @task.due_at %>
+			<% end %>
+		</h4>
+		
+		<%= simple_format @task.name %>
+		
+		<%= form_for @task, :html => { :class => "inline" } do |form| %>
+		<% if @task.completed %>
+			<%= form.hidden_field :completed, :value => false %>
+			<%= submit_button :label => t("application.task.reopen"), :back => :none, :icon => "back", :onclick => "return confirm('#{t("application.task.confirm_reopen")}')" %>
+		<% else %>
+			<%= form.hidden_field :completed, :value => true %>
+			<%= submit_button :label => t("application.task.complete"), :back => :none %>
+		<% end %>
+		<% end %>
+		
+		<div class="clear space"></div>
+
+		<a href="#" id="postpone_link" class="button inline"><%= inline_ui_icon("forward") %> <%= t("application.task.postpone") %></a>
+		
+		<hr class="clear" style="padding-top: 15px" />
+		
+		<div class="data_details gray_small">
+			<p><strong><%=t "activerecord.attributes.note.created_at" %>:</strong> <%=l @task.created_at %></p>
+			<% if @task.created_at != @task.updated_at %>
+			<p><strong><%=t "activerecord.attributes.note.updated_at" %>:</strong> <%=l @task.updated_at %></p>
+			<% end %>
+		</div>
+		<hr />
+		
+		<div class="comment_form">
+			<h3><%= t "texts.comment.new" %> <%= t "texts.task.about_this" %></h3>
+
+			<% semantic_form_for @comment, :html => {:id => "add_new_comment", :class => "inline"}, :url => comment_task_path(@task), :remote => true do |form| %>
+				<%= form.inputs do %>
+				<%= form.input :comment, :label => false, :input_html => { :rows => 2 } %>
+				<div class="right"><%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %></div>
+				<% end %>
+			<% end %>
+		</div>
+		<div class="clear"></div>
+		<hr />
+		<div class="comments">
+			<%= render :partial => "comments" %>
+		</div>
+		
+		
+    </div>
+  </div>
+</div>
+
+<div id="dialog-postpone" title="<%=t "application.task.postpone_title" %>">
+	<%= form_tag postpone_task_path(@task), :class => "popup inline" do |form| %>
+		<p>
+			Adiar esta tarefa, com prazo para <strong><%=l @task.due_at, :format => :short_with_year %></strong>, em: 
+			<%= text_field_tag :days, '', :style => "margin: 0 10px; width: 20px;" %> dias
+		</p>
+		
+		<div class="group navform wat-cf">
+		  <%= submit_button :label => t("application.postpone"), :back => :none, :icon => :forward %>
+		</div>
+	<% end %>
+</div>
+
+<% content_for :sidebar do %>
+	<div class="block notice">
+		<ul class="navigation">
+			<% if @task.contact.present? %>
+			<li><%= link_to "#{t("application.see")} #{t("activerecord.models.contact").downcase}", @task.contact %></li>
+			<% end %>
+			<li><%= link_to t("application.task.see_all_tasks"), tasks_path %></li>
+			<li><%= link_to "Alterar tarefa", edit_task_path(@task) %></li>
+			<li class="last"><%= link_to "Remover tarefa", task_path(@task), :method => :delete, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %></li>
+		</ul>
+	</div>
+<% end %>

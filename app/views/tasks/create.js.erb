@@ -1,0 +1,7 @@
+<% @object_dom = dom_id(@task) %>
+<% @task = Task.new(:due_at => Time.zone.now.at_midnight) %>
+$("#task_inline_form form")[0].reset();
+$("#new_task_dialog").dialog("close");
+$("#task_list").html("<%= escape_javascript(render :partial => "tasks/list", :locals => { :tasks => @last_tasks })%>")
+$("#<%= @object_dom %>").effect("highlight", {}, 1500);
+$('.tooltip').tipsy();

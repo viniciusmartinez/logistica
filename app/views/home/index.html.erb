@@ -1,0 +1,157 @@
+<% content_for :javascript do %>
+	$(function(){
+		$(".search_everything").defaultValue({'value' : '<%= t"application.search_everything" %>'});
+		
+		$(".search_results_wrapper").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: "60%",
+			minWidth: 300,
+			height: 360,
+			minHeight: 360,
+			modal: true
+		});
+	});
+<% end %>
+
+<div class="block">
+	<div class="content"> 
+		<div class="content-header">
+			     
+			<div class="home_search">
+				<%= form_tag search_path, :remote => true do |form| %>
+				<div class="fake_search">
+					<div class="column_left" style="width: 95%;">
+					<%= text_field_tag "content", "", { :class => "search_everything", :autocomplete => "off" } %>
+					</div>
+					<div class="column_right" style="width: 25px;">
+					<%= image_submit_tag("/images/icons/search.png", :style => "width:16px;height:16px;margin-top:3px;") %>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<% end %>
+				<div class="search_results_wrapper" title="<%= t"application.search_title" %>"></div>
+			</div>
+			
+		</div>
+		<div class="inner">
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color tasks") %> Tarefas</h3>
+				</div>
+				<div class="inner">
+					<ul class="home_list">
+						<% if @overdue_tasks.size == 0 and @today_tasks.size == 0 && @this_week_tasks.size == 0 %>
+							<p class="gray_small"><%= t("application.home.no_task")%></p>
+						<% end %>
+						
+						<% if @overdue_tasks.size > 0 %>
+						<h3 class="red"><%= t"application.task.overdue_plural" %></h3>
+						<% @overdue_tasks.each do |task| %>
+						<li>
+							<%= link_to truncate(task.name, :length => 50), tasks_path %>
+							<%= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%=l task.due_at, :format => :short %>)</span>
+						</li>
+						<% end %>
+					<% end %>
+					</ul>
+					
+					<ul class="home_list">
+						<% if @today_tasks.size > 0 %>
+						<h3><%= t"application.today" %><span class="gray_small">, <%=l Date.today, :format => :short_desc %></span></h3>
+						<% @today_tasks.each do |task| %>
+						<li>
+							<%= link_to truncate(task.name, :length => 50), tasks_path %>
+							<%= " - #{task.contact.first_name}" if task.contact.present? %>
+						</li>
+						<% end %>
+						<% end %>
+					</ul>
+					
+					<ul class="home_list">
+						<% if @this_week_tasks.size > 0 %>
+						<h3><%= t"application.this_week" %></h3>
+						<% @this_week_tasks.each do |task| %>
+						<li><%= link_to truncate(task.name, :length => 50), tasks_path %>
+							<%= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%=l task.due_at, :format => :short %>)</span></li>
+						<% end %>
+						<% end %>
+					</ul>
+					
+					<ul class="home_list">
+						<% if @next_week_tasks.size > 0 %>
+						<h3><%= t"application.next_week" %></h3>
+						<% @next_week_tasks.each do |task| %>
+						<li><%= link_to truncate(task.name, :length => 50), tasks_path %>
+							<%= " - #{task.contact.first_name}" if task.contact.present? %>
+							<span class="gray_small">(<%=l task.due_at, :format => :short %>)</span></li>
+						<% end %>
+						<% end %>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header"><h3><img src="/images/icons/calendar.png" /> Aniversários</h3></div>
+				<div class="inner">
+					<% if @today_birthdays.size == 0 and @next_birthdays.size == 0 %>
+						<p class="gray_small"><%= t("application.home.no_birthday")%></p>
+					<% end %>
+					
+					<% if @today_birthdays.size > 0 %>
+					<h3>Hoje<span class="gray_small">, <%=l Date.today, :format => :short_desc %></span></h3>
+					<ul class="home_list">
+					<% @today_birthdays.each do |contact| %>
+						<li><%= link_to contact.name, contact_path(contact) %><span class="gray_small">, <%= contact.age %> anos</li>
+					<% end %>
+					</ul>
+					<% end %>
+					
+					<% if @tomorrow_birthdays.size > 0 %>
+					<h3>Amanhã<span class="gray_small">, <%=l Date.tomorrow, :format => :short_desc %></span></h3>
+					<ul class="home_list">
+					<% @tomorrow_birthdays.each do |contact| %>
+						<li><%= link_to contact.name, contact_path(contact) %><span class="gray_small">, <%= contact.age+1 %> anos</li>
+					<% end %>
+					</ul>
+					<% end %>
+					
+					<% if @next_birthdays.size > 0 %>
+					<% if @today_birthdays.size > 0 or @tomorrow_birthdays.size > 0 %>
+					<hr class="space" />
+					<% end %>
+					<ul class="home_list">
+					<% @next_birthdays.each do |contact| %>
+						<li><%= link_to contact.name, contact_path(contact) %> <span class="gray_small">(<%=l contact.birthday, :format => :short %>)</span></li>
+					<% end %>
+					</ul>
+					<% end %>
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> Contatos favoritos</h3>
+				</div>
+				<div class="inner">
+					<% if @last_contacts.size == 0 %>
+						<p class="gray_small"><%= t("application.home.no_favorite_contact")%></p>
+					<% end %>
+					
+					<ul class="home_list">
+						<% @last_contacts.each do |contact| %>
+						<li><%= link_to contact.name, contact_path(contact) %></li>
+						<% end %>
+					</ul>
+				</div>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

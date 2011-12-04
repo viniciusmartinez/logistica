@@ -1,0 +1,29 @@
+<%= content_for :javascript do %>
+	$(function() {
+	});
+<% end %>
+<div class="block">   
+	<div class="content">
+		<div class="content-header">
+			<div class="control">
+				<%= link_to_new(Request) %>
+			</div>
+			<h2 class="title">
+				<%= link_to @contact.name, contact_path(@contact) %> &raquo;
+				<%= t("application.requests", :default => "Requests")  %>
+			</h2>
+		</div>
+		<div class="inner">
+			<div id="data_view">
+				<%= render :partial => "table" %>
+			</div>
+			<div id="data_pagination">
+				
+			</div>              
+			<br />
+			<div class='wat-cf'></div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

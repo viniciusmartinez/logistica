@@ -1,0 +1,66 @@
+<%= content_for :javascript do %>
+	$(function() {
+		$('#calendar').fullCalendar({
+			editable: false,
+			theme: false,
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: '' // month,agendaWeek,agendaDay
+			},
+			timeFormat: {
+			    // for agendaWeek and agendaDay
+			    agenda: "<%= I18n.t "fullcalendar.time_agenda" %>",
+			    // for all other views
+			    '': "<%= I18n.t "fullcalendar.time_other" %>"
+			},
+			columnFormat: {
+			    month: "<%= I18n.t "fullcalendar.column_month" %>",
+			    week: "<%= I18n.t "fullcalendar.column_week" %>",
+			    day: "<%= I18n.t "fullcalendar.column_day" %>"
+			},
+			titleFormat: {
+			    month: "<%= I18n.t "fullcalendar.title_month" %>",
+			    week: "<%= I18n.t("fullcalendar.title_week").html_safe %>",
+			    day: "<%= I18n.t "fullcalendar.title_day" %>"
+			},
+			buttonText: {
+			    prev:     '&nbsp;&lt;&nbsp;',  // left triangle
+			    next:     '&nbsp;&gt;&nbsp;',  // right triangle
+			    prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
+			    nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
+			    today:    "<%= I18n.t "fullcalendar.today" %>",
+			    month:    "<%= I18n.t "datetime.prompts.month" %>",
+			    week:     "<%= I18n.t "datetime.prompts.week" %>",
+			    day:      "<%= I18n.t "datetime.prompts.day" %>"
+			},
+			allDayText: "<%= I18n.t "fullcalendar.all_day" %>",
+			axisFormat: "<%= I18n.t "fullcalendar.axis_format" %>",
+			defaultView: 'month',
+			height: 500,
+			slotMinutes: 15,
+			events: "/tasks/get_tasks",
+			monthNames: <%= I18n.t("date.month_names").compact.inspect.html_safe %>,
+			monthNamesShort: <%= I18n.t("date.abbr_month_names").compact.inspect.html_safe %>,
+			dayNames: <%= I18n.t("date.day_names").inspect.html_safe %>,
+			dayNamesShort: <%= I18n.t("date.abbr_day_names").inspect.html_safe %>
+		});
+	});
+<% end %>
+<div class="block">
+	<div class="content">
+		<div class="content-header">
+			<h2><span class="header_icon calendar"></span> <%= t("application.calendar", :default => "Calendar")  %></h2>
+		</div>
+		<div class="inner">
+			
+			<div id="calendar">
+				
+			</div>
+			
+			<div class='wat-cf'></div>
+		</div>
+	</div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

@@ -1,0 +1,43 @@
+<%= content_for :javascript do %>
+	$(document).ready(function() {
+		$("#user_session_login").focus();
+	});
+<% end %>
+<h1><%= t("application_name", :default => "Organizer") %></h1> 
+<div class="block"> 
+	<h2><%= t("application.authentication", :default => "Authentication") %></h2> 
+	<div class="content login">
+		<div class="flash">
+			<% flash.each do |type, message| -%>
+			<div class="message <%= type %>">
+				<p><%= message %></p>
+			</div>
+			<% end -%>
+		</div>
+		<%= semantic_form_for @user_session, :validate => true, :html => {:class => "form login"} do |form| %>
+		<div class="group wat-cf"> 
+			<div class="left"> 
+				<%= form.label :login, t('activerecord.attributes.user.login'), :class => "label right" %>
+			</div> 
+			<div class="right"> 
+				<%= form.text_field :login, :class => "text_field" %>
+			</div> 
+		</div> 
+		<div class="group wat-cf"> 
+			<div class="left"> 
+				<%= form.label :password, t('activerecord.attributes.user.password'), :class => "label right" %>
+			</div> 
+			<div class="right"> 
+				<%= form.password_field :password, :class => "text_field" %>
+			</div> 
+		</div> 
+		<div class="group navform wat-cf"> 
+			<div class="right"> 
+				<button class="button" type="submit"> 
+					Entrar
+				</button> 
+			</div> 
+		</div> 
+		<% end %>
+	</div>
+</div>

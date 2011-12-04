@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Entidade:</b>
+  <%= @suit.entidade %>
+</p>
+
+<p>
+  <b>Representante:</b>
+  <%= @suit.representante %>
+</p>
+
+<p>
+  <b>Status Decisao:</b>
+  <%= StatusPedido::status_decisao(@suit.status_decisao) %>
+</p>
+
+<% if @suit.sera_atendido? %>
+<p>
+  <b>Status Atendimento:</b>
+  <%= StatusPedido::status_atendimento(@suit.status_atendimento) %>
+</p>
+<% end %>
+
+<% if @suit.protocol %>
+<p>
+  <b>Protocolo:</b>
+  <%= @suit.protocol.numero %>/<%= @suit.protocol.data.year %>
+</p>
+<% end %>
+
+
+<%= link_to 'Edit', edit_suit_path(@suit) %> |
+<%= link_to 'Back', suits_path %>

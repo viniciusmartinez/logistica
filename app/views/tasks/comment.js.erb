@@ -1,0 +1,7 @@
+<% @object_dom = dom_id(@comment) %>
+
+$(".comment_form form")[0].reset();
+$('.formtastic').valtastic();
+
+$(".comments").html("<%= escape_javascript(render(:partial => "tasks/comments"))%>")
+$("#<%= @object_dom %>").effect("highlight", {}, 1500);

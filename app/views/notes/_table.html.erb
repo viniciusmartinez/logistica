@@ -1,0 +1,14 @@
+<table class = "table">
+	<% @notes.each do |note| %>
+	<tr class   = "<%= cycle("odd", "even") %>">
+		<td>
+			<h4><%= I18n.l note.date, :format => :simple %></h4>
+			<%= note.name %>
+		</td>
+		<td class="last">
+			<%= link_to "#{t("application.edit", :default => "Edit")}", edit_contact_note_path(note.contact, note) %> |
+			<%= link_to "#{t("application.delete", :default => "Delete")}", contact_note_path(note.contact, note), :method => :delete, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
+		</td>
+	</tr>          
+	<% end -%>
+</table>

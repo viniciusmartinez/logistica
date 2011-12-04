@@ -1,0 +1,3 @@
+$("#data_view").html("<%= escape_javascript( render(:partial => "full_list", :locals => { :tasks => @completed, :completed => true }) ) %>");
+$("#data_pagination").html("<%= escape_javascript( render(:partial => "pagination", :locals => { :tasks => @completed }) ) %>");
+$(".pagination a").attr('data-remote', 'true');
