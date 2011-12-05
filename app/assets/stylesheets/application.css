@@ -2,22 +2,25 @@
  * This is a manifest file that'll automatically include all the stylesheets available in this directory
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
+
  *= require_self
- *= require_tree . 
+ *= require_tree .
+
+ *= require_tree ../../../vendor/assets/stylesheets/jquery-ui/themes/ui-lightness/
+ *= require ../../../vendor/assets/stylesheets/fullcalendar/fullcalendar
 */
-
-*= require formtastic
-*= require my_formtastic_changes
-
-*= require fullcalendar
-*= require jquery.tipsy
-*= require jquery.cleditor
-*= require ui.datepicker
-*= require ui-icons
-*= require jquery.ui
 
 html {
         overflow: auto;
+}
+
+hr {
+  background: #e2e2e2;
+  color: #e2e2e2;
+}
+
+a:hover, a:active {
+	background-color: transparent;
 }
 
 .hidden {
@@ -59,6 +62,10 @@ h3 p {
 
 #main .block .content h2 {
 	margin-left: auto;
+}
+
+input, textarea {
+	padding: 4px !important;
 }
 
 h5 {
@@ -130,10 +137,6 @@ a.strike, a.strike:hover {
 }
 .space_t {
 	margin-top: 20px;
-}
-
-#sidebar {
-	position: relative;
 }
 
 .floating_box_wrapper.fixed {
@@ -213,7 +216,7 @@ input {
 }
 
 .weather {
-	background: url(/images/widget_weather.png) center center no-repeat;
+	background: url(widget_weather.png) center center no-repeat;
 	height: 160px;
 	margin: 0 auto;
 }
@@ -322,11 +325,11 @@ input {
 	height: 200px;
 	width: 85%;
 	margin: 0 auto;
-	background: url(/images/empty_arrow.jpg) top right no-repeat;
+	background: url(empty_arrow.jpg) top right no-repeat;
 }
 
 #empty_data.small {
-	background: url(/images/empty_arrow_small.jpg) top right no-repeat;
+	background: url(empty_arrow_small.jpg) top right no-repeat;
 }
 
 #empty_data.small h1 {
@@ -489,16 +492,6 @@ ul.letters li.last a {
 	border: 0;
 }
 
-#sidebar h3 {
-	border: 0;
-	font-weight: bold;
-	font-size: 1.2em;
-}
-
-#sidebar h3 img {
-	margin-right: 4px;
-}
-
 ul#requests {
 	list-style-type: none;
 	margin-bottom: 10px;
@@ -558,7 +551,7 @@ ul.contact_show_list table {
 ul.contact_show_list li {
 	padding: 5px 0 5px 15px;
 	margin: 5px 0;
-	background: url(/images/arrow_right.png) left 13px no-repeat;
+	background: url(arrow_right.png) left 13px no-repeat;
 }
 
 ul.contact_show_list hr {
@@ -588,13 +581,17 @@ ul.home_list {
 ul.home_list li {
 	padding-left: 15px;
 	margin: 8px 0 8px 5px;
-	background: url(/images/arrow_right.png) left center no-repeat;
+	background: url(arrow_right.png) left center no-repeat;
 }
 
 ul.home_list li a {
 	font-size: 1.2em;
 	line-height: 1em;
 	color: #4A69AD;
+}
+
+li.last {
+	border-bottom: none;
 }
 
 .summary ul.home_list li a {
@@ -626,7 +623,7 @@ table.home_list td {
 
 table.home_list td.arrow {
 	width: 5px;
-	background: url(/images/arrow_right.png) left center no-repeat;
+	background: url(arrow_right.png) left center no-repeat;
 }
 
 .list_options a {
@@ -688,7 +685,7 @@ table.home_list td.arrow {
 .comments .comment {
 	margin: 15px 0;
 	padding-left: 15px;
-	background: url(/images/arrow_right.png) left 7px no-repeat;
+	background: url(arrow_right.png) left 7px no-repeat;
 }
 
 .comment_form {
@@ -841,7 +838,7 @@ form.popup .wat-cf .button,
 
 /*
 * JQUERY FULLCALENDAR
-*/
+*
 
 .fc-content th {
 	border-width: 0 0 1px 0;
@@ -884,7 +881,7 @@ form.popup .wat-cf .button,
 
 .fc-widget-content {
 	border-color: #ddd;
-}
+}*/
 
 /*
 * IMAGE ICONS
@@ -895,7 +892,7 @@ form.popup .wat-cf .button,
 }
 
 .header_icon {
-	background: url(/images/header_icons.png) no-repeat;
+	background: url(header_icons.png) no-repeat;
 	width: 32px;
 	height: 32px;
 	display: inline-block;

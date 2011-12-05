@@ -6,16 +6,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require_tree .
 
-//= require jquery.zweatherfeed
-//= require jquery.valtastic
-//= require fullcalendar
-//= require jquery.elastic
-//= require jquery.maskedinput
-//= require jquery.tipsy
-//= require jquery.defaultvalue
-//= require jquery.cleditor
+// plugin jquery.defaultvalue vendors/plugins placeholder attr.
+$(function(){
+	$(' [placeholder] ').defaultValue();
+}
 
 function clear_form_elements(ele) {
 

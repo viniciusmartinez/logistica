@@ -1,19 +1,9 @@
 <% content_for :javascript do %>
-	$(function(){
-		<% if current_user.preference.present? and current_user.preference.weather_location.present? %>
-			$(".weather").weatherfeed(['<%= current_user.preference.weather_location %>']);
-		<% end %>
-		
-		$(".search_results_wrapper").dialog({
-			autoOpen: false,
-			draggable: false,
-			width: "60%",
-			minWidth: 300,
-			height: 360,
-			minHeight: 360,
-			modal: true
+	<% if current_user.preference.present? and current_user.preference.weather_location.present? %>
+		$(function(){
+			$(".weather").weatherfeed(['<%= current_user.preference.weather_location %>']);	
 		});
-	});
+	<% end %>
 <% end %>
 
 <div class="notice block">

@@ -17,7 +17,7 @@ module ApplicationHelper
   end
   
   def inline_ui_icon(css_class = "", options = {:id => "", :style => "", :title => ""})
-    "<img src='/images/spacer.gif' class='ui-icon #{css_class}' id='#{options[:id]}' title='#{options[:title]}' style='#{options[:style]}' />".html_safe
+    "<img src='/assets/spacer.gif' class='ui-icon #{css_class}' id='#{options[:id]}' title='#{options[:title]}' style='#{options[:style]}' />".html_safe
   end
 
   def link_to_new(model)

@@ -1,7 +1,5 @@
 <% content_for :javascript do %>
 	$(function(){
-		$(".search_everything").defaultValue({'value' : '<%= t"application.search_everything" %>'});
-		
 		$(".search_results_wrapper").dialog({
 			autoOpen: false,
 			draggable: false,
@@ -22,10 +20,10 @@
 				<%= form_tag search_path, :remote => true do |form| %>
 				<div class="fake_search">
 					<div class="column_left" style="width: 95%;">
-					<%= text_field_tag "content", "", { :class => "search_everything", :autocomplete => "off" } %>
+					<%= text_field_tag "content", "", { :class => "search_everything", :autocomplete => "off", :placeholder => t("application.search_everything") } %>
 					</div>
 					<div class="column_right" style="width: 25px;">
-					<%= image_submit_tag("/images/icons/search.png", :style => "width:16px;height:16px;margin-top:3px;") %>
+					<%= image_submit_tag "icons/search.png", :style => "width:16px;height:16px;margin-top:3px;" %>
 					</div>
 					<div class="clear"></div>
 				</div>
@@ -95,7 +93,7 @@
 			</div>
 			
 			<div class="home_column block">
-				<div class="content-header"><h3><img src="/images/icons/calendar.png" /> Aniversários</h3></div>
+				<div class="content-header"><h3><%= image_tag "icons/calendar.png" %> Aniversários</h3></div>
 				<div class="inner">
 					<% if @today_birthdays.size == 0 and @next_birthdays.size == 0 %>
 						<p class="gray_small"><%= t("application.home.no_birthday")%></p>
