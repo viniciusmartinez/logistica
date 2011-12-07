@@ -15,4 +15,4 @@ Contact.create(:name => "Youssif Domingos", :email => "youssifdomingos@gmail.com
 Contact.create(:name => "Ricardo Assis Domingos", :email => "ricardodomingos55@hotmail.com", :user => admin)
 Contact.create(:name => "Samuel Benjoino Ferraz", :email => "samuelbferraz@gmail.com", :user => admin)
 Contact.create(:name => "Ana Beatriz", :user => admin)
-Contact.create(:name => "Sílvia da Silva", :user => admin)
+Contact.create(:name => "Silvia da Silva", :user => admin)

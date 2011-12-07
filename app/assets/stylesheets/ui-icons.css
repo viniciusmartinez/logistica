@@ -4,7 +4,7 @@
 
 .ui-icon {
     background-repeat: no-repeat;
-    background-image: url("/images/ui-icons_454545_256x240.png");
+    background-image: url("ui-icons/ui-icons_454545_256x240.png");
     height: 16px;
     width: 16px;
 	vertical-align: bottom;
@@ -27,58 +27,58 @@ img.ui-icon {
 img.ui-icon { text-indent: 0px }
 
 .ui-icon.add {
-	background: url(/images/icons.png) -48px 0 no-repeat;
+	background: url(ui-icons/icons.png) -48px 0 no-repeat;
 }
 
 .ui-icon.save {
-	background: url(/images/icons.png) -64px 0 no-repeat;
+	background: url(ui-icons/icons.png) -64px 0 no-repeat;
 }
 
 .ui-icon.edit, .ui-icon.edit-inline, .ui-icon.edit-inline:hover {
-	background: url(/images/icons.png) 0 0 no-repeat;
+	background: url(ui-icons/icons.png) 0 0 no-repeat;
 }
 
 .ui-icon.edit:hover {
-	background: url(/images/icons.png) 0 -16px no-repeat;
+	background: url(ui-icons/icons.png) 0 -16px no-repeat;
 }
 
 .ui-icon.remove, .ui-icon.remove-inline, .ui-icon.remove-inline:hover {
-	background: url(/images/icons.png) -16px 0 no-repeat;
+	background: url(ui-icons/icons.png) -16px 0 no-repeat;
 }
 
 .ui-icon.remove:hover {
-	background: url(/images/icons.png) -16px -16px no-repeat;
+	background: url(ui-icons/icons.png) -16px -16px no-repeat;
 }
 
 .ui-icon.mail {
-	background: url(/images/icons.png) -32px 0 no-repeat;
+	background: url(ui-icons/icons.png) -32px 0 no-repeat;
 }
 
 .ui-icon.phone {
-	background: url(/images/icons.png) -80px 0 no-repeat;
+	background: url(ui-icons/icons.png) -80px 0 no-repeat;
 }
 
 .ui-icon.comment {
-	background: url(/images/icons.png) -96px 0 no-repeat;
+	background: url(ui-icons/icons.png) -96px 0 no-repeat;
 }
 .ui-icon.back {
-	background: url(/images/icons.png) -112px 0 no-repeat;
+	background: url(ui-icons/icons.png) -112px 0 no-repeat;
 }
 .ui-icon.forward {
-	background: url(/images/icons.png) -128px 0 no-repeat;
+	background: url(ui-icons/icons.png) -128px 0 no-repeat;
 }
 
 .ui-icon.color.tasks {
-	background: url(/images/color_icons.png) 0 0 no-repeat;
+	background: url(ui-icons/color_icons.png) 0 0 no-repeat;
 }
 .ui-icon.color.user {
-	background: url(/images/color_icons.png) -16px 0 no-repeat;
+	background: url(ui-icons/color_icons.png) -16px 0 no-repeat;
 }
 .ui-icon.color.favorite_off {
-	background: url(/images/color_icons.png) -48px 0 no-repeat;
+	background: url(ui-icons/color_icons.png) -48px 0 no-repeat;
 }
 .ui-icon.color.favorite_on {
-	background: url(/images/color_icons.png) -64px 0 no-repeat;
+	background: url(ui-icons/color_icons.png) -64px 0 no-repeat;
 }
 
 .ui-icon-carat-1-n { background-position: 0 0; }
