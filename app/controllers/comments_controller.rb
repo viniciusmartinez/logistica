@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
+
     
     respond_with @comment do |format|
       format.html { redirect_to root_path }

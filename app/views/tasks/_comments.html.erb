@@ -13,6 +13,7 @@
 <% unless @task.comments.empty? %>
 <h3 class="nice_blue"><%=t "application.task.comments" %></h3>
 <% end %>
+
 <% @task.comments.each do |c| %>
 <div id="<%= dom_id(c) %>" class="comment">
 	<h3>

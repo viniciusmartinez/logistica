@@ -1,2 +1,5 @@
-<% @object_dom = dom_id(@comment) %>
-$("#<%= @object_dom %>").fadeThenSlideUp(2000);
+// js.erb rox
+
+$("#<%= dom_id(@comment) %>").fadeTo("slow", 0.00, function(){ $(this).slideUp("slow", function() { $(this).remove(); }); });
+//$("#<%= dom_id(@comment) %>").vai("slow");
+

@@ -22,7 +22,7 @@
 					<h4>
 						<% if task.due_at.present? %>
 							<% if task.due_at.year == Date.today.year %>
-							<%= I18n.l task.due_at, :format => :long_no_time_no_year %>
+							<%= I18n.l task.due_at, :format => :longo_sem_ano %>
 							<% else %>
 							<%= I18n.l task.due_at, :format => :long_no_time %>
 							<% end %>
