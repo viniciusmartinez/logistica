@@ -1,0 +1,52 @@
+<% content_for :javascript do %>
+	//$(function(){
+	//	$("textarea").elastic();
+		
+		//$.datepicker.setDefaults( $.datepicker.regional[ "<%= I18n.locale %>" ] );
+		
+		//$("#timepicker").mask("mask: ##:##");
+	//});
+	
+	$(function() {
+			$( "#datepicker" ).datepicker(
+				{
+					altField: "#alternate",
+					altFormat: "yy-mm-dd",
+					showOtherMonths: true,
+					selectOtherMonths: true,
+					changeMonth: true,
+					changeYear: true,
+					defaultDate: "<%=l @task.due_at, :format => :datepicker %>"
+				}
+			);
+	});
+<% end %>
+
+<%= semantic_form_for @task do |form| %>
+
+	<%= form.inputs :class => "column_left right_border", :style => "width: 270px; margin-right: 20px;" do %>
+		<%= form.input :due_at_date, :as => :hidden, :input_html => { :id => "alternate" } %>
+
+			<%#= form.label :due_at_date %>
+			<!--div id="datepicker" style="width: 250px"></div-->
+			<!--input id="datepicker" type="text"-->
+			<%= form.input :due_at_date, :as => :string, :input_html => { :style => "width: 250px", :id => "datepicker"} %>
+
+		<%= form.input :due_at_time, :as => :string, :input_html => { :style => "width: 240px", :id => "timepicker" } %>
+	<% end %>
+	
+	<%= form.inputs :class => "column_left", :style => "" do %>
+		<%= form.input :name, :input_html => { :rows => 4 } %>
+		<% if !form.object.new_record? %>
+		<%= form.input :completed %>
+		<% end%>
+		<div class="clear"></div>
+	<% end %>
+	
+	<fieldset></fieldset>
+	<hr />
+	<div class="group navform wat-cf">
+	  <%= submit_button %>
+	</div>
+<% end %>
+

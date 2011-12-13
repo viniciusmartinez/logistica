@@ -11,7 +11,7 @@ class Task < ActiveRecord::Base
   
   scope :due_to_tomorrow, where( :due_at => (Time.zone.now.at_midnight+1.day)..(Time.zone.now.end_of_day+1.day) ).order("created_at DESC")
   
-  scope :due_to_this_week, where( :due_at => (Time.zone.now.at_midnight+1.day)..(Time.zone.now.at_midnight.end_of_week) ).order("due_at ASC")
+  scope :due_to_this_week, where( :due_at => ((Time.zone.now.at_midnight-1.week).end_of_week)..(Time.zone.now.at_midnight.end_of_week) ).order("due_at ASC")
   
   scope :due_to_next_week, where( :due_at => (Time.zone.now.end_of_week.at_midnight+1.day)..(Time.zone.now.end_of_week.end_of_day+1.week) ).order("due_at ASC")
   

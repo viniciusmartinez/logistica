@@ -4,9 +4,8 @@
     	<h2><%= t("application.new", :default => "New")%>  <%= t("activerecord.models.task", :default => "Task").downcase %></h2>
 	</div>
     <div class="inner">
-        <%= render :partial => "form" %>
+		<%= render(:partial => 'formu') %>
     </div>
   </div>
 </div>
-
-<% content_for :sidebar, render(:partial => 'sidebar') %>
+<%# content_for :sidebar, render(:partial => 'sidebar') %>

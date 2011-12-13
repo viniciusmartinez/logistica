@@ -14,6 +14,8 @@
 			<div id="data_view">
 				<% if @next_week.size > 0 %>
 					<%= render :partial => "full_list", :locals => { :title => t("application.task.next_week"), :tasks => @next_week } %>
+				<% else %>
+					<p>Não há tarefas para semana que vem.</p>
 				<% end %>
 			</div>
 		</div>
