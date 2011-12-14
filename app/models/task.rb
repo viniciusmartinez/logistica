@@ -1,21 +1,32 @@
 class Task < ActiveRecord::Base
   acts_as_commentable
   
+  hoje = Date.current
+  inicio_hoje = hoje.beginning_of_day
+  fim_hoje = hoje.end_of_day
+  
+  inicio_amanha = Date.tomorrow.beginning_of_day
+  fim_amanha = Date.tomorrow.end_of_day
+  
+  inicio_semana = hoje.beginning_of_week
+  fim_semana = hoje.end_of_week
+  
+  inicio_prox_semana = inicio_semana + 1.week
+  fim_prox_semana = fim_semana + 1.week
+  
   scope :overdue, where("due_at < ? AND completed = ?", Date.today, false).order("due_at ASC")
   scope :not_overdue, where("due_at >= ? AND completed = ?", Date.today, false).order("due_at ASC")
   scope :incomplete, where(:completed => false)
   scope :complete, where(:completed => true)
   scope :last_tasks, where("completed = ?", false).order("due_at ASC")
   
-  scope :due_to_today, where( :due_at => (Time.zone.now.at_midnight)..(Time.zone.now.end_of_day) ).order("created_at DESC")
+  scope :due_to_today,          where( :due_at => inicio_hoje..fim_hoje ).order("created_at DESC")
+  scope :due_to_tomorrow,       where( :due_at => inicio_amanha..fim_amanha ).order("created_at DESC")
+  scope :due_to_this_week,      where( :due_at => inicio_semana..fim_semana ).order("due_at ASC")
+  scope :para_semana_exclusive, where( :due_at => inicio_amanha..fim_semana ).order("due_at ASC")
+  scope :due_to_next_week,      where( :due_at => inicio_prox_semana..fim_prox_semana ).order("due_at ASC")
   
-  scope :due_to_tomorrow, where( :due_at => (Time.zone.now.at_midnight+1.day)..(Time.zone.now.end_of_day+1.day) ).order("created_at DESC")
-  
-  scope :due_to_this_week, where( :due_at => ((Time.zone.now.at_midnight-1.week).end_of_week)..(Time.zone.now.at_midnight.end_of_week) ).order("due_at ASC")
-  
-  scope :due_to_next_week, where( :due_at => (Time.zone.now.end_of_week.at_midnight+1.day)..(Time.zone.now.end_of_week.end_of_day+1.week) ).order("due_at ASC")
-  
-  scope :due_to_later, where("date(due_at) > ?", Date.today.end_of_week+1.week).order("due_at ASC")
+  scope :due_to_later, where("date(due_at) > ?", fim_prox_semana).order("due_at ASC")
   
   def self.search_everything(query)
     if query.present?

@@ -19,7 +19,7 @@ class TasksController < ApplicationController
   end
   
   def week
-    @week = current_user.tasks.incomplete.due_to_this_week
+    @week = current_user.tasks.incomplete.para_semana_exclusive #due_to_this_week
   end
 
   def next_week
@@ -138,11 +138,16 @@ class TasksController < ApplicationController
   def comment
     @task = current_user.tasks.find(params[:id])
     @contact = @task.contact
-    @comment = @task.comments.new(params[:comment])
-    @comment.update_attribute(:user_id, current_user)
+    
+    # isso aqui soh eh necessario se nao tiver validacao
+    unless params[:comment][:comment].empty?
+      @comment = @task.comments.new(params[:comment])
+      @comment.update_attribute(:user_id, current_user)
+    end
     
     respond_with @comment do |format|
       format.html { redirect_to([@task], :notice => t('messages.comment.created')) }
+      format.js
     end
   end
   

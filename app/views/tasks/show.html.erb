@@ -13,6 +13,22 @@
 			$("#dialog-postpone").dialog("open");
 		});
 	});
+	
+	$().ready(function() {
+		// validate the comment form when it is submitted
+		
+		// validate signup form on keyup and submit
+		$("#add_new_comment").validate({
+			rules: {
+				comment_comment: "required"
+			},
+			messages: {
+				comment_comment: "hmmmmm"
+			}
+		});
+		
+	});
+	
 <% end %>
 <div class="block">       
   <div class="content">
@@ -64,13 +80,15 @@
 
 			<%= semantic_form_for @comment,
 			   :url => comment_task_path(@task),
-			   :remote => false,
+			   :remote => true,
+				:validate => :validate,
 			   :html => {:id => "add_new_comment", :class => "inline"} do |form| %>
 				<%= form.inputs do %>
-				   <%= form.input :comment, :label => false, :input_html => { :rows => 2 } %>
+				   <%= form.input :comment, :label => false, :input_html => { :rows => 5 } %>
 				<% end %>
 				<%= form.buttons do %>
-				   <div class="right">
+				   <div class="left">
+					<%#= link_to inline_ui_icon("remove", :title => t("application.comment.remove")), comment_path(c), :class => "list_options inline", :method => :delete, :remote => true, :confirm => "#{t("application.confirm", :default => "Are you sure?")}" %>
 				      <%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %>
 				      <%#= form.commit_button %>
 				   </div>

@@ -9,7 +9,7 @@ Logistica::Application.routes.draw do
 
   resources :categories
   
-  resources :comments, :only => [:destroy]
+  resources :comments #, :only => [:destroy]
 
   resources :users do
     collection do

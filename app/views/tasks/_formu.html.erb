@@ -1,10 +1,6 @@
 <% content_for :javascript do %>
 	//$(function(){
 	//	$("textarea").elastic();
-		
-		//$.datepicker.setDefaults( $.datepicker.regional[ "<%= I18n.locale %>" ] );
-		
-		//$("#timepicker").mask("mask: ##:##");
 	//});
 	
 	$(function() {
@@ -16,36 +12,39 @@
 					selectOtherMonths: true,
 					changeMonth: true,
 					changeYear: true,
-					defaultDate: "<%=l @task.due_at.to_date %>"
+					//defaultDate: "<%#=l @task.due_at.to_date %>"
 				}
 			);
 	});
 	
-	$(function() {
-   	$.mask.definitions['#']='[0-5]';
-   	$.mask.definitions['*']='[0-2]';
-      $("#datepicker").mask("99/99/9999");
-      $("#timepicker").mask("*9:#9");
-   });
+	$(function()
+	{
+   		$.mask.definitions['#']='[0-5]';
+   		$.mask.definitions['*']='[0-2]';
+      		$("#datepicker").mask("99/99/9999");
+      		$("#timepicker").mask("*9:#9");
+	});
 <% end %>
 
 <%= semantic_form_for @task do |form| %>
 
 	<%= form.inputs :class => "column_left right_border", :style => "width: 270px; margin-right: 20px;" do %>
 		<%= form.input :due_at_date, :as => :hidden, :input_html => { :id => "dataGravar" } %>
+		
+		<li class="string required" id="datepicker_input">
+			<%= form.label :due_at_date, :for => "datepicker" %>
+			<input type="text" value="<%= l @task.due_at.to_date %>" id="datepicker" required="required" >
+		</li>
 
-			<%#= form.label :due_at_date %>
-			<%# <div id="datepicker" style="width: 250px"></div> %>
-			<input id="datepicker" type="text" value="<%= l @task.due_at.to_date %>" >
-			<%#= form.input :due_at_date, :as => :string,
-			   :input_html => { :style => "width: 250px", :id => "datepicker", :value => l(@task.due_at.to_date) } %>
+		<%#= form.input :due_at_date, :as => :string,
+			:input_html => { :style => "width: 250px", :id => "datepicker", :value => l(@task.due_at.to_date) } %>
 
 		<%= form.input :due_at_time, :as => :string, :input_html => { :style => "width: 240px", :id => "timepicker" } %>
 	<% end %>
 	
 	<%= form.inputs :class => "column_left", :style => "" do %>
-		<%= form.input :name, :input_html => { :rows => 4 } %>
-		<% if !form.object.new_record? %>
+		<%= form.input :name, :input_html => { :rows => 5 } %>
+		<% unless form.object.new_record? %>
 		<%= form.input :completed %>
 		<% end%>
 		<div class="clear"></div>
