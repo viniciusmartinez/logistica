@@ -1,13 +1,9 @@
+<<<<<<< HEAD
 # Sample localization file for English. Add more files in this directory for other locales.
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 "pt-BR":
-  date:
-    formats:
-    default: "%d/%m/%Y"
-    short: "%d/%m"
-
-  application_name: Seção de Voto Informatizado
+  application_name: "Seção de Voto Informatizado"
   application:
     authentication: Autenticação
     users: Usuários
@@ -146,6 +142,7 @@
       short_with_year: "%d/%m/%Y"
       datepicker: "%Y-%m-%d"
       long: "%A, %d de %B de %Y às %H:%M"
+      longo_sem_ano: "%A, %d de %B às %H:%M"
       long_no_time: "%A, %d de %B de %Y"
       long_no_time_no_year: "%A, %d de %B"
       simple: "%d de %B de %Y"

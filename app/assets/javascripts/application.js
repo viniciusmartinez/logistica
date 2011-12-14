@@ -38,8 +38,8 @@ function clear_form_elements(ele) {
 		return $.trim($(this).val()).length==0;
 	}
 
-	$.fn.fadeThenSlideUp = function(speed, easing, callback) {
-		return this.fadeTo(speed, 0, function(){ //fade
+	$.fn.fadeThenSlideUp = function(speed) {
+		return this.fadeTo(speed, 0.00, function(){ //fade
 			$(this).slideUp("normal", function(){ //slideup
 				$(this).remove(); //then remove from the DOM
 			});

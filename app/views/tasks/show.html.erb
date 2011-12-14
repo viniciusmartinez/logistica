@@ -62,10 +62,18 @@
 		<div class="comment_form">
 			<h3><%= t "texts.comment.new" %> <%= t "texts.task.about_this" %></h3>
 
-			<% semantic_form_for @comment, :html => {:id => "add_new_comment", :class => "inline"}, :url => comment_task_path(@task), :remote => true do |form| %>
+			<%= semantic_form_for @comment,
+			   :url => comment_task_path(@task),
+			   :remote => false,
+			   :html => {:id => "add_new_comment", :class => "inline"} do |form| %>
 				<%= form.inputs do %>
-				<%= form.input :comment, :label => false, :input_html => { :rows => 2 } %>
-				<div class="right"><%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %></div>
+				   <%= form.input :comment, :label => false, :input_html => { :rows => 2 } %>
+				<% end %>
+				<%= form.buttons do %>
+				   <div class="right">
+				      <%= submit_button :back => :none, :icon => "add", :label => "Adicionar" %>
+				      <%#= form.commit_button %>
+				   </div>
 				<% end %>
 			<% end %>
 		</div>

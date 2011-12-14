@@ -10,28 +10,35 @@
 	$(function() {
 			$( "#datepicker" ).datepicker(
 				{
-					altField: "#alternate",
-					//altFormat: "yy-mm-dd",
+					altField: "#dataGravar",
+					altFormat: "yy-mm-dd",
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					changeMonth: true,
 					changeYear: true,
-					dateFormat: 'dd-mm-yy',
-					defaultDate: "<%= I18n.l @task.due_at, :format => :short %>"
+					defaultDate: "<%=l @task.due_at.to_date %>"
 				}
 			);
 	});
+	
+	$(function() {
+   	$.mask.definitions['#']='[0-5]';
+   	$.mask.definitions['*']='[0-2]';
+      $("#datepicker").mask("99/99/9999");
+      $("#timepicker").mask("*9:#9");
+   });
 <% end %>
 
 <%= semantic_form_for @task do |form| %>
 
 	<%= form.inputs :class => "column_left right_border", :style => "width: 270px; margin-right: 20px;" do %>
-		<%= form.input :due_at_date, :as => :hidden, :input_html => { :id => "alternate" } %>
+		<%= form.input :due_at_date, :as => :hidden, :input_html => { :id => "dataGravar" } %>
 
 			<%#= form.label :due_at_date %>
-			<!--div id="datepicker" style="width: 250px"></div-->
-			<!--input id="datepicker" type="text"-->
-			<%= form.input :due_at_date, :as => :string, :input_html => { :style => "width: 250px", :id => "datepicker"} %>
+			<%# <div id="datepicker" style="width: 250px"></div> %>
+			<input id="datepicker" type="text" value="<%= l @task.due_at.to_date %>" >
+			<%#= form.input :due_at_date, :as => :string,
+			   :input_html => { :style => "width: 250px", :id => "datepicker", :value => l(@task.due_at.to_date) } %>
 
 		<%= form.input :due_at_time, :as => :string, :input_html => { :style => "width: 240px", :id => "timepicker" } %>
 	<% end %>

@@ -35,7 +35,7 @@ class TasksController < ApplicationController
   def show
     @task = current_user.tasks.find(params[:id])
     @contact = @task.contact
-    @comment = @task.comments.new
+    @comment = Comment.new
 
     respond_with @task
   end
