@@ -11,12 +11,13 @@
 			$( "#datepicker" ).datepicker(
 				{
 					altField: "#alternate",
-					altFormat: "yy-mm-dd",
+					//altFormat: "yy-mm-dd",
 					showOtherMonths: true,
 					selectOtherMonths: true,
 					changeMonth: true,
 					changeYear: true,
-					defaultDate: "<%=l @task.due_at, :format => :datepicker %>"
+					dateFormat: 'dd-mm-yy',
+					defaultDate: "<%= I18n.l @task.due_at, :format => :short %>"
 				}
 			);
 	});
