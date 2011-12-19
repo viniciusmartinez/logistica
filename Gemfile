@@ -22,6 +22,7 @@ gem 'acts_as_commentable'
 gem "simple-navigation"
 gem "flash_render"
 gem 'web-app-theme', '~> 0.8.0'
+gem 'mysql'
 
 # not vini
 gem 'sqlite3'
