@@ -1,4 +1,6 @@
 Logistica::Application.routes.draw do
+  resources :locals
+
   resources :suit_status_changes
 
   resources :protocols
