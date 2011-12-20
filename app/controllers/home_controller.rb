@@ -5,7 +5,8 @@ class HomeController < ApplicationController
   def index
     @overdue_tasks = current_user.tasks.overdue
     @today_tasks = current_user.tasks.incomplete.due_to_today.limit(5)
-    @this_week_tasks = current_user.tasks.incomplete.due_to_this_week.limit(5)
+    #@this_week_tasks = current_user.tasks.incomplete.due_to_this_week.limit(5)
+    @this_week_tasks = current_user.tasks.incomplete.para_semana_exclusive.limit(5)
     @next_week_tasks = current_user.tasks.incomplete.due_to_next_week.limit(5)
     
     @today_birthdays = current_user.contacts.select{ |c| c.has_birthday_today? }
