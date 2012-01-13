@@ -24,6 +24,7 @@ GEM
       activesupport (= 3.1.1)
       arel (~> 2.2.1)
       tzinfo (~> 0.3.29)
+    activerecord-oracle_enhanced-adapter (1.4.0)
     activeresource (3.1.1)
       activemodel (= 3.1.1)
       activesupport (= 3.1.1)
@@ -104,6 +105,7 @@ GEM
     rdoc (3.11)
       json (~> 1.4)
     rmagick (2.13.1)
+    ruby-oci8 (2.1.0)
     sass (3.1.11)
     sass-rails (3.1.5)
       actionpack (~> 3.1.0)
@@ -138,6 +140,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-oracle_enhanced-adapter
   acts_as_commentable
   authlogic
   carrierwave
@@ -151,6 +154,7 @@ DEPENDENCIES
   paper_trail
   rails (= 3.1.1)
   rmagick
+  ruby-oci8
   sass-rails (~> 3.1.4)
   simple-navigation
   sqlite3
