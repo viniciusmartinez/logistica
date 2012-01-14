@@ -44,3 +44,9 @@ production:
 #   username: root
 #   password: vxmysql1
    
+teste2:
+  adapter: oracle_enhanced
+  database: //mt2.tre-mt.gov.br:1521/cad.mt
+  username: cons_tre
+  password: conscad01
+     

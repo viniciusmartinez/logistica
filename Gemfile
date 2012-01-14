@@ -24,6 +24,9 @@ gem "flash_render"
 gem 'web-app-theme', '~> 0.8.0'
 gem 'mysql'
 
+gem 'ruby-oci8'
+gem 'activerecord-oracle_enhanced-adapter'
+
 # not vini
 gem 'sqlite3'
 

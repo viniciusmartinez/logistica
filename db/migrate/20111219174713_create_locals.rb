@@ -1,5 +1,5 @@
 class CreateLocals < ActiveRecord::Migration
-  def change
+  def self.up
     create_table :locals do |t|
       t.string :nome
       t.integer :numero
@@ -9,6 +9,10 @@ class CreateLocals < ActiveRecord::Migration
 
       t.timestamps
     end
+  end
+  
+  def self.down
+    drop_table :locals
   end
 end
 
