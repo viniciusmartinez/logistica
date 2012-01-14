@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  numero: 1
+  cad_id: 1
+  city_id: 1
+  sincronizacao: 1
+
+two:
+  numero: 1
+  cad_id: 1
+  city_id: 1
+  sincronizacao: 1

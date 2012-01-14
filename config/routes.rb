@@ -1,4 +1,10 @@
 Logistica::Application.routes.draw do
+  resources :places
+
+  resources :cities
+
+  resources :zones
+
   resources :locals
 
   resources :suit_status_changes
