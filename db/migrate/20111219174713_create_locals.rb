@@ -12,7 +12,7 @@ class CreateLocals < ActiveRecord::Migration
   end
   
   def self.down
-    drop_table :locals
+    #drop_table :locals
   end
 end
 

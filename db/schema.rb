@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219174713) do
+ActiveRecord::Schema.define(:version => 20120113133713) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20111219174713) do
   create_table "categorizations", :id => false, :force => true do |t|
     t.integer "category_id"
     t.integer "event_id"
+  end
+
+  create_table "cities", :force => true do |t|
+    t.string   "nome"
+    t.integer  "numero"
+    t.integer  "cad_id"
+    t.integer  "zone_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", :force => true do |t|
@@ -72,11 +81,30 @@ ActiveRecord::Schema.define(:version => 20111219174713) do
     t.datetime "updated_at"
   end
 
+  create_table "locals", :force => true do |t|
+    t.string   "nome"
+    t.integer  "numero"
+    t.integer  "city_id"
+    t.integer  "zone_id"
+    t.integer  "detail_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notes", :force => true do |t|
     t.text     "name"
     t.datetime "date"
     t.integer  "user_id"
     t.integer  "contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "places", :force => true do |t|
+    t.integer  "numero"
+    t.integer  "cad_id"
+    t.integer  "city_id"
+    t.integer  "sincronizacao"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -161,5 +189,12 @@ ActiveRecord::Schema.define(:version => 20111219174713) do
   end
 
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+
+  create_table "zones", :force => true do |t|
+    t.integer  "numero"
+    t.integer  "cad_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

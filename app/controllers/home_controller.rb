@@ -21,11 +21,14 @@ class HomeController < ApplicationController
     # @d_or_n = Time.zone.now.hour >= 18 ? "n" : "d"
     # @weather_icon = "http://l.yimg.com/a/i/us/nws/weather/gr/#{ @condition['code'] }#{ @d_or_n }.png"
     
+    # Aqui testei a conexao com o Oracle mt2, funciona, mas tem que ficar reestabelecendo a conexao depois de terminar
+    # senao ele mantei a mt2. Ha uma forma de dar reset na conexao? Pq as vezes nao eh Rails.env a correta!
+    
     #ab = ActiveRecord::Base
     #ab.establish_connection(Rails.configuration.database_configuration["teste2"])
     #t = ab.connection.execute("SELECT nom_localidade from admcad.localidade where cod_objeto = '247'")
     #@teste = t.fetch_hash
-    @teste = "sem oracle"
+    #@teste = "sem oracle"
     #ab.establish_connection
     ##@teste = Oracle.find_by_sql("select * from admcad.local_votacao where cod_objeto = '15772'")
   end
