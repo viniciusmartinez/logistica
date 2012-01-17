@@ -1,11 +1,11 @@
 Logistica::Application.routes.draw do
+  resources :stations
+
   resources :places
 
   resources :cities
 
   resources :zones
-
-  resources :locals
 
   resources :suit_status_changes
 
@@ -66,6 +66,7 @@ Logistica::Application.routes.draw do
   
   # match '/calendar(/:year(/:month))' => 'calendar#index', :as => :calendar, :constraints => {:year => /\d{4}/, :month => /\d{1,2}/}
   
+ 
   match '/calendar' => 'calendar#index', :as => :calendar
   match '/summary' => 'home#summary', :as => :summary
   match '/profile' => 'users#profile', :as => :profile

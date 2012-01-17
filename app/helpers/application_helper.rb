@@ -3,11 +3,12 @@ module ApplicationHelper
 	menu = ""
     pages = [
        {:controller => "[home]", :path => root_path, :title => t("application.dashboard", :default => "Dashboard"), :thumb => "icons/user.png" },
-       {:controller => "[suits]", :path => suits_path, :title => t("application.suits", :default => "Pedidos"), :thumb => "icons/user.png" },       
+       #{:controller => "[suits]", :path => suits_path, :title => t("application.suits", :default => "Pedidos"), :thumb => "icons/user.png" },       
 #"1" => {:controller => "[users]", :path => users_path, :title => t("application.users", :default => "Users"), :thumb => "icons/user.png" },
-       {:controller => "[contacts, notes]", :path => contacts_path, :title => t("application.contacts", :default => "Contacts"), :thumb => "icons/user.png" },
-       {:controller => "[tasks]", :path => tasks_path, :title => t("application.tasks", :default => "Tasks"), :thumb => "icons/user.png" },
-       {:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }
+       #{:controller => "[contacts, notes]", :path => contacts_path, :title => t("application.contacts", :default => "Contacts"), :thumb => "icons/user.png" },
+       #{:controller => "[tasks]", :path => tasks_path, :title => t("application.tasks", :default => "Tasks"), :thumb => "icons/user.png" },
+       {:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }, 
+       {:controller => "[zones, cities, places]", :path => places_path, :title => t("application.places"), :thumb => "icons/user.png" }
     ]
     pages.each do |page|
       classnames = "current" if page[:controller].include? controller.controller_name

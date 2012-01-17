@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= t("application_name", :default => "Organizer") %></title>
+  <title><%= t("application_name") %> <%= t('application.subname_small') %></title>
 
   <%= javascript_include_tag "application" %>
 
@@ -22,7 +22,7 @@
 <body>
   <div id="container">
     <div id="header">
-      <h1><a href="/"><%= t("application_name", :default => "Organizer") %></a></h1>
+      <h1><a href="/"><%= t("application_name") %>.</a> &nbsp; <span style="color: yellow; clear: none; font-size: 55%"><%= t("application.subname") %>.</span></h1>
       <div id="user-navigation">
         <ul class="wat-cf">
 		  <li><%= link_to t("application.preferences", :default => "Preferences"), preferences_path %></li>
@@ -47,7 +47,7 @@
         <%= yield %>
         <div id="footer">
           <div class="block">
-            <p class="gray_small">Copyright &copy; <%= Time.now.year %></p>
+            <p class="gray_small">SVI - Copyright &copy; <%= Time.now.year %></p>
           </div>      
         </div>
       </div>

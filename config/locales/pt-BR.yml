@@ -1,6 +1,8 @@
 "pt-BR":
-  application_name: "Seção de Voto Informatizado"
+  application_name: "Logística"
   application:
+    subname: "Seção de Voto Informatizado"
+    subname_small: "SVI"
     authentication: Autenticação
     users: Usuários
     contacts: Contatos
@@ -8,6 +10,7 @@
     categories: Categorias
     tasks: Tarefas
     dashboard: Painel
+    places: "Locais de Votação"
     last_taks: Últimas tarefas
     incomplete_tasks: Tarefas não finalizadas
     this_week: Esta semana

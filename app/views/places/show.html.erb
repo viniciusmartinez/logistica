@@ -1,25 +1,9 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Numero:</b>
-  <%= @place.numero %>
+  <h3>Local de Votação</h3>
+  
+   Número: <strong><%= @place.numero %></strong> / <%= @place.nome_municipio %>-MT / <%= @place.numero_zona %>ª ZE
 </p>
 
-<p>
-  <b>Cad:</b>
-  <%= @place.cad_id %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @place.city_id %>
-</p>
-
-<p>
-  <b>Sincronizacao:</b>
-  <%= @place.sincronizacao %>
-</p>
-
-
-<%= link_to 'Edit', edit_place_path(@place) %> |
-<%= link_to 'Back', places_path %>
+<%= link_to 'Voltar', places_path %>

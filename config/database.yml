@@ -3,17 +3,18 @@
 #
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
+#
+#development:
+#  adapter: sqlite3
+#  database: db/development.sqlite3
+#  pool: 5
+#  timeout: 5000
   
-teste:
-    adapter: sqlite3
-    database: db/development.sqlite3
-    pool: 5
-    timeout: 5000
+#teste:
+#    adapter: sqlite3
+#    database: db/development.sqlite3
+#    pool: 5
+#    timeout: 5000
     
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -30,23 +31,23 @@ production:
   pool: 5
   timeout: 5000
   
-#development:
-#   adapter: mysql
-#   encoding: utf8
-#   database: logistica
-#   username: root
-#   password: vxmysql1  
+development:
+   adapter: mysql
+   encoding: utf8
+   database: logistica
+   username: root
+   password: vxmysql1  
 
-#teste:
-#   adapter: mysql
-#   encoding: utf8
-#   database: teste
-#   username: root
-#   password: vxmysql1
+teste:
+   adapter: mysql
+   encoding: utf8
+   database: teste
+   username: root
+   password: vxmysql1
    
-teste2:
+cad:
   adapter: oracle_enhanced
   database: //mt2.tre-mt.gov.br:1521/cad.mt
   username: cons_tre
   password: conscad01
-     
+
