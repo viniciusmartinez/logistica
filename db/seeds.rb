@@ -7,6 +7,7 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 admin = User.create( :name => "Admin", :login => "admin", :password => "admin", :password_confirmation => "admin", :email => "admin@admin.com", :admin => true )
+
 blah = User.create( :name => "Blah", :login => "blah", :password => "blah", :password_confirmation => "blah", :email => "admin@admin.com", :admin => true )
 #Preference.create( :user => admin )
 

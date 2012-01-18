@@ -2,9 +2,9 @@ class CitiesController < ApplicationController
   # GET /cities
   # GET /cities.json
   def index
-    @cities = City.mt
-    @outros = City.outros
-    @desativados = City.desativados
+    @cities = City.bons
+    @outros = City.mt.outros
+    @desativados = City.mt.desativados
 
     respond_to do |format|
       format.html # index.html.erb

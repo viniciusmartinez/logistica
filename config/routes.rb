@@ -1,4 +1,6 @@
 Logistica::Application.routes.draw do
+  resources :survey_processes
+
   resources :stations
 
   resources :places
@@ -79,6 +81,7 @@ Logistica::Application.routes.draw do
 
   resources :user_sessions, :only => [:new, :create, :destroy]
   resources :home, :only => [:index]
+  resources :vlv
 
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout

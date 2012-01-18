@@ -1,7 +1,5 @@
 <h1>Listando Municípios do Mato Grosso</h1>
 
-<% i = 1 %>
-
 <table>
   <tr>
     <th>#</th>
@@ -12,20 +10,17 @@
     <th></th>
   </tr>
 
-<% @cities.each do |city| %>
+<% @cities.each_with_index do |city,index| %>
   <tr>
-    <td><%= i %></td>
+    <td><%= index+1 %></td>
     <td><%= city.nome %></td>
     <td><%= city.numero %></td>
     <td><%= link_to 'Mostrar', city %></td>
   </tr>
-  
-  <% i = i+1 %>
 <% end %>
 </table>
 
 <h2>Outros de Mato Grosso</h2>
-<% i = 1 %>
 
 <table>
   <tr>
@@ -37,22 +32,18 @@
     <th></th>
   </tr>
 
-<% @outros.each do |city| %>
+<% @outros.each_with_index do |city, index| %>
   <tr>
-    <td><%= i %></td>
+    <td><%= index+1 %></td>
     <td><%= city.nome %></td>
     <td><%= city.numero %></td>
     <td><%= link_to 'Mostrar', city %></td>
   </tr>
-  
-  <% i = i+1 %>
 <% end %>
 </table>
 
 <h2>Desativados</h2>
 
-<% i = 1 %>
-
 <table>
   <tr>
     <th>#</th>
@@ -63,17 +54,14 @@
     <th></th>
   </tr>
 
-<% @desativados.each do |city| %>
+<% @desativados.each_with_index do |city| %>
   <tr>
-    <td><%= i %></td>
+    <td><%= index+1 %></td>
     <td><%= city.nome %></td>
     <td><%= city.numero %></td>
     <td><%= link_to 'Mostrar', city %></td>
   </tr>
-  
-  <% i = i+1 %>
 <% end %>
 </table>
-
 
 <br />

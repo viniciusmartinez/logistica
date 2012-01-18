@@ -1,5 +1,5 @@
 class Local < ActiveRecord::Base
-   establish_connection Rails.configuration.database_configuration["teste2"]
+   #establish_connection Rails.configuration.database_configuration["teste2"]
    #set_table_name 'admcad.local_votacao'
    
    # outros atributos possiveis

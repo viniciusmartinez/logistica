@@ -1,7 +1,5 @@
 <h1>Listando Locais de Votação</h1>
 
-<% i = 1 %>
-
 <table>
   <tr>
     <th>#</th>
@@ -13,16 +11,14 @@
     <th></th>
   </tr>
 
-<% @places.each do |place| %>
+<% @places.each_with_index do |place, index| %>
   <tr>
-    <td><%= i %></td>
+    <td><%= index+1 %></td>
     <td><%= place.numero %></td>
-    <td><%= place.nome_municipio %></td>
-    <td><%= place.numero_zona %></td>
+    <td><%= place.city.nome %></td>
+    <td><%= place.zone.nome %></td>
     <td><%= link_to 'Mostrar', place %></td>
   </tr>
-  
-  <% i = i + 1 %>
 <% end %>
 </table>
 

@@ -3,7 +3,7 @@
 <p>
   <h3>Local de Votação</h3>
   
-   Número: <strong><%= @place.numero %></strong> / <%= @place.nome_municipio %>-MT / <%= @place.numero_zona %>ª ZE
+   Número: <strong><%= @place.numero %></strong> / <%= @place.city.nome %>-MT / <%= @place.zone.nome %>
 </p>
 
 <%= link_to 'Voltar', places_path %>
