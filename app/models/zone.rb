@@ -5,20 +5,21 @@ class Zone < ActiveRecord::Base
    
    default_scope :order => "#{table_name}.num_zona ASC"
    
-   has_many :cities, :through => :places
+   has_many :cities, :through => :places, :uniq => true
    
    has_many :places,
             :primary_key => :cod_objeto,
             :foreign_key => :cod_objeto_zona
    
    scope :mt, where("cod_objeto_uf" => "18")
+   scope :boas, mt
    
    def nome
       "ZE %02d" % numero
    end
    
    def numero
-      self[:num_zona]
+      "%02d" % self[:num_zona]
    end
    
    def id

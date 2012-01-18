@@ -11,6 +11,7 @@
     tasks: Tarefas
     dashboard: Painel
     places: "Locais de Votação"
+    vlv: "Vistoria de Locais de Votação"
     last_taks: Últimas tarefas
     incomplete_tasks: Tarefas não finalizadas
     this_week: Esta semana

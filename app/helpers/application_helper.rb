@@ -8,7 +8,7 @@ module ApplicationHelper
        #{:controller => "[contacts, notes]", :path => contacts_path, :title => t("application.contacts", :default => "Contacts"), :thumb => "icons/user.png" },
        #{:controller => "[tasks]", :path => tasks_path, :title => t("application.tasks", :default => "Tasks"), :thumb => "icons/user.png" },
        {:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }, 
-       {:controller => "[vlv,zones, cities, places]", :path => places_path, :title => t("application.places"), :thumb => "icons/user.png" }
+       {:controller => "[vlv, zones, cities, places]", :path => vlv_path, :title => t("application.vlv"), :thumb => "icons/user.png" }
     ]
     pages.each do |page|
       classnames = "current" if page[:controller].include? controller.controller_name

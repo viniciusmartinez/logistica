@@ -78,10 +78,23 @@ Logistica::Application.routes.draw do
   match '/search/city' => 'home#search_city', :as => :search_city
   match '/search/occupation' => 'home#search_occupation', :as => :search_occupation
   match '/search/weather' => 'home#search_weather', :as => :search_weather
+  
+
 
   resources :user_sessions, :only => [:new, :create, :destroy]
   resources :home, :only => [:index]
-  resources :vlv
+
+  #resources :vlv do
+  #  member do
+  #    post :zona
+  #  end
+  #  collection do
+  #    get :zona
+  #  end
+  #end
+  
+  match '/vlv' => 'vlv#index'
+  match '/vlv/zona' => 'vlv#zona'
 
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout

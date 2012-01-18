@@ -6,7 +6,7 @@ class City < ActiveRecord::Base
    default_scope :order => "#{table_name}.nom_localidade ASC"
    scope :ordena, :order => "#{table_name}.nom_localidade ASC"
    
-   has_many :zones, :through => :places
+   has_many :zones, :through => :places, :uniq => true
    
    has_many :places,
             :primary_key => :cod_objeto,

@@ -34,19 +34,19 @@
   <div class="content">
 	<div class="content-header">
 		<% if @task.contact.present? %>
-    		<h2><%= t("activerecord.models.task", :default => "Task") %> <%= t "application.about" %> <%= link_to @task.contact.name, contact_path(@contact) %></h2>
+    		<h2><%= t("activerecord.models.task") %> <%= t "application.about" %> <%= link_to @task.contact.name, contact_path(@contact) %></h2>
 		<% else %>
-			<h2><%= t("activerecord.models.task", :default => "Task") %></h2>
+			<h2><%= t("activerecord.models.task") %></h2>
 		<% end %>
 	</div>
     <div class="inner">
-        <h4 class="nice_blue">
-			<strong><%=t "activerecord.attributes.task.due_at" %>:</strong>
-			<% if @task.due_at.time == @task.due_at.at_midnight.time %>
-			<%=l @task.due_at, :format => :short_with_year %>
-			<% else %>
-			<%=l @task.due_at %>
-			<% end %>
+      <h4 class="nice_blue">
+		<strong><%=t "activerecord.attributes.task.due_at" %>:</strong>
+	   <% if @task.due_at.time == @task.due_at.at_midnight.time %>
+	      <%=l @task.due_at, :format => :short_with_year %>
+		<% else %>
+		   <%=l @task.due_at %>
+		<% end %>
 		</h4>
 		
 		<%= simple_format @task.name %>
