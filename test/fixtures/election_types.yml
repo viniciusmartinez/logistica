@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cod_objeto: MyString
+  cod_tipo_eleicao: 1
+  des_tipo: MyString
+
+two:
+  cod_objeto: MyString
+  cod_tipo_eleicao: 1
+  des_tipo: MyString

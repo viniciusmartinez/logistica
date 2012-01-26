@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cod_objeto: MyString
+  dat_eleicao: 2012-01-25
+  des_eleicao: MyString
+  cod_objeto_tipo_eleicao: MyString
+  ind_anistia: 1
+
+two:
+  cod_objeto: MyString
+  dat_eleicao: 2012-01-25
+  des_eleicao: MyString
+  cod_objeto_tipo_eleicao: MyString
+  ind_anistia: 1

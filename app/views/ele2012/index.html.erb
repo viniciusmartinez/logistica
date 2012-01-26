@@ -1,0 +1,72 @@
+<div class="block">
+	<div class="content"> 
+		<div class="content-header" style="min-height: 30px">
+		   <h3>Logística de Urnas Eletrônicas</h3>
+		</div>
+		<div class="inner">
+		   <table class="zonas">
+		      <tr>
+		         <th>Zona</th>
+		         <th>Município</th>
+		         <th>Locais</th>
+		         <th>Seções</th>
+		         <th>Agregações</th>
+		      </tr>
+		   <% @zonas.each do |zona| %>
+		      <tr>
+		         <td class="zona" rowspan='<%= "#{zona.cities.length}" %>' >
+		            <%= zona.numero_bonito %>
+		         </td>
+		         
+		         <% zona.cities.each_with_index do |municipio, index| %>
+
+      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
+      		            <%= municipio.nome %> (<%= municipio.numero %>)
+      		         </td>
+      		         
+      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
+      		            <% locais = Place.por_zona_municipio(zona.numero, municipio.numero).ativos %>
+      		            <% @total_locais += locais.size %>
+      		            <%= locais.size %>
+      		         </td>
+      		         
+      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
+      		            <%= num_secoes = Station.por_zona_municipio(zona.id, municipio.id).size %>
+      		            <% @total_secoes += num_secoes %>
+      		         </td>
+      		         
+      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
+      		            <% num_agregacoes = AggregationHistory.agregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).size %>
+      		            <% num_desagregacoes = AggregationHistory.desagregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).size %>
+      		            <% @total_agregacoes += (num_agregacoes - num_desagregacoes) %>
+      		            <%= (num_agregacoes - num_desagregacoes) %>
+      		         </td>
+
+                     <% if municipio.numero == 90697 %>
+                        <ul>
+                           <% AggregationHistory.agregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).each do |a| %>
+                           <li>
+                              <%= zona.numero_bonito %> <%= municipio.numero %> <%= Station.find(a.cod_objeto_secao_agregada).num_secao %>
+                           </li>
+                           <% end %>
+                        </ul>
+                     <% end %>
+
+     		            <% if index != zona.cities.size-1 %></tr><tr><% end %>
+
+        		   <% end %>
+		      </tr>
+		   <% end %>
+
+		      <tr>
+		         <td>Total</td>
+		         <td><%= @total_municipios %></td>
+		         <td><%= @total_locais %></td>
+		         <td><%= @total_secoes %></td>
+  		         <td><%= @total_agregacoes %></td>
+		      </tr>
+
+         </table>
+		</div>
+   </div>
+</div>

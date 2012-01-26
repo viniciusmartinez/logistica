@@ -1,0 +1,26 @@
+<h1>Listando Seções</h1>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Número</th>
+    <th>Local de Votação</th>
+    <th>Município</th>
+    <th>Zona</th>
+    <th></th>
+  </tr>
+
+<% @stations.each_with_index do |station, index| %>
+  <tr>
+    <td><%= index+1 %>
+    <td><%= station.numero %></td>
+    <td><%= station.place.numero %></td>
+    <td><%= station.city.nome %></td>
+    <td><%= station.zone.nome %></td>
+    <td><%= link_to 'Mostrar', station %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+

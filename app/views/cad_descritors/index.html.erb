@@ -1,0 +1,20 @@
+<h1>Listing cad_descritors</h1>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Nome</th>
+    <th>Valor</th>
+    <th>Descricao</th>
+  </tr>
+
+<% @cad_descritors.each_with_index do |cad_descritor, index| %>
+  <tr>
+    <td><%= index+1 %></td>
+    <td><%= cad_descritor.descritor %></td>
+    <td><%= cad_descritor.valor %></td>
+    <td><%= cad_descritor.descricao %></td>
+  </tr>
+<% end %>
+</table>
+

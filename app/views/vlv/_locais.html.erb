@@ -1,0 +1,19 @@
+<div id="locais">
+
+	<% if @locais %>
+   	<h3>Locais de Votação:</h3>
+	   <% if @locais.empty? %>
+         <p>Nenhum local de votação.</p>
+		<% else %>
+	   	<% @locais.each do |local| %>
+   		   <%= local.numero %> <br />
+		   <% end %>
+      <% end %>
+      
+   <% else %>
+      <p>Selecione a Zona e o Município</p>
+	<% end %>
+	
+			
+</div>
+

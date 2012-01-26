@@ -1,0 +1,113 @@
+<% content_for :javascript do %>
+   
+   $(function(){
+		$(".search_results_wrapper").dialog({
+			autoOpen: false,
+			draggable: false,
+			width: "60%",
+			minWidth: 300,
+			height: 360,
+			minHeight: 360,
+			modal: true
+		});
+   
+      $("#select_zona").change(function () {
+         $("#troca_zona").submit();
+      });
+   });
+          
+	//$(document).ready( function() {
+	//   $("SELECT").selectBox();
+	//	$("SELECT").selectBox('settings', { 'menuTransition': 'slide', 'menuSpeed' : 'normal' } );
+   //});
+	
+<% end %>
+
+<div class="block">
+	<div class="content"> 
+		<div class="content-header" style="min-height: 30px">
+         <div style="float:left">
+         <%= form_for @zona,
+            :url => {:action => "zona"},
+            :remote => true,
+            :html => {:id => "troca_zona", :class => "inline" },
+			
+	          do |z| %>
+               <%= z.label :id, "Zona Eleitoral nº", {} %>
+               <%= z.select :id, @zonas.collect{ |zn| [zn.numero, zn.id]}, {}, { :id => "select_zona" } %>
+         </div>
+         <% end %>
+                  
+         <%= render :partial => "municipio" %>
+         
+
+		</div>
+		
+		<div class="inner">
+			
+			<%= render :partial => "locais" %>
+			
+			<br />			<br />			<br />
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color tasks") %> Tarefas</h3>
+				</div>
+				<div class="inner">
+					<ul class="home_list">
+						<p class="gray_small"><%= t("application.home.no_task")%></p>
+  						<h3 class="red"><%= t"application.task.overdue_plural" %></h3>
+						<li>
+						</li>
+					</ul>
+					
+					<ul class="home_list">
+						<h3><%= t"application.today" %><span class="gray_small">, <%=l Date.today, :format => :short_desc %></span></h3>
+						<li>
+						</li>
+					</ul>
+					
+					<ul class="home_list">
+						<h3><%= t"application.this_week" %></h3>
+						<li>
+                  </li>
+					</ul>
+				
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header"><h3><%= image_tag "icons/calendar.png" %> Aniversários</h3></div>
+				<div class="inner">
+						<p class="gray_small"><%= t("application.home.no_birthday")%></p>
+					
+					<h3>Hoje<span class="gray_small">, <%=l Date.today, :format => :short_desc %></span></h3>
+					<ul class="home_list">
+						<li>
+						</li>
+					</ul>
+					
+					<hr class="space" />
+				</div>
+			</div>
+			
+			<div class="home_column block">
+				<div class="content-header">
+					<h3><%= inline_ui_icon("color favorite_on") %> Contatos favoritos</h3>
+				</div>
+				<div class="inner">
+						<p class="gray_small"><%= t("application.home.no_favorite_contact")%></p>
+					
+					<ul class="home_list">
+						<li>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<%# content_for :sidebar, render(:partial => 'sidebar') -%>

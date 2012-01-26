@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  descricao: MyText
+  inicio: 2012-01-17
+  fim: 2012-01-17
+  numero: 1
+  obrigatoria: false
+  election_id: 1
+
+two:
+  descricao: MyText
+  inicio: 2012-01-17
+  fim: 2012-01-17
+  numero: 1
+  obrigatoria: false
+  election_id: 1

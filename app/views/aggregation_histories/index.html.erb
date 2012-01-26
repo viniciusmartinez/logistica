@@ -1,0 +1,36 @@
+<h1>Listing aggregation_histories</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Cod objeto zona</th>
+    <th>Cod objeto munic</th>
+    <th>Cod objeto local</th>
+    <th>Cod objeto secao principal</th>
+    <th>Cod objeto secao agregada</th>
+    <th>Tip operacao</th>
+    <th>Dat operacao</th>
+    <th>Cod operador</th>
+    <th>Qtd aptos principal</th>
+    <th>Qtd aptos agregada</th>
+    <th>Cod objeto dat eleicao</th>
+  </tr>
+
+<% @aggregation_histories.each do |aggregation_history| %>
+  <tr>
+    <td><%= aggregation_history.cod_objeto %></td>
+    <td><%= aggregation_history.cod_objeto_zona %></td>
+    <td><%= aggregation_history.cod_objeto_munic %></td>
+    <td><%= aggregation_history.cod_objeto_local %></td>
+    <td><%= aggregation_history.cod_objeto_secao_principal %></td>
+    <td><%= aggregation_history.cod_objeto_secao_agregada %></td>
+    <td><%= aggregation_history.tip_operacao %></td>
+    <td><%= aggregation_history.dat_operacao %></td>
+    <td><%= aggregation_history.cod_operador %></td>
+    <td><%= aggregation_history.qtd_aptos_principal %></td>
+    <td><%= aggregation_history.qtd_aptos_agregada %></td>
+    <td><%= aggregation_history.cod_objeto_dat_eleicao %></td>
+  </tr>
+<% end %>
+</table>
+

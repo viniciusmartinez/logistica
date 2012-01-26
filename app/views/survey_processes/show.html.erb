@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Descricao:</b>
+  <%= @survey_process.descricao %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @survey_process.status %>
+</p>
+
+<p>
+  <b>Mes:</b>
+  <%= @survey_process.mes %>
+</p>
+
+<p>
+  <b>Ano:</b>
+  <%= @survey_process.ano %>
+</p>
+
+<%= link_to 'Edit', edit_survey_process_path(@survey_process) %> |
+<%= link_to 'Back', survey_processes_path %>

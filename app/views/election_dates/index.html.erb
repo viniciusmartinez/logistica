@@ -1,0 +1,31 @@
+<h1>Listing election_dates</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Dat eleicao</th>
+    <th>Des eleicao</th>
+    <th>Cod objeto tipo eleicao</th>
+    <th>Ind anistia</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @election_dates.each do |election_date| %>
+  <tr>
+    <td><%= election_date.cod_objeto %></td>
+    <td><%= election_date.dat_eleicao %></td>
+    <td><%= election_date.des_eleicao %></td>
+    <td><%= election_date.cod_objeto_tipo_eleicao %></td>
+    <td><%= election_date.ind_anistia %></td>
+    <td><%= link_to 'Show', election_date %></td>
+    <td><%= link_to 'Edit', edit_election_date_path(election_date) %></td>
+    <td><%= link_to 'Destroy', election_date, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Election date', new_election_date_path %>

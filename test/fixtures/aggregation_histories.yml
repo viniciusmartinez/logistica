@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cod_objeto: MyString
+  cod_objeto_zona: MyString
+  cod_objeto_munic: MyString
+  cod_objeto_local: MyString
+  cod_objeto_secao_principal: MyString
+  cod_objeto_secao_agregada: MyString
+  tip_operacao: 1
+  dat_operacao: 2012-01-25
+  cod_operador: MyString
+  qtd_aptos_principal: 1
+  qtd_aptos_agregada: 1
+  cod_objeto_dat_eleicao: MyString
+
+two:
+  cod_objeto: MyString
+  cod_objeto_zona: MyString
+  cod_objeto_munic: MyString
+  cod_objeto_local: MyString
+  cod_objeto_secao_principal: MyString
+  cod_objeto_secao_agregada: MyString
+  tip_operacao: 1
+  dat_operacao: 2012-01-25
+  cod_operador: MyString
+  qtd_aptos_principal: 1
+  qtd_aptos_agregada: 1
+  cod_objeto_dat_eleicao: MyString

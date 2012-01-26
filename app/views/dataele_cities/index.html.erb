@@ -1,0 +1,21 @@
+<h1>Listing dataele_cities</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dataele_cities.each do |dataele_city| %>
+  <tr>
+    <td><%= link_to 'Show', dataele_city %></td>
+    <td><%= link_to 'Edit', edit_dataele_city_path(dataele_city) %></td>
+    <td><%= link_to 'Destroy', dataele_city, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dataele city', new_dataele_city_path %>

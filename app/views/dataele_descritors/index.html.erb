@@ -1,0 +1,29 @@
+<h1>Listing dataele_descritors</h1>
+
+<table>
+  <tr>
+    <th>Chave</th>
+    <th>Descricao</th>
+    <th>Valor</th>
+    <th>Grupo</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dataele_descritors.each do |dataele_descritor| %>
+  <tr>
+    <td><%= dataele_descritor.chave %></td>
+    <td><%= dataele_descritor.descricao %></td>
+    <td><%= dataele_descritor.valor %></td>
+    <td><%= dataele_descritor.grupo %></td>
+    <td><%= link_to 'Show', dataele_descritor %></td>
+    <td><%= link_to 'Edit', edit_dataele_descritor_path(dataele_descritor) %></td>
+    <td><%= link_to 'Destroy', dataele_descritor, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dataele descritor', new_dataele_descritor_path %>

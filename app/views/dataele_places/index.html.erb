@@ -1,0 +1,29 @@
+<h1>Listing dataele_places</h1>
+
+<table>
+  <tr>
+    <th>Zona</th>
+    <th>Municipio</th>
+    <th>Local</th>
+    <th>Vistoria</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dataele_places.each do |dataele_place| %>
+  <tr>
+    <td><%= dataele_place.zona %></td>
+    <td><%= dataele_place.munic_id %></td>
+    <td><%= dataele_place.num_local %></td>
+    <td><%= dataele_place.id_vistoria %></td>
+    <td><%= link_to 'Show', dataele_place %></td>
+    <td><%= link_to 'Edit', edit_dataele_place_path(dataele_place) %></td>
+    <td><%= link_to 'Destroy', dataele_place, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dataele place', new_dataele_place_path %>

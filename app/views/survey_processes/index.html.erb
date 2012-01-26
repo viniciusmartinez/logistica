@@ -1,0 +1,29 @@
+<h1>Listing survey_processes</h1>
+
+<table>
+  <tr>
+    <th>Descricao</th>
+    <th>Status</th>
+    <th>Mes</th>
+    <th>Ano</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @survey_processes.each do |survey_process| %>
+  <tr>
+    <td><%= survey_process.descricao %></td>
+    <td><%= survey_process.status %></td>
+    <td><%= survey_process.mes %></td>
+    <td><%= survey_process.ano %></td>
+    <td><%= link_to 'Show', survey_process %></td>
+    <td><%= link_to 'Edit', edit_survey_process_path(survey_process) %></td>
+    <td><%= link_to 'Destroy', survey_process, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Survey process', new_survey_process_path %>

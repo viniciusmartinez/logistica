@@ -1,0 +1,24 @@
+<% content_for :javascript do %>
+   $(function(){
+      $("#select_municipio").change(function () {
+         $("#troca_municipio").submit();
+      });
+   });
+   
+   function addSelectChange(){ $("#troca_municipio").submit(); } 
+<% end %>
+
+<span style="float:left;" id="municipio">
+<% if @zona.id %>
+	<%= form_for @municipio,
+         	:url => {:action => "municipio"},
+            :remote => true,
+            :html => {:id => "troca_municipio", :class => "inline" },
+            do |m| %>
+         <%= hidden_field :zona, :id %>
+	      <%= m.label :id, "Município:", { :style => "margin-left: 15px" } %>
+         <%= m.select :id, @municipios.collect{ |mun| [mun.nome, mun.id]}, {}, { :id => "select_municipio", :onchange => "addSelectChange();" } %>
+   <% end %>
+<% end %>
+
+</span>

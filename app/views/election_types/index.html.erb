@@ -1,0 +1,18 @@
+<h1>Listing election_types</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Cod tipo eleicao</th>
+    <th>Des tipo</th>
+  </tr>
+
+<% @election_types.each do |election_type| %>
+  <tr>
+    <td><%= election_type.cod_objeto %></td>
+    <td><%= election_type.cod_tipo_eleicao %></td>
+    <td><%= election_type.des_tipo %></td>
+  </tr>
+<% end %>
+</table>
+
