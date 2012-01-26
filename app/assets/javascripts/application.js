@@ -12,7 +12,7 @@
 // plugin jquery.defaultvalue vendors/plugins placeholder attr.
 $(function(){
 	$(' [placeholder] ').defaultValue();
-}
+})
 
 function clear_form_elements(ele) {
 
@@ -84,17 +84,17 @@ $(document).ready(function() {
 	}*/
 	
 	// Formtastic validator
-	$('.formtastic').valtastic();
+	//$('.formtastic').valtastic();
 	
 	// Tooltip
-	$('.tooltip').tipsy({ live: true });
+	//$('.tooltip').tipsy({ live: true });
 	
 	// jQuery RTE
-	$(".rich_text").cleditor({
-		width: '90%',
-		height: 'auto',
-		controls: "bold italic underline | bullets numbering | center alignleft alignright justify | undo redo"
-	});
+	//$(".rich_text").cleditor({
+	//	width: '90%',
+	//	height: 'auto',
+	//	controls: "bold italic underline | bullets numbering | center alignleft alignright justify | undo redo"
+	//});
 	
 	// Default values
 	$("#search").defaultValue({'value' : 'Pesquisar...'});

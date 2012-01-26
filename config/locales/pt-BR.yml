@@ -4,6 +4,7 @@
     subname: "Seção de Voto Informatizado"
     subname_small: "SVI"
     authentication: Autenticação
+    ele2012: "Eleições Municipais 2012"
     users: Usuários
     contacts: Contatos
     calendar: Calendário
@@ -11,7 +12,7 @@
     tasks: Tarefas
     dashboard: Painel
     places: "Locais de Votação"
-    vlv: "Vistoria de Locais de Votação"
+    vlv: "Locais de Votação"
     last_taks: Últimas tarefas
     incomplete_tasks: Tarefas não finalizadas
     this_week: Esta semana

@@ -1,4 +1,18 @@
 Logistica::Application.routes.draw do
+  resources :aggregation_histories
+
+  resources :election_dates
+
+  resources :election_types
+
+  resources :cad_descritors
+
+  resources :dataele_cities
+
+  resources :dataele_places
+
+  resources :dataele_descritors
+
   resources :survey_processes
 
   resources :stations
@@ -93,8 +107,11 @@ Logistica::Application.routes.draw do
   #  end
   #end
   
+  match '/ele2012' => 'ele2012#index'
+  
   match '/vlv' => 'vlv#index'
   match '/vlv/zona' => 'vlv#zona'
+  match '/vlv/municipio' => 'vlv#municipio'
 
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout

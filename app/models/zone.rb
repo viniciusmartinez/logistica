@@ -18,8 +18,12 @@ class Zone < ActiveRecord::Base
       "ZE %02d" % numero
    end
    
-   def numero
+   def numero_bonito
       "%02d" % self[:num_zona]
+   end
+   
+   def numero
+      self[:num_zona]
    end
    
    def id

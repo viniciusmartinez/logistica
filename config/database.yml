@@ -51,3 +51,8 @@ cad:
   username: cons_tre
   password: conscad01
 
+intranet:
+  adapter: oracle_enhanced
+  database: //10.18.1.1:1521/adm.world
+  username: intranet
+  password: in20tra06

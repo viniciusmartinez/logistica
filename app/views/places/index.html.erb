@@ -6,8 +6,8 @@
     <th>Numero</th>
     <th>Município</th>
     <th>Zona</th>
-    <th></th>
-    <th></th>
+    <th>Vistorias</th>
+    <th>Situacao</th>
     <th></th>
   </tr>
 
@@ -17,6 +17,11 @@
     <td><%= place.numero %></td>
     <td><%= place.city.nome %></td>
     <td><%= place.zone.nome %></td>
+    <td><% place.vistorias.each do |v| %>
+    <%= v.id_vistoria %>, 
+    <% end %>
+    </td>
+    <td><%= place.descricao_situacao %></td>
     <td><%= link_to 'Mostrar', place %></td>
   </tr>
 <% end %>

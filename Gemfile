@@ -26,8 +26,9 @@ gem 'mysql'
 
 gem 'ruby-oci8'
 gem 'activerecord-oracle_enhanced-adapter', :git => "https://github.com/rsim/oracle-enhanced.git"
-gem 'unicode'
+#gem 'unicode'
 #gem 'unicode_utils'
+gem 'composite_primary_keys', '=4.1.2'
 
 
 # not vini

@@ -2,13 +2,14 @@ module ApplicationHelper
   def main_navigation
 	menu = ""
     pages = [
-       {:controller => "[home]", :path => root_path, :title => t("application.dashboard", :default => "Dashboard"), :thumb => "icons/user.png" },
+       #{:controller => "[home]", :path => root_path, :title => t("application.dashboard", :default => "Dashboard"), :thumb => "icons/user.png" },
        #{:controller => "[suits]", :path => suits_path, :title => t("application.suits", :default => "Pedidos"), :thumb => "icons/user.png" },       
 #"1" => {:controller => "[users]", :path => users_path, :title => t("application.users", :default => "Users"), :thumb => "icons/user.png" },
        #{:controller => "[contacts, notes]", :path => contacts_path, :title => t("application.contacts", :default => "Contacts"), :thumb => "icons/user.png" },
        #{:controller => "[tasks]", :path => tasks_path, :title => t("application.tasks", :default => "Tasks"), :thumb => "icons/user.png" },
-       {:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }, 
-       {:controller => "[vlv, zones, cities, places]", :path => vlv_path, :title => t("application.vlv"), :thumb => "icons/user.png" }
+       #{:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }, 
+       {:controller => "[ele2012]", :path => ele2012_path, :title => t("application.ele2012") },
+       {:controller => "[home, vlv, zones, cities, places]", :path => vlv_path, :title => t("application.vlv"), :thumb => "icons/user.png" }
     ]
     pages.each do |page|
       classnames = "current" if page[:controller].include? controller.controller_name
