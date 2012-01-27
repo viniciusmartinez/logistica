@@ -30,11 +30,15 @@ class Zone < ActiveRecord::Base
       self[:cod_objeto]
    end
    
-   #def self.numero_por_id(id)
-   #   where("cod_objeto" => id).first.numero
-   #end
+   def municipio_sede_id
+      self[:cod_objeto_localidade]
+   end
    
    def self.numero(id)
       find(id).numero
+   end
+   
+   def municipios
+      self.cities.select {|m| m.id == self.municipio_sede_id } + self.cities.reject {|m| m.id == self.municipio_sede_id }
    end
 end

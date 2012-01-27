@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-table.zonas
+/*table.zonas
 {
    margin: 0;   
    border-collapse: collapse;
@@ -10,10 +10,10 @@ table.zonas
 
 table.zonas th
 {
-   background-color: #bbb;
-   padding: 3px;
+   background-color: #fff;
+   padding: 3px 8px 3px 8px;
    font-size: 120%;   
-      border: none;
+   border: 1px solid #00f;
 }
 
 table.zonas td
@@ -21,17 +21,66 @@ table.zonas td
    padding: 3px;
    margin: 0;
    text-align: center;
-   border: 1px solid #fff;
+   border: 1px solid #00f;
 }
 
 table.zonas tr
 {
    margin: 0;
    width: auto;
-   background-color: #ccf;
+   background-color: #eef;
 }
 
-table.zonas td.zona
+table.zonas td.ultimo
 {
-   border-bottom: 2px solid #555;
+   border-bottom: 2px solid #00c;
+}
+
+table.zonas td.sede
+{
+   background-color: #ccf;
+}*/
+
+#hor-zebra
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 45px;
+	width: 480px;
+	text-align: center;
+	border-collapse: collapse;
+}
+#hor-zebra th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 10px 8px;
+	color: #039;
+}
+
+#hor-zebra td
+{
+	padding: 5px; /* 8px */
+	color: #669;
+}
+#hor-zebra .odd
+{
+	background: #e8edff;
+}
+
+/* mods */
+
+#hor-zebra .divide
+{
+   border-right: 1px dashed #669;
+}
+
+#hor-zebra td.ultimo
+{
+	border-bottom: 1px solid #669;
+}
+
+#hor-zebra .sede
+{
+   color: #00a;
 }

@@ -4,68 +4,85 @@
 		   <h3>Logística de Urnas Eletrônicas</h3>
 		</div>
 		<div class="inner">
-		   <table class="zonas">
-		      <tr>
-		         <th>Zona</th>
-		         <th>Município</th>
-		         <th>Locais</th>
-		         <th>Seções</th>
-		         <th>Agregações</th>
-		      </tr>
-		   <% @zonas.each do |zona| %>
-		      <tr>
-		         <td class="zona" rowspan='<%= "#{zona.cities.length}" %>' >
-		            <%= zona.numero_bonito %>
-		         </td>
-		         
-		         <% zona.cities.each_with_index do |municipio, index| %>
+		   <table id="hor-zebra" class="zonas">
+		      <thead>
+   		      <tr>
+	   	         <th scope="col" colspan="4" class="divide" >Cadastro</th>
+  	   	         <th scope="col" colspan="2" class="divide" >Eleição 2010</th>
+  	   	         <th scope="col" colspan="2">UEs (+25%)</th>
+	   	      </tr>
+		         <tr>
+		            <th scope="col">Zona</th>
+		            <th scope="col">Município</th>
+		            <th scope="col">Locais</th>
+		            <th scope="col" class="divide" >Seções</th>
+		            <th scope="col">Agregas</th>
+		            <th scope="col" class="divide" >MRJ</th>
+		            <th scope="col">de Seção</th>
+		            <th scope="col">de Reserva</th>
+		         </tr>
+            </thead>
+            <tbody>
+            
+		      <% @zonas.each_with_index do |zona, indice_zona| %>
+		         <tr <% if indice_zona % 2 == 0 %>class="odd"<% end %> >
+		            <td class="ultimo" rowspan='<%= "#{zona.cities.length}" %>' >
+		               <strong><%= zona.numero_bonito %></strong>
+		            </td>
 
-      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
-      		            <%= municipio.nome %> (<%= municipio.numero %>)
-      		         </td>
-      		         
-      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
-      		            <% locais = Place.por_zona_municipio(zona.numero, municipio.numero).ativos %>
-      		            <% @total_locais += locais.size %>
-      		            <%= locais.size %>
-      		         </td>
-      		         
-      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
-      		            <%= num_secoes = Station.por_zona_municipio(zona.id, municipio.id).size %>
-      		            <% @total_secoes += num_secoes %>
-      		         </td>
-      		         
-      		         <td <% if index == zona.cities.size-1 %>class="zona"<% end %> >
-      		            <% num_agregacoes = AggregationHistory.agregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).size %>
-      		            <% num_desagregacoes = AggregationHistory.desagregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).size %>
-      		            <% @total_agregacoes += (num_agregacoes - num_desagregacoes) %>
-      		            <%= (num_agregacoes - num_desagregacoes) %>
-      		         </td>
+      	         <% zona.municipios.each_with_index do |municipio, index| %>
+                      
+                        <% sede = index == 0? 'sede ': '' %>
+                        <% ultimo = index == zona.cities.size-1? 'ultimo ': '' %>
 
-                     <% if municipio.numero == 90697 %>
-                        <ul>
-                           <% AggregationHistory.agregacao.por_dataeleicao_zona_municipio(@eleicao.id, zona.id, municipio.id).each do |a| %>
-                           <li>
-                              <%= zona.numero_bonito %> <%= municipio.numero %> <%= Station.find(a.cod_objeto_secao_agregada).num_secao %>
-                           </li>
-                           <% end %>
-                        </ul>
-                     <% end %>
+		                  <td class="<%= ultimo+sede %>" >
+                           <%= municipio.nome %> (<%= municipio.numero %>)
+         		         </td>
+         		         
+         		         <td class="<%= ultimo %>" >
+         		            <%= (locais = Place.por_zona_municipio(zona.numero, municipio.numero).ativos).size %>
+         		            <% @total_locais += locais.size %>
+         		         </td>
+         		         
+         		         <td class="divide <%= ultimo %>" >
+                           <%= numero_secoes(zona,municipio) %>
+         		         </td>
+         		         
+         		         <td class="<%= ultimo %>" >
+                           <%= numero_agregacoes_efetivas(zona,municipio) %>
+         		         </td>
+         		         
+         		         <td class="divide <%= ultimo %>" >
+         		            <%= numero_mrjs(zona,municipio) %>
+         		         </td>
 
-     		            <% if index != zona.cities.size-1 %></tr><tr><% end %>
+         		         <td class="<%= ultimo %>" >
+         		            <%= numero_urnas_de_secao %>
+         		         </td>
+         		         
+           		         <td class="<%= ultimo %>" >
+         		            <%= numero_urnas_de_contingencia %>
+         		         </td>
 
-        		   <% end %>
-		      </tr>
-		   <% end %>
+        		            <% if index != zona.cities.size-1 %>
+           		            </tr>
+           		            <tr <%= "class='odd'" if indice_zona%2==0 %> >
+        		            <% end %>
 
-		      <tr>
-		         <td>Total</td>
-		         <td><%= @total_municipios %></td>
-		         <td><%= @total_locais %></td>
-		         <td><%= @total_secoes %></td>
-  		         <td><%= @total_agregacoes %></td>
-		      </tr>
+           		   <% end %>
+		         </tr>
+		      <% end %>
 
+		         <tr>
+		            <td>Total</td>
+		            <td><%= @total_municipios %></td>
+		            <td><%= @total_locais %></td>
+		            <td><%= @total_secoes %></td>
+     		         <td><%= @total_agregacoes %></td>
+     		         <td><%= @total_mrjs %></td>
+     		         <td colspan="2"><%= @total_urnas_de_secao + @total_urnas_de_contingencia %></td>
+		         </tr>
+            </tbody>
          </table>
 		</div>
    </div>
