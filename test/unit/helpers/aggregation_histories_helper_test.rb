@@ -1,4 +1,4 @@
 require 'test_helper'
 
-class AggregationHistoriesHelperTest < ActionView::TestCase
+class AggregationsHelperTest < ActionView::TestCase
 end

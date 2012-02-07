@@ -1,8 +1,8 @@
 module Ele2012Helper
 
    def numero_agregacoes_efetivas(zona, mun)
-      num_agrega = AggregationHistory.agregacao.por_dataeleicao(@eleicao.id).por_zona(zona.id).por_municipio(mun.id).size
-      num_desagrega = AggregationHistory.desagregacao.por_dataeleicao(@eleicao.id).por_zona(zona.id).por_municipio(mun.id).size
+      num_agrega = Aggregation.agregacao.por_dataeleicao(@eleicao.id).por_zona(zona.id).por_municipio(mun.id).size
+      num_desagrega = Aggregation.desagregacao.por_dataeleicao(@eleicao.id).por_zona(zona.id).por_municipio(mun.id).size
   
       @num_agregacoes = (num_agrega - num_desagrega)
       @total_agregacoes += @num_agregacoes

@@ -56,7 +56,7 @@ class Place < ActiveRecord::Base
    end
 
    def self.ativos
-      where(:situacao => CadDescritor.valores_por_descritor_descricao(@@descritor,@@bom) )
+      where(:situacao => CadDescritor.valores_por_descritor_descricoes(@@descritor,@@bom) )
    end
 
    def self.por_zona(zona)

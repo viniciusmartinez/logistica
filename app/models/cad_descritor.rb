@@ -5,7 +5,15 @@ class CadDescritor < ActiveRecord::Base
    default_scope :order => 'nom_dominio ASC, valor ASC'
    
    def self.por_descritor(descritor)
-      find_all_by_nom_dominio(descritor)
+      where(:nom_dominio => descritor) #find_all_by_nom_dominio(descritor)
+   end
+   
+   def self.por_valor(valor)
+     where(:valor => valor)
+   end
+   
+   def self.por_descricao(descricao)
+      where(:des_dominio => descricao)
    end
    
    def self.por_descritor_valor(descritor, valor)
@@ -13,7 +21,11 @@ class CadDescritor < ActiveRecord::Base
    end
    
    def self.descricao_por_descritor_valor(descritor, valor)
-      por_descritor_valor(descritor, valor).first.descricao
+      por_descritor(descritor).por_valor(valor).first.descricao
+   end
+   
+   def self.valor_por_descritor_descricao(descritor, descricao)
+      por_descritor(descritor).por_descricao(descricao).first.valor
    end
    
    def descricao
@@ -22,19 +34,11 @@ class CadDescritor < ActiveRecord::Base
    
    def descritor
       self[:nom_dominio]
-   end     
-   
-   def self.por_descritor_descricao(descritor, descricao)
-      where("nom_dominio = '#{descritor}'").where(:des_dominio => descricao)
    end
 
-   def self.valor_por_descritor_descricao(descritor, descricao)
-      por_descritor_descricao(descritor, descricao).first.valor
-   end
-
-   def self.valores_por_descritor_descricao(descritor, descricao)
+   def self.valores_por_descritor_descricoes(descritor, descricoes)
       valores = []
-      por_descritor_descricao(descritor, descricao).each {|descritor| valores << descritor.valor }
+      por_descritor(descritor).por_descricao(descricoes).each {|d| valores << d.valor }
       return valores
    end
   
