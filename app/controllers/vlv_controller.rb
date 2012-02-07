@@ -6,7 +6,7 @@ class VlvController < ApplicationController
       @zonas = Zone.boas
       @zona = @zonas.first
       
-      @municipios = @zona.cities
+      @municipios = @zona.municipios
       @municipio = @municipios.first
       
       @locais = Place.por_zid_mid(@zona.id, @municipio.id)
@@ -17,7 +17,7 @@ class VlvController < ApplicationController
    def zona
       @zonas = Zone.boas
       @zona = Zone.find(params[:zone][:id])
-      @municipios = @zona.cities
+      @municipios = @zona.municipios
       
       @municipio = @municipios.first
       @locais = Place.por_zid_mid(@zona.id, @municipio.id)
@@ -25,12 +25,12 @@ class VlvController < ApplicationController
   
   def municipio
   
-      Rails.logger.info("PARAMS: #{params.inspect}")
+      #Rails.logger.info("PARAMS: #{params.inspect}")
   
       @zonas = Zone.boas
       @zona = Zone.find(params[:zona][:id]) # @zona.id
 
-      @municipios = @zona.cities
+      @municipios = @zona.municipios
       @municipio = City.find(params[:city][:id])
       
       @locais = Place.por_zid_mid(@zona.id, @municipio.id)
