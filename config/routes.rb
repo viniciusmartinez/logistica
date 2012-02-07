@@ -1,7 +1,7 @@
 Logistica::Application.routes.draw do
   resources :mrjs
 
-  resources :aggregation_histories
+  resources :aggregations
 
   resources :election_dates
 

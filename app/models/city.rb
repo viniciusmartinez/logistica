@@ -13,12 +13,12 @@ class City < ActiveRecord::Base
             :foreign_key => :cod_objeto_localidade
 
    scope :mt, where("cod_objeto_uf" => "18")
-   scope :ativos, where("situacao = ? AND nom_localidade != ?",1,"OUTROS MATO GROSSO")
+   scope :ativos, where(:situacao => 1).where("nom_localidade != ?","OUTROS MATO GROSSO") #colocar dois CadDescritor.valores_por_descritor_descricoes
    scope :bons, mt.ativos
    
-   scope :outros, where("situacao = ? AND nom_localidade = ?",1,"OUTROS MATO GROSSO")
-   scope :desativados, where("situacao = ?",2)
-   
+   scope :outros, where(:situacao => 1).where(:nom_localidade => "OUTROS MATO GROSSO") #colocar dois CadDescritor.valores_por_descritor_descricoes
+   scope :desativados, where(:situacao => 2) #colocar um CadDescritor.valores_por_descritor_descricoes
+      
    def numero
       self[:cod_localidade_tse]
    end
@@ -29,9 +29,5 @@ class City < ActiveRecord::Base
    
    def id
       self[:cod_objeto]
-   end
-   
-   def self.nome(id)
-      find(id).nome
    end
 end

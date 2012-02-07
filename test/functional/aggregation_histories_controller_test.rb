@@ -1,14 +1,14 @@
 require 'test_helper'
 
-class AggregationHistoriesControllerTest < ActionController::TestCase
+class AggregationsControllerTest < ActionController::TestCase
   setup do
-    @aggregation_history = aggregation_histories(:one)
+    @aggregation = aggregations(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:aggregation_histories)
+    assert_not_nil assigns(:aggregations)
   end
 
   test "should get new" do
@@ -16,34 +16,34 @@ class AggregationHistoriesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create aggregation_history" do
-    assert_difference('AggregationHistory.count') do
-      post :create, aggregation_history: @aggregation_history.attributes
+  test "should create aggregation" do
+    assert_difference('Aggregation.count') do
+      post :create, aggregation: @aggregation.attributes
     end
 
-    assert_redirected_to aggregation_history_path(assigns(:aggregation_history))
+    assert_redirected_to aggregation_path(assigns(:aggregation))
   end
 
-  test "should show aggregation_history" do
-    get :show, id: @aggregation_history.to_param
+  test "should show aggregation" do
+    get :show, id: @aggregation.to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @aggregation_history.to_param
+    get :edit, id: @aggregation.to_param
     assert_response :success
   end
 
-  test "should update aggregation_history" do
-    put :update, id: @aggregation_history.to_param, aggregation_history: @aggregation_history.attributes
-    assert_redirected_to aggregation_history_path(assigns(:aggregation_history))
+  test "should update aggregation" do
+    put :update, id: @aggregation.to_param, aggregation: @aggregation.attributes
+    assert_redirected_to aggregation_path(assigns(:aggregation))
   end
 
-  test "should destroy aggregation_history" do
-    assert_difference('AggregationHistory.count', -1) do
-      delete :destroy, id: @aggregation_history.to_param
+  test "should destroy aggregation" do
+    assert_difference('Aggregation.count', -1) do
+      delete :destroy, id: @aggregation.to_param
     end
 
-    assert_redirected_to aggregation_histories_path
+    assert_redirected_to aggregations_path
   end
 end
