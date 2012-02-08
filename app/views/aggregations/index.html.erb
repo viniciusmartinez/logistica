@@ -1,0 +1,36 @@
+<h1>Listing aggregations</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Cod objeto zona</th>
+    <th>Cod objeto munic</th>
+    <th>Cod objeto local</th>
+    <th>Cod objeto secao principal</th>
+    <th>Cod objeto secao agregada</th>
+    <th>Tip operacao</th>
+    <th>Dat operacao</th>
+    <th>Cod operador</th>
+    <th>Qtd aptos principal</th>
+    <th>Qtd aptos agregada</th>
+    <th>Cod objeto dat eleicao</th>
+  </tr>
+
+<% @aggregations.each do |aggregation| %>
+  <tr>
+    <td><%= aggregation.cod_objeto %></td>
+    <td><%= aggregation.cod_objeto_zona %></td>
+    <td><%= aggregation.cod_objeto_munic %></td>
+    <td><%= aggregation.cod_objeto_local %></td>
+    <td><%= aggregation.cod_objeto_secao_principal %></td>
+    <td><%= aggregation.cod_objeto_secao_agregada %></td>
+    <td><%= aggregation.tip_operacao %></td>
+    <td><%= aggregation.dat_operacao %></td>
+    <td><%= aggregation.cod_operador %></td>
+    <td><%= aggregation.qtd_aptos_principal %></td>
+    <td><%= aggregation.qtd_aptos_agregada %></td>
+    <td><%= aggregation.cod_objeto_dat_eleicao %></td>
+  </tr>
+<% end %>
+</table>
+
