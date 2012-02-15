@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cd eleicao:</b>
+  <%= @ele_candidate.cd_eleicao %>
+</p>
+
+<p>
+  <b>Nr cand:</b>
+  <%= @ele_candidate.nr_cand %>
+</p>
+
+
+<%= link_to 'Edit', edit_ele_candidate_path(@ele_candidate) %> |
+<%= link_to 'Back', ele_candidates_path %>

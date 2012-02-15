@@ -1,4 +1,6 @@
 Logistica::Application.routes.draw do
+  resources :ele_candidates
+
   resources :mrjs
 
   resources :aggregations

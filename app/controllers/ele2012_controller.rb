@@ -1,13 +1,19 @@
 class Ele2012Controller < ApplicationController
 
    def index
+      
       @zonas = Zone.boas
-      @total_municipios = City.bons.size
+      #@zonas = Zone.boas.where("num_zona in (1,3,34)")
+      
+      @total_municipios = 0 #City.bons.size
+      @todos_municipios = []
       
       @total_locais = 0
       
       @secoes = nil
       @total_secoes = 0
+      
+      @total_eleitores = 0
       
       @eleicao = ElectionDate.find("Ba1709080617161528") # primeiro turno ele2010
       

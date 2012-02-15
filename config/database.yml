@@ -51,6 +51,12 @@ cad:
   username: cons_tre
   password: conscad01
 
+eleicao:
+  adapter: oracle_enhanced
+  database: "(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = mt2)(PORT = 1521))(CONNECT_DATA = (SID = eleicao)))"
+  username: consulta_tre
+  password: consulta_mt
+
 intranet:
   adapter: oracle_enhanced
   database: //10.18.1.1:1521/adm.world

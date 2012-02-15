@@ -1,0 +1,41 @@
+<h1>Listing mrjs</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Num mesa</th>
+    <th>Cod objeto zona</th>
+    <th>Cod objeto municipio</th>
+    <th>Cod objeto dat eleicao</th>
+    <th>Des endereco</th>
+    <th>Des observacao</th>
+    <th>Nom local</th>
+    <th>Dat criacao</th>
+    <th>Tip mrj</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @mrjs.each do |mrj| %>
+  <tr>
+    <td><%= mrj.cod_objeto %></td>
+    <td><%= mrj.num_mesa %></td>
+    <td><%= mrj.cod_objeto_zona %></td>
+    <td><%= mrj.cod_objeto_municipio %></td>
+    <td><%= mrj.cod_objeto_dat_eleicao %></td>
+    <td><%= mrj.des_endereco %></td>
+    <td><%= mrj.des_observacao %></td>
+    <td><%= mrj.nom_local %></td>
+    <td><%= mrj.dat_criacao %></td>
+    <td><%= mrj.tip_mrj %></td>
+    <td><%= link_to 'Show', mrj %></td>
+    <td><%= link_to 'Edit', edit_mrj_path(mrj) %></td>
+    <td><%= link_to 'Destroy', mrj, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Mrj', new_mrj_path %>

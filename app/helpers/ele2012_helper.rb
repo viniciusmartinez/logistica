@@ -37,5 +37,11 @@ module Ele2012Helper
       return @num_urnas_de_contingencia
    end
 
+   def eleitorado(zona,municipio)
+      eleitorado = 0
+      Station.por_zona_municipio(zona.id,municipio.id).each {|secao| eleitorado += secao.qtd_aptos}
+      @total_eleitores += eleitorado
+      return number_with_delimiter(eleitorado, :delimiter => ".")
+   end
 
 end

@@ -1,0 +1,2 @@
+module MrjsHelper
+end

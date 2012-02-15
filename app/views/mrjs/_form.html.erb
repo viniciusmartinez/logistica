@@ -1,0 +1,18 @@
+<%= semantic_form_for @mrj do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :cod_objeto %>
+    <%= f.input :num_mesa %>
+    <%= f.input :cod_objeto_zona %>
+    <%= f.input :cod_objeto_municipio %>
+    <%= f.input :cod_objeto_dat_eleicao %>
+    <%= f.input :des_endereco %>
+    <%= f.input :des_observacao %>
+    <%= f.input :nom_local %>
+    <%= f.input :dat_criacao %>
+    <%= f.input :tip_mrj %>
+  <% end %>
+
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <% end %>
+<% end %>
