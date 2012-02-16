@@ -1,4 +1,8 @@
 Logistica::Application.routes.draw do
+  resources :electoral_units
+
+  resources :elections
+
   resources :ele_candidates
 
   resources :mrjs

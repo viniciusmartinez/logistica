@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  election_id: 1
+  city_id: 1
+  zone_id: 1
+
+two:
+  id: 1
+  election_id: 1
+  city_id: 1
+  zone_id: 1

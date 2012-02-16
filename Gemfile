@@ -22,7 +22,7 @@ gem 'acts_as_commentable'
 gem "simple-navigation"
 gem "flash_render"
 gem 'web-app-theme', '~> 0.8.0'
-gem 'mysql'
+gem 'mysql2'
 
 gem 'ruby-oci8'
 gem 'activerecord-oracle_enhanced-adapter', :git => "https://github.com/rsim/oracle-enhanced.git"

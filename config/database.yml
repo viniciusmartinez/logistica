@@ -32,14 +32,14 @@ production:
   timeout: 5000
   
 development:
-   adapter: mysql
+   adapter: mysql2
    encoding: utf8
    database: logistica
    username: root
    password: vxmysql1  
 
 teste:
-   adapter: mysql
+   adapter: mysql2
    encoding: utf8
    database: teste
    username: root

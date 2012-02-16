@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120117192806) do
+ActiveRecord::Schema.define(:version => 20120216193444) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -59,6 +59,22 @@ ActiveRecord::Schema.define(:version => 20120117192806) do
     t.string   "avatar"
     t.string   "name_normalized"
     t.boolean  "favorite",        :default => false
+  end
+
+  create_table "elections", :force => true do |t|
+    t.string   "nome"
+    t.string   "nome_abreviado"
+    t.string   "election_date_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "electoral_units", :force => true do |t|
+    t.integer  "election_id"
+    t.integer  "city_id"
+    t.integer  "zone_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "events", :force => true do |t|
@@ -113,17 +129,6 @@ ActiveRecord::Schema.define(:version => 20120117192806) do
     t.integer  "protocol_id"
     t.integer  "status_decisao"
     t.integer  "status_atendimento"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "survey_processes", :force => true do |t|
-    t.text     "descricao"
-    t.date     "inicio"
-    t.date     "fim"
-    t.integer  "numero"
-    t.boolean  "obrigatoria"
-    t.integer  "election_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

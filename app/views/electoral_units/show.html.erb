@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @electoral_unit.id %>
+</p>
+
+<p>
+  <b>Election:</b>
+  <%= @electoral_unit.election_id %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @electoral_unit.city_id %>
+</p>
+
+<p>
+  <b>Zone:</b>
+  <%= @electoral_unit.zone_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_electoral_unit_path(@electoral_unit) %> |
+<%= link_to 'Back', electoral_units_path %>

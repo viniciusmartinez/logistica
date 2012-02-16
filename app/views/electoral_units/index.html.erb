@@ -1,0 +1,29 @@
+<h1>Listing electoral_units</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Election</th>
+    <th>City</th>
+    <th>Zone</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @electoral_units.each do |electoral_unit| %>
+  <tr>
+    <td><%= electoral_unit.id %></td>
+    <td><%= electoral_unit.election_id %></td>
+    <td><%= electoral_unit.city_id %></td>
+    <td><%= electoral_unit.zone_id %></td>
+    <td><%= link_to 'Show', electoral_unit %></td>
+    <td><%= link_to 'Edit', edit_electoral_unit_path(electoral_unit) %></td>
+    <td><%= link_to 'Destroy', electoral_unit, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Electoral unit', new_electoral_unit_path %>

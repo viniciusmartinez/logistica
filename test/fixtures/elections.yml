@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  nome: MyString
+  nome_abreviado: MyString
+  election_date_id: MyString
+
+two:
+  id: 1
+  nome: MyString
+  nome_abreviado: MyString
+  election_date_id: MyString

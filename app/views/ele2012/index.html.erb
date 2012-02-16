@@ -4,12 +4,11 @@
 		   <h3>Logística de Urnas Eletrônicas</h3>
 		</div>
 		<div class="inner">
-		   <div id="tableContainer" class="tableContainer">
-		   <table id="hor-zebra" border="0" cellpadding="0" cellspacing="0" width="100%" class="zonas scrollTable">
-		      <thead class="fixedHeader">
+		   <table id="hor-zebra" border="0" cellpadding="0" cellspacing="0" width="100%" class="zonas">
+		      <thead>
    		      <tr>
 	   	         <th scope="col" colspan="5" class="divide" >Cadastro Eleitoral</th>
-  	   	         <th scope="col" colspan="2" class="divide" >Eleição 2010</th>
+  	   	         <th scope="col" colspan="2" class="divide" ><%= @eleicao.nome_abreviado %></th>
   	   	         <th scope="col" colspan="2" class="divide" >UEs</th>
   	   	         <th scope="col" colspan="2">Mídias</th>
 	   	      </tr>
@@ -29,15 +28,17 @@
 		            <th scope="col">Flashes</th>
 		         </tr>
             </thead>
-            <tbody class="scrollContent">
+            <tbody>
             
-		      <% @zonas.each_with_index do |zona, indice_zona| %>
+		      <% @eleicao.zonas.each_with_index do |zona, indice_zona| %>
+		      
+		         <% municipios = @eleicao.municipios_por_zona(zona) %>
+               
 		         <tr <%= "class='odd'" if indice_zona%2==0 %> >
-		            <td class="ultimo" rowspan='<%= "#{zona.cities.length}" %>' >
+		            <td class="ultimo" rowspan='<%= "#{municipios.size}" %>' >
 		               <strong><%= zona.numero_bonito %></strong>
 		            </td>
 
-                  <% @todos_municipios += municipios = zona.municipios %>
         	         <% municipios.each_with_index do |municipio, index| %>
   
                      <% sede = index == 0? 'sede ': '' %>
@@ -57,7 +58,7 @@
          		         </td>
 
          		         <td class="divide <%= ultimo %>" >
-                           <%= eleitorado(zona,municipio) %>
+                           <%= eleitorado zona, municipio %>
          		         </td>
          		         
          		         <td class="<%= ultimo %>" >
@@ -94,8 +95,8 @@
 		      <% end %>
 
 		         <tr>
-		            <td><strong><%= @zonas.size %></strong></td>
-		            <td><strong><%= @todos_municipios.map(&:cod_objeto).uniq.size %></strong></td>
+		            <td><strong><%= @eleicao.zonas.size %></strong></td>
+		            <td><strong><%= @eleicao.municipios.size %></strong></td>
 		            <td><strong><%= number_with_delimiter(@total_locais, :delimiter => ".") %></strong></td>
 		            <td><strong><%= number_with_delimiter(@total_secoes, :delimiter => ".") %></strong></td>
  		            <td><strong><%= number_with_delimiter(@total_eleitores, :delimiter => ".") %></strong></td>
@@ -109,7 +110,6 @@
 		         </tr>
             </tbody>
          </table>
-         </div>
 		</div>
    </div>
 </div>

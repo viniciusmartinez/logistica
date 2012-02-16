@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @election.id %>
+</p>
+
+<p>
+  <b>Nome:</b>
+  <%= @election.nome %>
+</p>
+
+<p>
+  <b>Nome abreviado:</b>
+  <%= @election.nome_abreviado %>
+</p>
+
+<p>
+  <b>Election date:</b>
+  <%= @election.election_date_id %>
+</p>
+
+<h5>Unidades Eleitorais</h5>
+<% @election.municipios.each do |municipio| %>
+   <p><%= municipio.nome %></p><br />
+<% end %>
+
+
+<%= link_to 'Edit', edit_election_path(@election) %> |
+<%= link_to 'Back', elections_path %>
