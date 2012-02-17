@@ -4,4 +4,8 @@ class ElectionDate < ActiveRecord::Base
    set_primary_key 'cod_objeto'
    
    default_scope :order => :dat_eleicao
+   
+   def data
+      self[:dat_eleicao]
+   end
 end

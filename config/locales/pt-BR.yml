@@ -4,7 +4,9 @@
     subname: "Seção de Voto Informatizado"
     subname_small: "SVI"
     authentication: Autenticação
-    ele2012: "Eleições Municipais 2012"
+    eleicoes:
+      oficiais: "Eleições Oficiais"
+      parametrizadas: "Eleições Parametrizadas"
     users: Usuários
     contacts: Contatos
     calendar: Calendário
@@ -125,6 +127,7 @@
       default: "%d/%m/%Y"
       short: "%d/%m"
       short_desc: "%d de %B"
+      extenso: "%d de %B de %Y"
       long: "%d de %B de %Y"
       long_week: "%A, %d de %B de %Y"
       weekday: "%A"
@@ -137,11 +140,12 @@
     order: [ :day, :month, :year ]
   time:
     formats:
-      default: "%d/%m/%Y %H:%M"
+      default: "%d/%m/%Y"
       time: "%H:%M"
       short: "%d/%m"
       short_with_year: "%d/%m/%Y"
       datepicker: "%Y-%m-%d"
+      extenso: "%d de %B de %Y"
       long: "%A, %d de %B de %Y às %H:%M"
       longo_sem_ano: "%A, %d de %B às %H:%M"
       long_no_time: "%A, %d de %B de %Y"
@@ -165,58 +169,7 @@
     title_day: "dddd, d 'de' MMMM 'de' yyyy"
     today: "Hoje"
     all_day: "o dia todo"
-
-  # time distance in words
-  datetime:
-    formats:
-      default: "%d/%m/%Y %H:%M"
-      date: "%d/%m/%Y"
-      time: "%H:%M"
-    distance_in_words:
-      today: 'hoje'
-      half_a_minute: 'meio minuto'
-      less_than_x_seconds:
-        one: 'menos de 1 segundo'
-        other: 'menos de %{count} segundos'
-      x_seconds:
-        one: '1 segundo'
-        other: '%{count} segundos'
-      less_than_x_minutes:
-        one: 'menos de um minuto'
-        other: 'menos de %{count} minutos'
-      x_minutes:
-        one: '1 minuto'
-        other: '%{count} minutos'
-      about_x_hours:
-        one: 'aproximadamente 1 hora'
-        other: 'aproximadamente %{count} horas'
-      x_days:
-        one: '1 dia'
-        other: '%{count} dias'
-      about_x_months:
-        one: 'aproximadamente 1 mês'
-        other: 'aproximadamente %{count} meses'
-      x_months:
-        one: '1 mês'
-        other: '%{count} meses'
-      about_x_years:
-        one: 'aproximadamente 1 ano'
-        other: 'aproximadamente %{count} anos'
-      over_x_years:
-        one: 'mais de 1 ano'
-        other: 'mais de %{count} anos'
-      almost_x_years:
-        one: 'quase 1 ano'
-        other: 'quase %{count} anos'
-    prompts:
-      year:   "Ano"
-      month:  "Mês"
-      week:   "Semana"
-      day:    "Dia"
-      hour:   "Hora"
-      minute: "Minuto"
-      second: "Segundos"
-  
+ 
   # numbers
   number:
     format:

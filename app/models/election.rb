@@ -10,6 +10,10 @@ class Election < ActiveRecord::Base
             #:primary_key => :cod_objeto,
             #:foreign_key => :cod_objeto_zona
    
+   def data
+      ElectionDate.find(self[:election_date_id]).dat_eleicao
+   end
+   
    def unidades_eleitorais
       self.electoral_units
    end

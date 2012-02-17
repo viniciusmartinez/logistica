@@ -4,6 +4,7 @@ class CreateElections < ActiveRecord::Migration
       t.integer :id
       t.string :nome
       t.string :nome_abreviado
+      t.datetime :data
       t.string :election_date_id
 
       t.timestamps

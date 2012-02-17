@@ -1,0 +1,27 @@
+<% content_for :javascript do %>
+
+<% end %>
+
+<div id="informacoes">
+
+	<% if @eleicao_escolhida %>
+   	<h3><%= @eleicao_escolhida.nome %></h3>
+      <p><strong>Data:</strong> <%= l @eleicao_escolhida.data, :format => :extenso %></p>
+      
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_ue"},
+         :remote => true,
+         :html => {:id => "click_distribuicao_ue", :class => "inline" },
+			
+	       do |ele| %>
+	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "Distribuição de UE" %>
+         <% end %>
+	<% end %>
+		
+   <span id="spinner" style="display:none">
+      <%= image_tag 'carregando.gif' %>
+   </span>	
+		
+</div>
+

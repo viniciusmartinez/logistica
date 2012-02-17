@@ -8,7 +8,8 @@ module ApplicationHelper
        #{:controller => "[contacts, notes]", :path => contacts_path, :title => t("application.contacts", :default => "Contacts"), :thumb => "icons/user.png" },
        #{:controller => "[tasks]", :path => tasks_path, :title => t("application.tasks", :default => "Tasks"), :thumb => "icons/user.png" },
        #{:controller => "[calendar]", :path => calendar_path, :title => t("application.calendar", :default => "Calendar"), :thumb => "icons/calendar.png" }, 
-       {:controller => "[ele2012]", :path => ele2012_path, :title => t("application.ele2012") },
+       {:controller => "[oficiais]", :path => oficiais_path, :title => t("application.eleicoes.oficiais") },
+       {:controller => "[parametrizadas]", :path => oficiais_path, :title => t("application.eleicoes.parametrizadas") },
        {:controller => "[home, vlv, zones, cities, places]", :path => vlv_path, :title => t("application.vlv"), :thumb => "icons/user.png" }
     ]
     pages.each do |page|

@@ -41,6 +41,13 @@ Logistica::Application.routes.draw do
 
   resources :categories
   
+   resources :oficiais do
+      collection do
+         post :eleicao
+         post :distribuicao_ue
+      end
+   end  
+  
   resources :comments #, :only => [:destroy]
 
   resources :users do
@@ -115,7 +122,9 @@ Logistica::Application.routes.draw do
   #  end
   #end
   
-  match '/ele2012' => 'ele2012#index'
+  #match '/oficiais' => 'oficiais#index'
+  #match '/oficiais/eleicao' => 'oficiais#eleicao'
+  match '/parametrizadas' => 'oficiais#index'
   
   match '/vlv' => 'vlv#index'
   match '/vlv/zona' => 'vlv#zona'
@@ -125,7 +134,7 @@ Logistica::Application.routes.draw do
   match 'logout' => 'user_sessions#destroy', :as => :logout
 
   #root :to => "home#index"
-  root :to => "ele2012#index"
+  root :to => "oficiais#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

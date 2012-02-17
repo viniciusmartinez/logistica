@@ -1,0 +1,111 @@
+<div id="distribuicao_ue">
+
+   <% if @distribuicao_ue %>
+   <table id="hor-zebra" border="0" cellpadding="0" cellspacing="0" width="100%" class="zonas">
+      <thead>
+	      <tr>
+	         <th scope="col" colspan="5" class="divide" >Cadastro Eleitoral</th>
+	         <th scope="col" colspan="2" class="divide" ><%= @eleicao.nome_abreviado %></th>
+	         <th scope="col" colspan="2" class="divide" >UEs</th>
+	         <th scope="col" colspan="2">Mídias</th>
+	      </tr>
+         <tr>
+            <th scope="col">Zona</th>
+            <th scope="col">Município</th>
+            <th scope="col">Locais</th>
+            <th scope="col" >Seções</th>
+            <th scope="col" class="divide" >Eleitorado</th>
+
+            <th scope="col">Agregas</th>
+            <th scope="col" class="divide" >MRJ</th>
+            <th scope="col">de Seção</th>
+
+            <th scope="col" class="divide" >de Reserva (25%)</th>
+            <th scope="col">MRs</th>
+            <th scope="col">Flashes</th>
+         </tr>
+      </thead>
+      <tbody>
+      
+      <% @eleicao.zonas.each_with_index do |zona, indice_zona| %>
+      
+         <% municipios = @eleicao.municipios_por_zona(zona) %>
+         
+         <tr <%= "class='odd'" if indice_zona%2==0 %> >
+            <td class="ultimo" rowspan='<%= "#{municipios.size}" %>' >
+               <strong><%= zona.numero_bonito %></strong>
+            </td>
+
+  	         <% municipios.each_with_index do |municipio, index| %>
+
+               <% sede = index == 0? 'sede ': '' %>
+               <% ultimo = index == municipios.size-1? 'ultimo ': '' %>
+
+                  <td class="<%= ultimo+sede %>" >
+                     <%= municipio.nome %> (<%= municipio.numero %>)
+   		         </td>
+   		         
+   		         <td class="<%= ultimo %>" >
+   		            <%= (locais = Place.por_zona(zona.numero).por_municipio(municipio.numero).ativos).size %>
+   		            <% @total_locais += locais.size %>
+   		         </td>
+   		         
+   		         <td class="<%= ultimo %>" >
+                     <%= numero_secoes(zona,municipio) %>
+   		         </td>
+
+   		         <td class="divide <%= ultimo %>" >
+                     <%= eleitorado zona, municipio %>
+   		         </td>
+   		         
+   		         <td class="<%= ultimo %>" >
+                     <%= numero_agregacoes_efetivas(zona,municipio) %>
+   		         </td>
+   		         
+   		         <td class="divide <%= ultimo %>" >
+   		            <%= numero_mrjs(zona,municipio) %>
+   		         </td>
+
+   		         <td class="<%= ultimo %>" >
+   		            <%= numero_urnas_de_secao %>
+   		         </td>
+   		         
+     		         <td class="divide <%= ultimo %>" >
+   		            <%= numero_urnas_de_contingencia %>
+   		         </td>
+   		         
+   		         <td class="<%= ultimo %>" >
+                     ?
+   		         </td>
+   		         
+     		         <td class="<%= ultimo %>" >
+   		            ?
+   		         </td>
+
+  		            <% if index != municipios.size-1 %>
+     		            </tr>
+     		            <tr <%= "class='odd'" if indice_zona%2==0 %> >
+  		            <% end %>
+
+     		   <% end %>
+         </tr>
+      <% end %>
+
+         <tr>
+            <td><strong><%= @eleicao.zonas.size %></strong></td>
+            <td><strong><%= @eleicao.municipios.size %></strong></td>
+            <td><strong><%= number_with_delimiter(@total_locais, :delimiter => ".") %></strong></td>
+            <td><strong><%= number_with_delimiter(@total_secoes, :delimiter => ".") %></strong></td>
+            <td><strong><%= number_with_delimiter(@total_eleitores, :delimiter => ".") %></strong></td>
+	         <td><strong><%= @total_agregacoes %></strong></td>
+	         <td><strong><%= @total_mrjs %></strong></td>
+	         <td colspan="2">
+	            <strong>
+	            <%= number_with_delimiter(@total_urnas_de_secao + @total_urnas_de_contingencia, :delimiter => ".") %>
+	            </strong>
+	         </td>
+         </tr>
+      </tbody>
+   </table>
+   <% end %>
+</div>
