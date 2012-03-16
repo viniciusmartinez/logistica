@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cod_objeto: MyString
+  situacao: 1
+  nom_bairro: MyString
+  cod_objeto_localidade: MyString
+  cod_objeto_sub_localidade: MyString
+  cod_objeto_bairro_ect: MyString
+  tip_associacao: MyString
+  origem: MyString
+
+two:
+  cod_objeto: MyString
+  situacao: 1
+  nom_bairro: MyString
+  cod_objeto_localidade: MyString
+  cod_objeto_sub_localidade: MyString
+  cod_objeto_bairro_ect: MyString
+  tip_associacao: MyString
+  origem: MyString

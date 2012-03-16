@@ -10,6 +10,7 @@ class Place < ActiveRecord::Base
 
    belongs_to :city, :foreign_key => "cod_objeto_localidade"
    belongs_to :zone, :foreign_key => "cod_objeto_zona"
+   belongs_to :neighborhood, :foreign_key => "cod_objeto_bairro"
    
    has_many :stations,
             :primary_key => :cod_objeto,
@@ -31,8 +32,16 @@ class Place < ActiveRecord::Base
       self[:num_local]
    end
    
+   def nome
+      self[:nom_local]
+   end
+   
    def self.numero(id)
       find(id).numero
+   end
+
+   def bairro
+      CadNeighborhood.find(self[:cod_objeto_bairro])
    end
 
    def descricao_situacao

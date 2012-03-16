@@ -22,4 +22,14 @@ class Aggregation < ActiveRecord::Base
    def self.por_dataeleicao(dataeleicao)
       where(:cod_objeto_dat_eleicao => dataeleicao)
    end
+   
+   def self.por_secao_agregada(secao_agregada)
+      where(:cod_objeto_secao_agregada => secao_agregada.id)
+   end
+
+   def self.por_secao_agregada_id(secao_agregada_id)
+      where(:cod_objeto_secao_agregada => secao_agregada_id)
+   end
+   
+
 end

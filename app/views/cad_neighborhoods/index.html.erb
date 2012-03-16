@@ -1,0 +1,37 @@
+<h1>Listing cad_neighborhoods</h1>
+
+<table>
+  <tr>
+    <th>Cod objeto</th>
+    <th>Situacao</th>
+    <th>Nom bairro</th>
+    <th>Cod objeto localidade</th>
+    <th>Cod objeto sub localidade</th>
+    <th>Cod objeto bairro ect</th>
+    <th>Tip associacao</th>
+    <th>Origem</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @cad_neighborhoods.each do |cad_neighborhood| %>
+  <tr>
+    <td><%= cad_neighborhood.cod_objeto %></td>
+    <td><%= cad_neighborhood.situacao %></td>
+    <td><%= cad_neighborhood.nom_bairro %></td>
+    <td><%= cad_neighborhood.cod_objeto_localidade %></td>
+    <td><%= cad_neighborhood.cod_objeto_sub_localidade %></td>
+    <td><%= cad_neighborhood.cod_objeto_bairro_ect %></td>
+    <td><%= cad_neighborhood.tip_associacao %></td>
+    <td><%= cad_neighborhood.origem %></td>
+    <td><%= link_to 'Show', cad_neighborhood %></td>
+    <td><%= link_to 'Edit', edit_cad_neighborhood_path(cad_neighborhood) %></td>
+    <td><%= link_to 'Destroy', cad_neighborhood, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Cad neighborhood', new_cad_neighborhood_path %>

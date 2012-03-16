@@ -1,4 +1,6 @@
 Logistica::Application.routes.draw do
+  resources :cad_neighborhoods
+
   resources :electoral_units
 
   resources :elections

@@ -8,7 +8,7 @@ class Station < ActiveRecord::Base
    belongs_to :zone, :foreign_key => "cod_objeto_zona"
    
    scope :mt, where("cod_objeto_uf" => "18")
-   scope :ativas, where(:situacao => 1)
+   scope :ativas, where(:situacao => 1).where("qtd_aptos > 0")
    scope :junta, joins(:place,:city,:zone).order("#{Zone.table_name}.num_zona").order("#{City.table_name}.nom_localidade").order("#{Place.table_name}.num_local")
 
    scope :boas, mt.ativas.junta
@@ -35,5 +35,28 @@ class Station < ActiveRecord::Base
    
    def self.por_zona_municipio(zona, municipio)
       ativas.where(:cod_objeto_zona => zona).where(:cod_objeto_munic => municipio).order(:cod_objeto_zona).order(:cod_objeto_munic)
+   end
+   
+   def self.por_zona(zona)
+      where(:cod_objeto_zona => zona.id)
+   end
+   
+   def self.por_municipio(municipio)
+      where(:cod_objeto_munic => municipio.id)
+   end
+
+   def self.por_local_id(local_id)
+      where(:cod_objeto_local => "#{local_id}")
+   end
+   
+   def self.por_local(local)
+      where(:cod_objeto_local => local.id)
+   end
+   
+   def agregada?(dataeleicao)
+      n_agregacoes = Aggregation.agregacao.por_dataeleicao(dataeleicao).por_secao_agregada_id(self.id).size
+      n_desagregacoes = Aggregation.desagregacao.por_dataeleicao(dataeleicao).por_secao_agregada_id(self.id).size
+      
+      return n_agregacoes - n_desagregacoes > 0 ? true : false
    end
 end

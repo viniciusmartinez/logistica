@@ -1,0 +1,16 @@
+<%= semantic_form_for @cad_neighborhood do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :cod_objeto %>
+    <%= f.input :situacao %>
+    <%= f.input :nom_bairro %>
+    <%= f.input :cod_objeto_localidade %>
+    <%= f.input :cod_objeto_sub_localidade %>
+    <%= f.input :cod_objeto_bairro_ect %>
+    <%= f.input :tip_associacao %>
+    <%= f.input :origem %>
+  <% end %>
+
+  <%= f.buttons do %>
+    <%= f.commit_button %>
+  <% end %>
+<% end %>
