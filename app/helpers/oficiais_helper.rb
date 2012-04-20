@@ -10,14 +10,17 @@ module OficiaisHelper
       return @num_agregacoes
    end
 
-   def numero_mrjs(zona, mun)
-      @num_mrjs = Mrj.por_dataeleicao(@eleicao.election_date_id).por_zona(zona.id).por_municipio(mun.id).size
+   def numero_mrjs(zona, municipio)
+   
+      mrj = @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["MRJ"]
+   
+      @mrj[zona.numero] += mrj
+      @total_mrj_eleicao += mrj
 
-      @total_mrjs += @num_mrjs
-      return @num_mrjs
+      return mrj
    end
    
-   def numero_secoes(zona,municipio)
+   def lista_numero_secoes_por_local(zona,municipio)
       
       locais = Place.por_zona(zona.numero).por_municipio(municipio.numero).ativos
       secoes = Array.new(locais.size) { 0 }
@@ -28,39 +31,53 @@ module OficiaisHelper
       @total_secoes += @secoes.size
       return secoes
    end
+
+   def numero_secoes(zona,municipio)
+      @secoes = Station.por_zona_municipio(zona.id, municipio.id)
+      @total_secoes += @secoes.size
+      return @secoes.size
+   end
    
-   def numero_urnas_de_secao(num_zona)
-      @num_urnas_de_secao = @secoes.size - @num_agregacoes + @num_mrjs
-      @total_urnas_de_secao += @num_urnas_de_secao
+   def numero_urnas_de_secao(zona,municipio)
+   
+      total_ue_local = 0
+      	
+      @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["local"].each do |log_numero_local, logistica_local|
+         total_ue_local += logistica_local["secao"].size
+      end
       
-      #@urnas_por_zona[num_zona] = 0 unless @urnas_por_zona[num_zona]
-      @urnas_por_zona[num_zona] += @num_urnas_de_secao
+      @ue[zona.numero] += total_ue_local
+      @total_ue_eleicao += total_ue_local
       
-      return @num_urnas_de_secao
+      return total_ue_local   
    end
 
-   def numero_urnas_de_contingencia(num_zona)
-      @num_urnas_de_contingencia = (@num_urnas_de_secao*0.25).ceil
-      @total_urnas_de_contingencia += @num_urnas_de_contingencia
+   def numero_urnas_de_contingencia(zona,municipio)
       
-      #@urnas_por_zona[num_zona] = 0 unless @urnas_por_zona[num_zona] # tirei pq calcula de secao primeiro
-      @urnas_por_zona[num_zona] += @num_urnas_de_contingencia     
+      total_uer_local = 0
+      	
+      @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["local"].each do |log_numero_local, logistica_local|
+         total_uer_local += (logistica_local["secao"].size*0.101).ceil
+      end
       
-      return @num_urnas_de_contingencia
+      @uer[zona.numero] += total_uer_local
+      @total_uer_eleicao += total_uer_local
+      
+      return total_uer_local
    end
 
-   def matriz_local_eleitorado(zona,municipio)
-      
+   def matriz_eleitorado(zona,municipio)
       log = []
    	index_locais = 0
-   	@total_eleitores = 0
+   	@total_eleitores_do_municipio = 0
    	
    	logistica_municipio = @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]
    	
       logistica_municipio["local"].each do |log_numero_local, logistica_local|
          log[index_locais] = []
          logistica_local["secao"].each do |log_numero_secao, logistica_secao|
-            @total_eleitores += logistica_secao["eleitorado"]
+            @total_eleitores_do_municipio += logistica_secao["eleitorado"]
+            @total_eleitores_eleicao += logistica_secao["eleitorado"]
             log[index_locais] << logistica_secao["eleitorado"]
          end
          
@@ -68,18 +85,6 @@ module OficiaisHelper
       end
       
       return log
-      
-      #eleitorado = 0
-      #secoes = Station.por_zona_municipio(zona.id,municipio.id)
-      #eleitores = Array.new
-      
-      #secoes.each do |secao|
-      #   eleitores << secao.qtd_aptos
-      #   eleitorado += secao.qtd_aptos
-      #end
-      @total_eleitores += eleitorado
-      #return eleitores #number_with_delimiter(eleitorado, :delimiter => ".")
-      
    end
 
 end

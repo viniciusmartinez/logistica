@@ -14,7 +14,7 @@
             <th scope="col" style="padding-left: 50px; padding-right: 50px;">Município</th>
             <th scope="col">Locais</th>
             <th scope="col" style="padding-left: 50px; padding-right: 50px;">Seções</th>
-            <th scope="col" class="divide" style="padding-left: 50px; padding-right: 50px;" >Eleitorado</th>
+            <th scope="col" class="divide" style="padding-left: 0px; padding-right: 50px;" >Eleitorado</th>
 
             <th scope="col">Agregas</th>
             <th scope="col" class="divide" >MRJ</th>
@@ -51,18 +51,21 @@
    		         </td>
    		         
    		         <td class="<%= ultimo %>" >
-                     <% numero_secoes(zona,municipio).each do |secao| %>
-                        <%= secao %><br /><br />
-                     <% end %>
+                     <%# lista_numero_secoes_por_local(zona,municipio).each do |secao| %>
+                        <%#= secao %><!--br /><br /-->
+                     <%# end %>
+                     
+                     <%= numero_secoes(zona,municipio) %>
    		         </td>
 
    		         <td class="divide <%= ultimo %>" >
 
-                     <% matriz_local_eleitorado(zona, municipio).each do |local| %>
-                        <%= local %><br /><br />
-                     <% end %>
+                     <%# matriz_local_eleitorado(zona, municipio).each do |local| %>
+                        <%#= local %><!--br /><br /-->
+                     <%# end %>
 
-                     <strong><%= @total_eleitores %></strong>
+                     <% matriz_eleitorado(zona, municipio) %>
+                     <!--strong--><%= @total_eleitores_do_municipio %><!--/strong-->
    		         </td>
    		         
    		         <td class="<%= ultimo %>" >
@@ -74,15 +77,15 @@
    		         </td>
 
    		         <td class="<%= ultimo %>" >
-   		            <%= numero_urnas_de_secao(zona.numero) %>
+   		            <%= numero_urnas_de_secao(zona,municipio) %>
    		         </td>
    		         
      		         <td class="divide <%= ultimo %>" >
-   		            <%= numero_urnas_de_contingencia(zona.numero) %>
+   		            <%= numero_urnas_de_contingencia(zona,municipio) %>
    		         </td>
    		         
   		            <td class="<%= ultimo %>">
-  		               <strong><%= @urnas_por_zona[zona.numero] if index==municipios.size-1 %></strong>
+  		               <strong><%= @ue[zona.numero]+@uer[zona.numero] if index==municipios.size-1 %></strong>
   		            </td>
                   
   		            <% if index != municipios.size-1 %>
@@ -99,12 +102,12 @@
             <td><strong><%= @eleicao.municipios.size %></strong></td>
             <td><strong><%= number_with_delimiter(@total_locais, :delimiter => ".") %></strong></td>
             <td><strong><%= number_with_delimiter(@total_secoes, :delimiter => ".") %></strong></td>
-            <td><strong><%= number_with_delimiter(@total_eleitores, :delimiter => ".") %></strong></td>
+            <td><strong><%= number_with_delimiter(@total_eleitores_eleicao, :delimiter => ".") %></strong></td>
 	         <td><strong><%= @total_agregacoes %></strong></td>
-	         <td><strong><%= @total_mrjs %></strong></td>
+	         <td><strong><%= @total_mrj_eleicao %></strong></td>
 	         <td colspan="3">
 	            <strong>
-	            <%= number_with_delimiter(@total_urnas_de_secao + @total_urnas_de_contingencia, :delimiter => ".") %>
+	            <%= number_with_delimiter(@total_ue_eleicao+@total_uer_eleicao+@total_mrj_eleicao, :delimiter => ".") %>
 	            </strong>
 	         </td>
          </tr>

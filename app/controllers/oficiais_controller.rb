@@ -26,13 +26,13 @@ class OficiaisController < ApplicationController
          
             @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"] = Hash.new
             @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["local"] = Hash.new
+            @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["MRJ"] = Mrj.por_dataeleicao(@eleicao.election_date_id).por_zona(zona.id).por_municipio(mun.id).size
             
             Place.ativos.por_zid_mid(zona.id, mun.id).each do |local|
 
                @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["local"]["#{local.numero}"] = Hash.new
                @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["local"]["#{local.numero}"]["nome"] = local.nome
                @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["local"]["#{local.numero}"]["bairro"] = local.bairro.nome
-
                @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{mun.numero}"]["local"]["#{local.numero}"]["secao"] = Hash.new
                
                Station.ativas.por_local(local).each do |secao|
@@ -54,21 +54,19 @@ class OficiaisController < ApplicationController
       @secoes = nil
       @total_secoes = 0
       
-      @total_eleitores = 0
+      @total_eleitores_do_municipio = 0
+      @total_eleitores_eleicao = 0
       
       @num_agregacoes = 0
       @total_agregacoes = 0
       
-      @num_mrjs = 0
-      @total_mrjs = 0
-
-      @num_urnas_de_secao = 0
-      @total_urnas_de_secao = 0
+      @total_mrj_eleicao = 0
+      @total_ue_eleicao = 0
+      @total_uer_eleicao = 0
       
-      @num_urnas_de_contingencia = 0
-      @total_urnas_de_contingencia = 0
-      
-      @urnas_por_zona = Array.new(62){ 0 }
+      @ue = Array.new(62){ 0 }
+      @uer = Array.new(62){ 0 }
+      @mrj = Array.new(62){ 0 }
    end
   
    def eleicao
