@@ -16,7 +16,18 @@
 	       do |ele| %>
 	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
             <%= ele.submit "Distribuição de UE" %>
-         <% end %>
+      <% end %>
+      
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_tu"},
+         :remote => true,
+         :html => {:id => "click_distribuicao_tu", :class => "inline" },
+			
+	       do |ele| %>
+	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "Distribuição de TU" %>
+      <% end %>
+
 	<% end %>
 		
    <span id="spinner" style="display:none">

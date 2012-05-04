@@ -47,6 +47,7 @@ Logistica::Application.routes.draw do
       collection do
          post :eleicao
          post :distribuicao_ue
+         post :distribuicao_tu
       end
    end  
   
