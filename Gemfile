@@ -6,6 +6,7 @@ gem 'rails', '3.1.1'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 # vini
+gem 'pdfkit'
 gem 'authlogic'
 gem 'formtastic'
 # gem 'validation_reflection'

@@ -1,5 +1,5 @@
 class OficiaisController < ApplicationController
-   respond_to :html, :js
+   respond_to :html, :js, :pdf
   
    def index
       @eleicoes = Election.all
@@ -208,13 +208,29 @@ class OficiaisController < ApplicationController
             end
          end # fim muns
       end # fim zonas 2011
- 
+      
+      respond_to do |format|
+         format.js
+        format.html
+        format.pdf {
+          @template.template_format = :html
+          html = render_to_string(:layout => false , :action => "distribuicao_ue.html.erb")
+          kit = PDFKit.new(html)
+          send_data(kit.to_pdf, :filename => "labels.pdf", :type => 'application/pdf')
+          return # to avoid double render call
+        }
+      end
    end
   
    def eleicao
       @eleicao_escolhida = Election.find(params['election']['id'])
       @eleicao = Election.new
       #Rails.logger.info("Eleicao: #{params.inspect}")
+      
+   end
+   
+   def show
+   
    end
 
 end

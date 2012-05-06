@@ -127,6 +127,7 @@ Logistica::Application.routes.draw do
   
   #match '/oficiais' => 'oficiais#index'
   #match '/oficiais/eleicao' => 'oficiais#eleicao'
+  #match '/oficiais/distribuicao_ue' => 'oficiais#distribuicao_ue'
   match '/parametrizadas' => 'oficiais#index'
   
   match '/vlv' => 'vlv#index'

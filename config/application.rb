@@ -3,6 +3,9 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'tzinfo'
 
+# vini pdf
+require "pdfkit"
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -51,5 +54,8 @@ module Logistica
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    # vini pdf
+    config.middleware.use PDFKit::Middleware, :print_media_type => true
   end
 end
