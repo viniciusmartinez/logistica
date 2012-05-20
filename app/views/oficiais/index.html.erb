@@ -20,7 +20,11 @@
 			
 	          do |ele| %>
                <strong><%= ele.label :id, "Eleição Oficial: ", {} %></strong>
-               <%= ele.select :id, @eleicoes.collect{ |x| [x.nome_abreviado, x.id]}, {}, { :id => "select_eleicao" } %>
+               <% if @eleicoes.size > 1 %>
+                  <%= ele.select :id, @eleicoes.collect{ |x| [x.nome_abreviado, x.id]}, {}, { :id => "select_eleicao" } %>
+               <% else %>
+                  <%= ele.select :id, @eleicoes.collect{ |x| [x.nome_abreviado, x.id]}, {}, { :id => "select_eleicao", :disabled => true } %>
+               <% end %>
          <% end %>
          </div>                  
 		</div>

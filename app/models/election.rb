@@ -9,6 +9,9 @@ class Election < ActiveRecord::Base
    has_many :zones, :through => :electoral_units, :uniq => true
             #:primary_key => :cod_objeto,
             #:foreign_key => :cod_objeto_zona
+
+   scope :ativas, where("status" => 1)
+   scope :boas, ativas
    
    def data
       ElectionDate.find(self[:election_date_id]).dat_eleicao

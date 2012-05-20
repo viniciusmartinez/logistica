@@ -12,7 +12,7 @@ module OficiaisHelper
 
    #def numero_mrjs(zona, municipio)
    
-   #   mrj = @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["mrj"]
+   #   mrj = @logistica["ze"][zona.numero]["mun"][municipio.numero]["mrj"]
    
    #   @mrj[zona.numero] += mrj
    #   @total_mrj_eleicao += mrj
@@ -40,7 +40,7 @@ module OficiaisHelper
       
       #secoes = 0
 
-      #@logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["local"].each do |nlocal, logistica_local|
+      #@logistica["ze"][zona.numero]["mun"][municipio.numero]["local"].each do |nlocal, logistica_local|
       #   secoes += logistica_local["secao"].size
       #end
       
@@ -65,7 +65,7 @@ module OficiaisHelper
       ##   total_uer_local = (Station.por_zona_municipio(zona.id, municipio.id).size*0.1).ceil
 
       ##else	
-         #@logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["local"].each do |log_numero_local, logistica_local|
+         #@logistica["ze"][zona.numero]["mun"][municipio.numero]["local"].each do |log_numero_local, logistica_local|
             #total_uer_local += (logistica_local["secao"].size*0.12).ceil # a partir de 9 UE
          #end
          
@@ -82,7 +82,7 @@ module OficiaisHelper
    	index_locais = 0
    	@total_eleitores_do_municipio = 0
    	
-   	logistica_municipio = @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]
+   	logistica_municipio = @logistica["ze"][zona.numero]["mun"][municipio.numero]
    	
       logistica_municipio["local"].each do |log_numero_local, logistica_local|
          log[index_locais] = []
@@ -98,26 +98,26 @@ module OficiaisHelper
       return log
    end
 
-   def eleitorado(zona,municipio)
+   #def eleitorado(zona,municipio)
 
-   	eleitorado = 0
+   #	eleitorado = 0
   	
-      @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"]["local"].each do |nlocal, log_local|
-         log_local["secao"].each do |nsecao, log_secao|
-            eleitorado += log_secao["eleitorado"]
-         end
-      end
+   #   @logistica["ze"][zona.numero]["mun"][municipio.numero]["local"].each do |nlocal, log_local|
+   #      log_local["secao"].each do |nsecao, log_secao|
+   #         eleitorado += log_secao["eleitorado"]
+   #      end
+   #   end
       
-      return eleitorado
-   end
+   #   return eleitorado
+   #end
 
    def secoes(zona)
 
    	secoes = 0
 
-      @logistica["ze"]["#{zona.numero_bonito}"]["mun"].each do |nmun, log_mun|
+      @logistica["ze"][zona.numero]["mun"].each do |nmun, log_mun|
          log_mun["local"].each do |nlocal, log_local|
-            secoes += log_local["secao"].size
+            secoes += log_local["secoes"]
          end
       end
       

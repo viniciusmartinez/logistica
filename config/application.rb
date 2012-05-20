@@ -56,6 +56,6 @@ module Logistica
     config.assets.version = '1.0'
     
     # vini pdf
-    config.middleware.use PDFKit::Middleware, :print_media_type => true
+    #config.middleware.use PDFKit::Middleware #, :print_media_type => true
   end
 end

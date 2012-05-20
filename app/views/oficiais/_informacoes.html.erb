@@ -9,24 +9,28 @@
       <p><strong>Data:</strong> <%= l @eleicao_escolhida.data, :format => :extenso %></p>
       
       <%= form_for @eleicao,
-         :url => {:action => "distribuicao_ue"},
-         :remote => true,
-         :html => {:id => "click_distribuicao_ue", :class => "inline" },
+         :url => {:action => "distribuicao_ue", :format => "pdf"},
+         :html => {:id => "click_distribuicao_ue" },
 			
 	       do |ele| %>
 	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
-            <%= ele.submit "Distribuição de UE" %>
+            <%= ele.submit "Distribuição de UE", { :class => "ui-button" } %>
       <% end %>
+
+<%#= form_for @ele, :url => {:action => "ue"}, :remote => true, :html => {:id => "ue", :class => "inline" }, do |ele| %>
+
+      <br />
       
       <%= form_for @eleicao,
-         :url => {:action => "distribuicao_tu"},
-         :remote => true,
-         :html => {:id => "click_distribuicao_tu", :class => "inline" },
+         :url => {:action => "distribuicao_tu", :format => "pdf"},
+         :html => {:id => "click_distribuicao_tu" },
 			
 	       do |ele| %>
 	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
-            <%= ele.submit "Distribuição de TU" %>
+            <%= ele.submit "Distribuição de TU", { :class => "ui-button" } %>
       <% end %>
+      
+      <%# :remote => true, no lugar do :format => "pdf" transforma em JS %>
 
 	<% end %>
 		
@@ -34,7 +38,7 @@
       <%= image_tag 'carregando.gif' %>
    </span>	
    
-   <p><%#= link_to "pdf", oficiais_path(:action => 'distribuicao_ue'"pdf") %></p>     
+   <p><%#= link_to "pdf", oficiais_path(:action => 'distribuicao_ue', :format => "pdf") %></p>     
    
 </div>
 

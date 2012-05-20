@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120216193444) do
+ActiveRecord::Schema.define(:version => 20120508172217) do
+
+  create_table "cad_neighborhoods", :force => true do |t|
+    t.string   "cod_objeto"
+    t.integer  "situacao"
+    t.string   "nom_bairro"
+    t.string   "cod_objeto_localidade"
+    t.string   "cod_objeto_sub_localidade"
+    t.string   "cod_objeto_bairro_ect"
+    t.string   "tip_associacao"
+    t.string   "origem"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -67,6 +80,7 @@ ActiveRecord::Schema.define(:version => 20120216193444) do
     t.string   "election_date_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   create_table "electoral_units", :force => true do |t|

@@ -87,5 +87,8 @@ module ApplicationHelper
   def novo?(objeto)
     not objeto.id?
   end
-
+   
+   def numero(numero)
+      number_with_delimiter(numero, :delimiter => ".")
+   end
 end

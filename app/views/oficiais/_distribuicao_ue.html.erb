@@ -1,6 +1,9 @@
 <div id="distribuicao_ue">
 
    <% if @distribuicao_ue %>
+   
+   <h3>Distribuição de Urnas Eletrônicas</h3>
+   
    <table id="hor-zebra" border="0" cellpadding="0" cellspacing="0" width="100%" class="zonas">
       <thead>
 	      <tr>
@@ -10,16 +13,16 @@
 	      </tr>
          <tr>
             <th scope="col">Zona</th>
-            <th scope="col" style="padding-left: 50px; padding-right: 50px;">Município</th>
+            <th scope="col">Município</th>
             <th scope="col">Locais</th>
-            <th scope="col" style="padding-left: 50px; padding-right: 50px;">Seções</th>
-            <th scope="col" class="divide" style="padding-left: 0px; padding-right: 50px;" >Eleitorado</th>
+            <th scope="col">Seções</th>
+            <th scope="col" class="divide">Eleitorado</th>
 
             <th scope="col">Agregas</th>
             <th scope="col" class="divide" >MRJ</th>
             <th scope="col">Seção</th>
             <th scope="col">Reserva</th>
-            <th scope="col" class="divide">Modelo</th>
+            <!--th scope="col" class="divide">Modelo</th-->
   	         <th scope="col" colspan="1" ><strong>Total</strong></th>
          </tr>
       </thead>
@@ -39,7 +42,7 @@
                <% sede = index == 0? 'sede ': '' %>
                <% ultimo = index == municipios.size-1? 'ultimo ': '' %>
 
-               <% logistica_municipio = @logistica["ze"]["#{zona.numero_bonito}"]["mun"]["#{municipio.numero}"] %>
+               <% logistica_municipio = @logistica["ze"][zona.numero]["mun"][municipio.numero] %>
 
                   <td class="<%= ultimo+sede %>" >
                      <%= municipio.nome %><br/>(<%= municipio.numero %>)
@@ -67,7 +70,7 @@
                         <%#= local %><!--br /><br /-->
                      <%# end %>
 
-                     <%= eleitorado(zona, municipio) %>
+                     <%= numero logistica_municipio["eleitorado"] %>
    		         </td>
    		         
    		         <td class="<%= ultimo %>" >
@@ -76,7 +79,7 @@
    		         </td>
    		         
    		         <td class="divide <%= ultimo %>" >
-   		            <%= logistica_municipio["mrj"] %>
+   		            <%= @log_mrj[ @ul.index([zona.numero,municipio.numero]) ][2] %>
    		         </td>
 
    		         <td class="<%= ultimo %>" >
@@ -90,16 +93,16 @@
    		         </td>
    		         
      		         <% if index == 0 %>
-     		         <td class="divide ultimo" rowspan='<%= "#{municipios.size}" %>' >
-   		            <%= @logistica["ze"]["#{zona.numero_bonito}"]["ues_por_modelo"] %>
-   		         </td>
+     		         <!--td class="divide ultimo" rowspan='<%= "#{municipios.size}" %>' -->
+   		            <%#= @logistica["ze"][zona.numero]["ues_por_modelo"] %>
+   		         <!--/td-->
      		         
   		            <td class="ultimo" rowspan='<%= "#{municipios.size}" %>' >
   		               <strong>
   		                  <%#= @ue[zona.numero]+@uer[zona.numero] if index==municipios.size-1 %>
   		                  <% ue_a_enviar = 0 %>
-  		                  <% @logistica["ze"]["#{zona.numero_bonito}"]["mun"].each do |nmun, log_mun| %>
-  		                     <% ue_a_enviar += log_mun["ue"]+log_mun["uer"]+log_mun["mrj"] %>
+  		                  <% @logistica["ze"][zona.numero]["mun"].each do |nmun, log_mun| %>
+  		                     <% ue_a_enviar += log_mun["ue"]+log_mun["uer"]+@log_mrj[ @ul.index([zona.numero, municipio.numero]) ][2] %>
   		                  <% end %>
   		                  <%= ue_a_enviar %>
   		               </strong>
@@ -118,24 +121,24 @@
          <tr>
             <td><strong><%= @eleicao.zonas.size %></strong></td>
             <td><strong><%= @eleicao.municipios.size %></strong></td>
-            <td><strong><%= number_with_delimiter(@logistica["locais"], :delimiter => ".") %></strong></td>
-            <td><strong><%= number_with_delimiter(@logistica["secoes"], :delimiter => ".") %></strong></td>
-            <td><strong><%= number_with_delimiter(@logistica["eleitorado"], :delimiter => ".") %></strong></td>
+            <td><strong><%= numero @logistica["locais"] %></strong></td>
+            <td><strong><%= numero @logistica["secoes"] %></strong></td>
+            <td><strong><%= numero @logistica["eleitorado"] %></strong></td>
 	         <td><strong><%= @logistica["agregas"] %></strong></td>
-	         <td><strong><%= @logistica["mrj"] %></strong></td>
+	         <td><strong><%= @log_mrj[0][2] %></strong></td>
 	         <td>
 	            <strong>
-	            <%= number_with_delimiter(@logistica["ue"], :delimiter => ".") %>
+	            <%= numero @logistica["ue"] %>
 	            </strong>
 	         </td>
 	         <td>
 	            <strong>
-	            <%= number_with_delimiter(@logistica["uer"], :delimiter => ".") %>
+	            <%= numero @logistica["uer"] %>
 	            </strong>
 	         </td>
 	         <td>
 	            <strong>
-	            <%= number_with_delimiter(@logistica["ue"]+@logistica["uer"]+@logistica["mrj"], :delimiter => ".") %>
+	            <%= numero(@logistica["ue"]+@logistica["uer"]+@log_mrj[0][2]) %>
 	            </strong>
 	         </td>
          </tr>

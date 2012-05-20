@@ -48,6 +48,15 @@ class Place < ActiveRecord::Base
       CadDescritor.descricao_por_descritor_valor(@@descritor,self[:situacao])
    end
 
+   # agregacoes
+   
+   def agregacoes(eleicao)
+      n_agregacoes = Aggregation.agregacao.por_dataeleicao(eleicao.election_date_id).por_local(self).size
+      n_desagregacoes = Aggregation.desagregacao.por_dataeleicao(eleicao.election_date_id).por_local(self).size
+      
+      return n_agregacoes - n_desagregacoes
+   end
+
    # outras associacoes
 
    def vistorias

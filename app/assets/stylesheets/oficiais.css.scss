@@ -50,19 +50,26 @@ table.zonas td.sede
 	text-align: center;
 	border-collapse: collapse;
 }
+
+#hor-zebra th, #hor-zebra td
+{
+	padding: 8px;
+	text-align: center;
+}
+
 #hor-zebra th
 {
 	font-size: 14px;
-	font-weight: normal;
-	padding: 10px 8px;
+	/*font-weight: normal;*/
+	padding-top: 10px;
 	color: #039;
 }
 
 #hor-zebra td
 {
-	padding: 5px; /* 8px */
 	color: #669;
 }
+
 #hor-zebra .odd
 {
 	background: #e8edff;
