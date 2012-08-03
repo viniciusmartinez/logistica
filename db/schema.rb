@@ -11,19 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120508172217) do
+ActiveRecord::Schema.define(:version => 20120803014710) do
 
-  create_table "cad_neighborhoods", :force => true do |t|
-    t.string   "cod_objeto"
-    t.integer  "situacao"
-    t.string   "nom_bairro"
-    t.string   "cod_objeto_localidade"
-    t.string   "cod_objeto_sub_localidade"
-    t.string   "cod_objeto_bairro_ect"
-    t.string   "tip_associacao"
-    t.string   "origem"
+  create_table "adjunct_cities", :force => true do |t|
+    t.string   "city_id"
+    t.integer  "kms_de_cuiaba"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "bio"
   end
 
   create_table "categories", :force => true do |t|
@@ -81,14 +76,54 @@ ActiveRecord::Schema.define(:version => 20120508172217) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status"
+    t.datetime "base_em"
   end
+
+  create_table "electoral_models", :force => true do |t|
+    t.integer  "electoral_unit_id"
+    t.integer  "electronic_ballot_box_model_id"
+    t.integer  "qtd"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "election_id"
+  end
+
+  create_table "electoral_places", :force => true do |t|
+    t.integer  "electoral_unit_id"
+    t.string   "place_id"
+    t.integer  "secoes"
+    t.integer  "agregacoes"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "electoral_places", ["electoral_unit_id"], :name => "index_electoral_places_on_electoral_unit_id"
 
   create_table "electoral_units", :force => true do |t|
     t.integer  "election_id"
-    t.integer  "city_id"
-    t.integer  "zone_id"
+    t.string   "city_id"
+    t.string   "zone_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "agregacoes"
+    t.integer  "ues_de_secao"
+    t.integer  "ues_de_contingencia"
+    t.integer  "eleitorado"
+    t.integer  "mrjs_atendidas"
+    t.text     "modelos_de_ue"
+    t.boolean  "sede"
+    t.integer  "mrjs_solicitadas",    :default => 0
+    t.boolean  "excecao_mrj",         :default => false, :null => false
+    t.boolean  "bio"
+  end
+
+  create_table "electronic_ballot_box_models", :force => true do |t|
+    t.integer  "qtd"
+    t.boolean  "bio"
+    t.integer  "ano"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "ativo"
   end
 
   create_table "events", :force => true do |t|

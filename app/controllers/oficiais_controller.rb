@@ -1,5 +1,5 @@
 class OficiaisController < ApplicationController
-   respond_to :html, :js, :pdf
+   respond_to :html, :js, :pdf, :xls
   
    def index
       @eleicoes = Election.boas
@@ -12,11 +12,17 @@ class OficiaisController < ApplicationController
    end
    
    def distribuicao_tu
-      logistica
+
+      @distribuicao_tu = true
+      @eleicao = Election.find(params['election']['id'])
+         
+      #regera_banco_logistica = false
+      #logistica if regera_banco_logistica
       
       respond_to do |format|
         format.js
         format.html
+        format.xls
         format.pdf {
           @template_format = :html
           html = render_to_string(:layout => false , :action => "distribuicao_tu.html.erb")
@@ -31,18 +37,221 @@ class OficiaisController < ApplicationController
    
    def logistica
    
-      @eleicao = Election.find(params['election']['id'])
+      eleicao = Election.find(params['election']['id'])
+   
+      # Tabela de Solicitacoes de Urnas para MRJ
+      # fazer isto aqui virar uma Consulta gravada no banco
+      solicitadas =
+      [
+         0, # TRE
+         2, # 1a ZE
+         0,0, # 2a ZE
+         0,0,0, # 3a ZE
+         2, # 4a ZE
+         4,0, # 5a ZE
+         2, # 6a ZE
+         0,0, # 7a ZE
+         0,0,0,0,0, # 8a ZE
+         2,0,0, # 9a ZE
+         5, # 10a ZE
+         0,2, # 11a ZE
+         0,0, # 12a ZE
+         2,0,0,0, # 13a ZE
+         0,0,0, # 14a ZE
+         0,0,0,0, # 15
+         3,0,0,0, # 16
+         0,0,0,0, # 17
+         0,0,0,0,0, # 18
+         4, # 19
+         1, # 20
+         21,0,0, # 21
+         8,1,1,1, # 22
+         1,0,0,0,0, # 23 
+         0,0,0, # 24
+         3,0,0, # 25
+         0,0,0, # 26 
+         2,0,0,0, # 27
+         0,0,0, # 28
+         0,0, # 29
+         4,1,0, # 30
+         2,2, # 31 
+         0,0,0, # 32 ...
+         0,0,0,0, # 33
+         0,0,0, # 34
+         3,0, # 35
+         2, # 36
+         0, # 37
+         2,0, # 38
+         2,0, # 39
+         0,0,0, # 40
+         2,0,0,0,0, # 41
+         0,0, # 42
+         3,0,0, # 43a ZE
+         0,0, # 44a ZE
+         0,0, # 45a ZE
+         6,1, # 46a ZE 
+         1,0,0,0, # 47a ZE
+         0,0, # 48a ZE
+         1, # 49a ZE
+         0,0,0, # 50a ZE
+         1, # 51a ZE
+         0,0,0, # 52a ZE
+         1,0,0, # 53a ZE
+         0, # 54a ZE
+         1, # 55a ZE
+         0, # 56a ZE
+         2,0, # 57a ZE
+         2,0, # 58a ZE
+         3, # 60a ZE
+         0,0,0,0 # 61a ZE
+      ]
 
+      # itera todas as unidades da eleicao
+      eleicao.unidades.each_with_index do |unidade,index|
+
+         # preambulo
+         unidade.agregacoes = 0
+         unidade.ues_de_secao = 0
+         unidade.ues_de_contingencia = 0
+         
+         zona = unidade.zona
+         mun = unidade.municipio
+         z = zona.numero
+         m = mun.numero
+
+         # marca como sede         
+         if zona.cod_objeto_localidade == unidade.municipio_id
+            unidade.sede = true
+         else
+            unidade.sede = false
+         end
+
+         # destroi os locais eleitorais da unidade
+         unidade.electoral_places.each { |local| local.destroy }
+         # fim
+
+         # pega os locais do cadastro
+         locais = Place.por_zid_mid(unidade.zona_id, unidade.municipio_id).bons
+
+         # gera de novo conforme banco CAD atual
+         locais.each do |local|
+            local_eleitoral = ElectoralPlace.new
+            local_eleitoral.electoral_unit_id = unidade.id
+            local_eleitoral.place_id = local.id
+            local_eleitoral.secoes = secoes = Station.ativas.por_local(local).count
+            local_eleitoral.agregacoes = agregas = local.agregacoes(@eleicao)
+            local_eleitoral.save
+         
+            unidade.agregacoes += agregas
+            unidade.ues_de_secao += secoes-agregas
+            unidade.ues_de_contingencia += ((secoes-agregas)*0.2).ceil
+         end
+         
+         # sobra feita a mao.. arrumar pra distribuir se sobrar multiplos de (eleicao.unidades.size) urnas
+         unidade.ues_de_contingencia += 1
+         
+         # eleitorado
+         unidade.eleitorado = Station.ativas.por_zona(unidade.zona).por_municipio(unidade.municipio).sum(:qtd_aptos)
+
+         # mrj: preambulo
+         unidade.mrjs_solicitadas = solicitadas[index+1]
+         calculadas = (unidade.eleitorado<=15000? 0 : (unidade.eleitorado/15500.to_f).ceil)
+
+         # mrj: excecoes
+         unidade.excecao_mrj = true
+         if z == 5 and m == 90646
+            atendidas = 4
+         elsif z == 21 and m == 90603
+            atendidas = 7
+         elsif z == 12 and m == 90506 # campo verde, biometria
+            atendidas = 2
+         elsif z == 36 and m == 90913
+            atendidas = 1
+         elsif z == 60 and m == 90484
+            atendidas = 3
+         elsif z == 38 and m == 91553 # sto antonio / serra são vicente
+            atendidas = 2
+         elsif z == 34 and m == 90590 # chapada
+            atendidas = 2
+         elsif z == 41 and m == 89893 # araputanga
+            atendidas = 1
+         elsif z == 42 and m == 90727 # sapezal, uma mesa com 3 urnas em 2010 tiveram 1570 justs
+            atendidas = 3
+         
+         # mrj: nao excecoes
+         else      
+            unidade.excecao_mrj = false
+            atendidas = (solicitadas[index+1]>calculadas ? calculadas : solicitadas[index+1])
+         end
+
+         # mrj: variavel atendidas ja tera qtd correta daquela unidade
+         unidade.mrjs_atendidas = atendidas
+         
+         # biometria
+         unidade.bio = mun.adjunto.bio # eh bio se municipio for bio
+         
+         # salva unidade no banco
+         unidade.save
+
+         # muda data da geracao da base de logistica         
+         eleicao.base_em = DateTime.now
+         eleicao.save
+
+      end
+   end
+   
+   def modelo_ues
+   
+      eleicao = Election.find(params['election']['id'])
+      
+      # reset as electoral_models
+      eleicao.electoral_models.each { |e_model| e_model.destroy }
+      # end
+      
+      # preambulo
+      ues_disponiveis = Array.new
+      eh_biometrica = Array.new
+      ids_modelos = Array.new
+      
+      ElectronicBallotBoxModel.ativos.each do |modelo| 
+         ues_disponiveis << modelo.qtd
+         eh_biometrica << (modelo.bio ? true : false)
+         ids_modelos << modelo.id
+      end
+      
+      # itera todas as unidades
+      ElectoralUnit.por_eleicao(eleicao.id).distancia_decrescente.each_with_index do |unidade,index|
+      
+         urnas_a_enviar = unidade.ues_de_secao + unidade.ues_de_contingencia + unidade.mrjs_atendidas
+         
+         modelo = 0
+         until urnas_a_enviar == 0 or modelo == ues_disponiveis.size
+         
+            if (unidade.bio and eh_biometrica[modelo]) or not(unidade.bio)
+               urnas_do_modelo = (ues_disponiveis[modelo] >= urnas_a_enviar ? urnas_a_enviar : ues_disponiveis[modelo])
+               ues_disponiveis[modelo] -= urnas_do_modelo
+               urnas_a_enviar -= urnas_do_modelo
+               
+               if urnas_do_modelo != 0
+                  e_modelo = ElectoralModel.new
+                  e_modelo.election_id = eleicao.id
+                  e_modelo.electoral_unit_id = unidade.id
+                  e_modelo.electronic_ballot_box_model_id = ids_modelos[modelo]
+                  e_modelo.qtd = urnas_do_modelo
+                  e_modelo.save
+               end
+            end
+               
+            modelo += 1            
+            
+         end
+      
+      end
+      
+   end
+=begin
       # logistica
       
-      @logistica = Hash.new
-      @logistica["ze"] = Hash.new
-      @logistica["locais"] = 0
-      @logistica["secoes"] = 0
-      @logistica["ue"] = 0
-      @logistica["uer"] = 0
-      @logistica["agregas"] = 0  
-      @logistica["eleitorado"] = 0
       #@logistica["mrj"] = 0
 
       # logistica MRJ
@@ -55,199 +264,21 @@ class OficiaisController < ApplicationController
       #      [36, 90913] => 1,
       #      [60, 90484] => 3
       #}
-      
-      # unidades de logistica
-      @ul = Hash.new
-      id = 1
-      @eleicao.zonas.each do |zona|
-         @eleicao.municipios_por_zona(zona).each do |mun|
-            
-            @ul[id] = [zona.numero,mun.numero]
-            id += 1
-         
-            #locais = Place.ativos.por_zid_mid(zona.id, mun.id)
-            #locais.each do |local|
-            #end
-         end
-      end
-      
+
       # logistica de ue         
-      @eleicao.zonas.each do |zona|
-         
-         log_z = @logistica["ze"][zona.numero] = Hash.new
-         
-         municipios = @eleicao.municipios_por_zona(zona)
-         log_z["mun"] = Hash.new(municipios.size)
-         
-         log_z["ues_por_modelo"] = Array.new(5) { 0 }
-         
-         municipios.each do |mun|
- 
-            log_zm = log_z["mun"][mun.numero] = Hash.new
-
-            #log_zm["mrj"] = mrj = Mrj.por_dataeleicao(@eleicao.election_date_id).por_zona(zona.id).por_municipio(mun.id).size
-            #@logistica["mrj"] += mrj
-
-            log_zm["ue"] = 0
-            log_zm["agregas"] = 0
-            log_zm["uer"] = 0
-            
-            locais = Place.ativos.por_zid_mid(zona.id, mun.id)
-            log_zm["local"] = Hash.new(locais.size)
-            @logistica["locais"] += locais.size
-            
-            secoes_mun = 0
-            agregacoes_mun = 0
-
-            locais.each do |local|
-
-               log_zml = log_zm["local"][local.numero] = Hash.new
-              
-               log_zml["secoes"] = secoes = Station.ativas.por_local(local).count
-               secoes_mun += secoes
-               
-               #secoes.each do |secao|
-               
-                  #log_zmls = log_zml["secao"][secao.numero] = Hash.new
-                  #log_zmls["eleitorado"] = secao.qtd_aptos
-                  #@logistica["eleitorado"] += secao.qtd_aptos
-                  #eleitorado_mun += secao.qtd_aptos
-                  
-                  #nagregas += 1 if secao.agregada?(@eleicao.election_date_id)
-
-               #end # fim stations
-               
-               nagregas = local.agregacoes(@eleicao)
-               agregacoes_mun += nagregas 
-                
-               log_zm["ue"] += (secoes-nagregas)
-               @logistica["ue"] += (secoes-nagregas)
-               
-               # 2UER com 9UE
-               calculo_uer = ((secoes-nagregas)*0.12).ceil
-               log_zm["uer"] += calculo_uer
-               @logistica["uer"] += calculo_uer
-
-            end # fim places
-            
-            log_zm["agregas"] = agregacoes_mun
-            log_zm["secoes"] = secoes_mun
-            log_zm["eleitorado"] = Station.ativas.por_zona(zona).por_municipio(mun).sum(:qtd_aptos) 
-            
-            @logistica["secoes"] += secoes_mun
-            @logistica["agregas"] += agregacoes_mun
-            
-         end # fim cities
-      end # fim zones
+      log_z["ues_por_modelo"] = Array.new(5) { 0 }
       
-      # logistica mrj
-      @log_mrj[0] = Array.new(3) {0}
-      @ul.each do |id, zm|
-         @log_mrj[id] = Array.new(3) {0}
-      end
-      
-      solicitadas =
-      [
-         0, # TRE
-         2, # 1a ZE
-         0,0, # 2a ZE
-         0,0,0, # ...
-         2,
-         4,0,
-         2,
-         0,0,
-         0,0,0,0,0,
-         2,0,0,
-         5,
-         0,0,
-         0,0,
-         2,0,0,0,
-         0,0,0,
-         0,0,0,0,
-         3,0,0,0,
-         0,0,0,0,
-         0,0,0,0,0,
-         4,
-         1,
-         21,0,0,
-         8,1,1,1,
-         1,0,0,0,0,
-         0,0,0,
-         3,0,0,
-         0,0,0,
-         2,0,0,0,
-         0,0,0,
-         0,0,
-         4,1,0,
-         2,2,
-         14,2,1,
-         0,0,0,0,
-         0,0,0,
-         3,0,
-         2,
-         0,
-         2,0,
-         2,0,
-         0,0,0,
-         2,0,0,0,0,
-         0,0,
-         2,0,0,
-         0,0,
-         0,0,
-         6,1,
-         1,0,0,0,
-         0,0,
-         1,
-         0,0,0,
-         1,
-         0,0,0,
-         1,0,0,
-         0,
-         1,
-         0,
-         2,0, # ...
-         2,0, # 58a ZE
-         3, # 60a ZE
-         0,0,0,0 # 61a ZE
-      ]
-      
-      @ul.each do |id,zm|
-        
-            # variaveis auxiliares
-            z = zm[0] # zona numero
-            m = zm[1] # mun numero
-            eleitorado_mun = @logistica["ze"][z]["mun"][m]["eleitorado"]
-         
-            # solicitadas
-            @log_mrj[id][0] = solicitadas[id]
-            @log_mrj[0][0] += solicitadas[id]
-            
-            # calculadas
-            @log_mrj[id][1] = calculadas = (eleitorado_mun<=15000? 0 : (eleitorado_mun/15000.to_f).ceil)
-            @log_mrj[0][1] += calculadas
-            
-            # excecoes
-            if z == 5 and m == 90646
-               @log_mrj[id][2] = disponibilizadas = 4
-            elsif z == 21 and m == 90603
-               @log_mrj[id][2] = disponibilizadas = 7
-            elsif z == 36 and m == 90913
-               @log_mrj[id][2] = disponibilizadas = 1
-            elsif z == 60 and m == 90484
-               @log_mrj[id][2] = disponibilizadas = 3
-               
-            # regra geral: calculadas # tem algo errado
-            
-            else
-               @log_mrj[id][2] = disponibilizadas = @log_mrj[id][1]
-            end
-            
-            @log_mrj[0][2] += disponibilizadas
-
-      end
+      # excecoes
+      if z == 5 and m == 90646
+         @log_mrj[id][2] = disponibilizadas = 4
+      elsif z == 21 and m == 90603
+         @log_mrj[id][2] = disponibilizadas = 7
+      elsif z == 36 and m == 90913
+         @log_mrj[id][2] = disponibilizadas = 1
+      elsif z == 60 and m == 90484
+         @log_mrj[id][2] = disponibilizadas = 3
       
       # distribuicao de modelos de ue
-=begin
       @d = Hash.new
       @d["ue"] = 8521
       @d["ue2004"] = 634
@@ -360,17 +391,36 @@ class OficiaisController < ApplicationController
          end # fim muns
       end # fim zonas 2011
 =end   
-   end
+
 
    def distribuicao_ue
-      
+     
       @distribuicao_ue = true
- 
-      logistica
+
+      regera_banco_logistica = false
+      regera_modelo_ues = false
+      @com_nome_chefe = false
+      @com_mrj_elo = false
+      @com_modelos_ues = true
+      
+
+      @eleicao = Election.find(params['election']['id'])
+      
+      logistica if regera_banco_logistica
+      modelo_ues if regera_modelo_ues
+      
+      # cria adjunct_cities .. Nao executar se ja tiverem sido criadas
+      #City.bons.each do |mun|
+      #   adj_mun = AdjunctCity.new
+      #   adj_mun.city_id = mun.id
+      #   adj_mun.kms_de_cuiaba = 0
+      #   adj_mun.save
+      #end
       
       respond_to do |format|
         format.js
         format.html
+        format.xls
         format.pdf {
           @template_format = :html
           html = render_to_string(:action => "distribuicao_ue.html.erb")

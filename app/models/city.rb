@@ -6,6 +6,8 @@ class City < ActiveRecord::Base
    default_scope :order => "#{table_name}.nom_localidade ASC"
    scope :ordena, :order => "#{table_name}.nom_localidade ASC"
    
+   has_one :adjunct_city
+   
    has_many :zones, :through => :places, :uniq => true
    
    has_many :places,
@@ -29,5 +31,9 @@ class City < ActiveRecord::Base
    
    def id
       self[:cod_objeto]
+   end
+   
+   def adjunto
+      adjunct_city
    end
 end

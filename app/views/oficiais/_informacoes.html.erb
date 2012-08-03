@@ -1,6 +1,28 @@
 <% content_for :javascript do %>
 
+   $(function(){
+  
+      $("#ue_html").click(function () {
+         $("#tabua").html('');
+         $("#limpa").css('display','none');
+         $("#painel").css('display','block');
+         $("#distribuicao_tu_pdf").css("display","none");
+         $("#distribuicao_ue_pdf").css("display","none");
+         $("#carregando").css('display','block');
+      });
+
+      $("#tu_html").click(function () {
+         $("#tabua").html('');
+         $("#limpa").css('display','none');
+         $("#painel").css('display','block');
+         $("#distribuicao_ue_pdf").css("display","none");
+         $("#distribuicao_tu_pdf").css("display","none");
+         $("#carregando").css('display','block');
+      });
+
+   });
 <% end %>
+
 
 <div id="informacoes">
 
@@ -8,37 +30,59 @@
    	<h3><%= @eleicao_escolhida.nome %></h3>
       <p><strong>Data:</strong> <%= l @eleicao_escolhida.data, :format => :extenso %></p>
       
-      <%= form_for @eleicao,
-         :url => {:action => "distribuicao_ue", :format => "pdf"},
-         :html => {:id => "click_distribuicao_ue" },
-			
-	       do |ele| %>
-	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
-            <%= ele.submit "Distribuição de UE", { :class => "ui-button" } %>
-      <% end %>
-
-<%#= form_for @ele, :url => {:action => "ue"}, :remote => true, :html => {:id => "ue", :class => "inline" }, do |ele| %>
-
-      <br />
+      <hr style="clear: both" />
       
-      <%= form_for @eleicao,
-         :url => {:action => "distribuicao_tu", :format => "pdf"},
-         :html => {:id => "click_distribuicao_tu" },
+      <span style="float: left; clear: none;" >Distribuição de Urnas Eletrônicas:</span>
+      <div class="botoes">
+         <%= form_for @eleicao,
+            :url => {:action => "distribuicao_ue" },
+            :html => {:id => "distribuicao_ue_html" },
+			   :remote => true, 
 			
-	       do |ele| %>
-	         <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
-            <%= ele.submit "Distribuição de TU", { :class => "ui-button" } %>
-      <% end %>
-      
-      <%# :remote => true, no lugar do :format => "pdf" transforma em JS %>
+	          do |ele| %>
+	            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+               <%= ele.submit "Gerar", { :id => "ue_html", :class => "ui-button" } %>
+         <% end %>
+      </div>
+
+      <br style="clear: both;" />
+      <br style="clear: both;" />
+
+      <span style="float: left; clear: none;" >Distribuição de Técnicos de Urna:</span>
+      <div class="botoes">
+         <%= form_for @eleicao,
+            :url => {:action => "distribuicao_tu" },
+            :html => {:id => "distribuicao_tu_html" },
+			   :remote => true,
+			   
+	          do |ele| %>
+	            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+               <%= ele.submit "Gerar", { :id => "tu_html", :class => "ui-button" } %>
+         <% end %>
+     </div>
+     
+     <br style="clear: both;" />
+     <br style="clear: both;" />
+
+     <span style="float: left; clear: none;" >Distribuição de Materiais Eleitorais:</span>
+     <div class="botoes">
+         <%= form_for @eleicao,
+            :url => {:action => "distribuicao_me" },
+            :html => {:id => "distribuicao_me_html" },
+			   :remote => true,
+			   
+	          do |ele| %>
+	            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+               <%= ele.submit "Gerar", { :id => "me_html", :class => "ui-button" } %>
+         <% end %>
+     </div>
+           
+     <br style="clear: both;" />
+
 
 	<% end %>
-		
-   <span id="spinner" style="display:none">
-      <%= image_tag 'carregando.gif' %>
-   </span>	
-   
-   <p><%#= link_to "pdf", oficiais_path(:action => 'distribuicao_ue', :format => "pdf") %></p>     
+
+   <!--p><%#= link_to "pdf", oficiais_path(:action => 'distribuicao_ue', :format => "pdf") %></p-->
    
 </div>
 

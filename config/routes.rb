@@ -1,10 +1,23 @@
 Logistica::Application.routes.draw do
+  resources :electoral_models
+
+  resources :electronic_ballot_box_models
+
+  resources :adjunct_cities
+
+  resources :electoral_places
+
   resources :cad_neighborhoods
 
   resources :electoral_units
 
-  resources :elections
-
+   resources :elections do
+      member do
+         get :unidades_eleitorais
+         post :grava
+      end
+   end
+   
   resources :ele_candidates
 
   resources :mrjs
@@ -48,6 +61,7 @@ Logistica::Application.routes.draw do
          post :eleicao
          post :distribuicao_ue
          post :distribuicao_tu
+         post :distribuicao_me
       end
    end  
   
@@ -136,6 +150,8 @@ Logistica::Application.routes.draw do
 
   match 'login' => 'user_sessions#new', :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
+  
+  #match '/elections/:id/grava' => 'elections#grava'
 
   #root :to => "home#index"
   root :to => "oficiais#index"

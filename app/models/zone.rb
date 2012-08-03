@@ -10,7 +10,8 @@ class Zone < ActiveRecord::Base
    has_many :places,
             :primary_key => :cod_objeto,
             :foreign_key => :cod_objeto_zona
-   
+            
+  
    scope :mt, where("cod_objeto_uf" => "18")
    scope :boas, mt
    
@@ -41,4 +42,5 @@ class Zone < ActiveRecord::Base
    def municipios
       self.cities.select {|m| m.id == self.municipio_sede_id } + self.cities.reject {|m| m.id == self.municipio_sede_id }
    end
+   
 end

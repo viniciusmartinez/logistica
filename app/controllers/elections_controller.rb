@@ -80,4 +80,53 @@ class ElectionsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+   def unidades_eleitorais
+
+      @election = Election.find(params[:id])
+     
+      @possiveis_unidades = Array.new
+      
+      Zone.boas.each do |zona|
+         zona.municipios.each do |municipio|
+            @possiveis_unidades << [zona.id,municipio.id]
+         end
+      end
+  
+      @unidades_selecionadas = Array.new(@possiveis_unidades.size)
+      
+      @unidades_selecionadas.each_with_index { |u,i| @unidades_selecionadas[i] = ElectoralUnit.por_eleicao(@election.id).por_zona(@possiveis_unidades[i][0]).por_municipio(@possiveis_unidades[i][1]).exists? }
+
+   end
+
+   def grava
+   
+      @election = Election.find(params[:id])
+      
+      ElectoralUnit.por_eleicao(@election.id).each { |unidade| unidade.destroy }
+      
+      @possiveis_unidades = Array.new
+      Zone.boas.each do |zona|
+         zona.municipios.each do |municipio|
+            @possiveis_unidades << [zona.id,municipio.id]
+         end
+      end
+      
+      params[:unidade].each do |index|
+         eu = ElectoralUnit.new
+         eu.id = nil
+         eu.election_id = @election.id
+         eu.zone_id = @possiveis_unidades[index.to_i][0]
+         eu.city_id = @possiveis_unidades[index.to_i][1]
+         eu.save
+      end
+      
+      #Rails.logger.info("Eleicao: #{params.inspect}")
+      
+      respond_to do |format|
+         format.html { render action: "show" }
+      end
+   end
+  
+  
 end

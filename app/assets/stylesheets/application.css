@@ -219,6 +219,7 @@ input {
 	background: url(widget_weather.png) center center no-repeat;
 	height: 160px;
 	margin: 0 auto;
+	
 }
 
 .weatherItem {
@@ -762,13 +763,19 @@ form.inline .wat-cf {
 	padding: 0;
 }
 
-form.inline textarea, form.inline input {
-	width: 98%;
+form.inline {
+   float: left;
+}
+
+form.inline textarea /*, form.inline input*/ {
+	/*width: 98%;*/
 	margin: 2px 0 10px 0;
 	border: 1px solid #ccc;
 	font-family: inherit;
 	font-size: 1em;
 	background: #fff;
+	float: left;
+	clear: none;
 }
 
 form.inline .button {

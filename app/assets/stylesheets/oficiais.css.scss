@@ -2,6 +2,54 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#informacoes div.botoes form
+{
+   float: left;
+   clear: none;
+}
+
+#informacoes span /*, #informacoes div.botoes form input*/
+{
+   font-size: 110%;
+   margin: 5px;
+	font-family: inherit;
+	float: left;
+	clear: none;
+}
+
+/*#informacoes div.botoes form input
+{
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+#informacoes div.botoes form input.pdf
+{
+   background-color: tomato;
+}
+
+#informacoes div.botoes form input.html
+{
+   background-color: lightBlue;
+}*/
+
+#informacoes div.botoes
+{
+   float: left;
+   clear: none;
+}
+
+div.ajax
+{
+   margin-top: 15px;
+   /*background-image: url(image-path("carregando2.gif"));
+   background-repeat: no-repeat;
+   background-position: center;*/
+   display: none;
+   position: relative;
+   left: 50%
+}
+
 /*table.zonas
 {
    margin: 0;   

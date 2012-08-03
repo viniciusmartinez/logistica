@@ -5,6 +5,15 @@
       $("#select_eleicao").change(function () {
          $("#troca_eleicao").submit();
       });
+      
+      $("#limpa").click(function () {
+         $("#limpa").css("display","none");
+         $("#distribuicao_tu_pdf").css("display","none");
+         $("#distribuicao_ue_pdf").css("display","none");
+         $("#tabua").html("");
+         $("#painel").css('display','none');
+      });
+            
    });
 	
 <% end %>
@@ -30,11 +39,34 @@
 		</div>
 
 		<div class="inner">
-
          <%= render :partial => "informacoes" %>
-
-         <%= render :partial => "distribuicao_ue" %>
-
-		</div>
+      </div>
    </div>
+</div>
+
+<div id="painel" class="block" style="display: none;">   
+   <div class="content">
+      <div id="carregando" class='ajax'><img src="assets/carregando2.gif" alt="carregando..." /></div>
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_ue", :format => "pdf"},
+         :html => {:id => "distribuicao_ue_pdf", :style => "display: none; float: right; clear: left;" },
+		
+          do |ele| %>
+            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "PDF", { :class => "ui-button" } %>
+      <% end %>
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_tu", :format => "pdf"},
+         :html => {:id => "distribuicao_tu_pdf", :style => "display: none; float: right; clear: left;" },
+		
+          do |ele| %>
+            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "PDF", { :class => "ui-button" } %>
+      <% end %>
+      <input type="button" id="limpa" class="ui-button" style="float: right; clear: left; display: none;" value="Limpar" />
+      
+      <div id="tabua" class="inner">
+         <%= render :partial => "distribuicao_ue" %>
+      </div>
+	</div>
 </div>

@@ -4,7 +4,7 @@ class Place < ActiveRecord::Base
    set_primary_key 'cod_objeto'
    
    @@descritor = 'SITUACAO_LOCAL'
-   @@bom = ['ATIVO','BLOQUEADO']
+   @@bom = ['ATIVO','BLOQUEADO'] # (1,5)
    
    scope :ordena, :order => "#{table_name}.num_local ASC"
 
@@ -48,6 +48,10 @@ class Place < ActiveRecord::Base
       CadDescritor.descricao_por_descritor_valor(@@descritor,self[:situacao])
    end
 
+   def eleitorado
+      Station.por_local(self).sum(:qtd_aptos)
+   end
+   
    # agregacoes
    
    def agregacoes(eleicao)
@@ -74,7 +78,8 @@ class Place < ActiveRecord::Base
    end
 
    def self.ativos
-      where(:situacao => CadDescritor.valores_por_descritor_descricoes(@@descritor,@@bom) )
+      #where(:situacao => CadDescritor.valores_por_descritor_descricoes(@@descritor,@@bom) )
+      where(:situacao => [1,5] )
    end
 
    def self.por_zona(zona)
@@ -91,6 +96,10 @@ class Place < ActiveRecord::Base
 
    def self.por_zid_mid(zona, mun)
       where(:cod_objeto_zona => "#{zona}").where(:cod_objeto_localidade => "#{mun}").ordena
+   end
+   
+   def self.bons
+      return ativos.select { |local| local.eleitorado > 0 }
    end
 
    #def self.mt

@@ -1,150 +1,221 @@
-<div id="distribuicao_ue">
+<div id="distribuicao_ue" style="padding: 10px">
 
    <% if @distribuicao_ue %>
    
+   <h4 style="color: blue"><%= @eleicao.nome %></h4>
    <h3>Distribuição de Urnas Eletrônicas</h3>
+   <h6 style="font-weight: normal">Base da Logística gerada em <%= l @eleicao.base_em, :format => :long %><br />Seção de Voto Informatizado / CSE / STI / TRE-MT</h6>
    
    <table id="hor-zebra" border="0" cellpadding="0" cellspacing="0" width="100%" class="zonas">
       <thead>
 	      <tr>
-	         <th scope="col" colspan="5" class="divide" >Cadastro Eleitoral</th>
-	         <th scope="col" colspan="2" class="divide" ><%= @eleicao.nome_abreviado %></th>
+	         <th scope="col" colspan="<% if @com_nome_chefe %>6<% else %>5<% end %>" class="divide" >Cadastro Eleitoral</th>
+	         <th scope="col" colspan="<% if @com_mrj_elo %>3<% else %>2<% end %>" class="divide" ><%= @eleicao.nome_abreviado %></th>
 	         <th scope="col" colspan="4">UEs</th>
+
 	      </tr>
          <tr>
             <th scope="col">Zona</th>
             <th scope="col">Município</th>
+            <% if @com_nome_chefe %><th scope="col">Chefe</th><% end %>
             <th scope="col">Locais</th>
             <th scope="col">Seções</th>
             <th scope="col" class="divide">Eleitorado</th>
 
             <th scope="col">Agregas</th>
-            <th scope="col" class="divide" >MRJ</th>
+            <th scope="col" class="<%= ' divide' unless @com_mrj_elo %>">MRJ</th>
+            <% if @com_mrj_elo %><th scope="col" class="divide" >MRJ (elo)</th><% end %>
             <th scope="col">Seção</th>
-            <th scope="col">Reserva</th>
-            <!--th scope="col" class="divide">Modelo</th-->
-  	         <th scope="col" colspan="1" ><strong>Total</strong></th>
+            <th scope="col" style="margin-left: 10px; margin-right: 10px">Reserva</th>
+  	         <th scope="col" colspan="1" ><strong>Subtotal</strong></th>
+  	         <% if @com_modelos_ues %><th scope="col" colspan="1">Modelos</th><% end %>
          </tr>
       </thead>
       <tbody>
       
-      <% @eleicao.zonas.each_with_index do |zona, indice_zona| %>
+      <% total_percentual = 0 %>
+      <% indice_zona = -1 %>
+      <% indice_mun = 1 %>
       
-         <% municipios = @eleicao.municipios_por_zona(zona) %>
+      <% @eleicao.unidades.each_with_index do |unidade, uid| %>
+      
+         <% muns = ElectoralUnit.por_eleicao(@eleicao.id).por_zona(unidade.zona_id).count %>
+         <% zona = unidade.zona %>
+         <% municipio = unidade.municipio %>
+
+         <% if unidade.sede %>
+            <% indice_zona += 1 %>
+            <% indice_mun = 1 %>
+         <% else %>
+            <% indice_mun += 1 %>
+         <% end %>
          
+         <% ultimo = indice_mun == muns ? 'ultimo ' : '' %>
+
          <tr <%= "class='odd'" if indice_zona%2==0 %> >
-            <td class="ultimo" rowspan='<%= "#{municipios.size}" %>' >
+ 
+            <% if unidade.sede %>           
+            <td class="ultimo" rowspan="<%= muns %>" >
                <big><strong><%= zona.numero_bonito %></strong></big>
             </td>
-
-  	         <% municipios.each_with_index do |municipio, index| %>
-
-               <% sede = index == 0? 'sede ': '' %>
-               <% ultimo = index == municipios.size-1? 'ultimo ': '' %>
-
-               <% logistica_municipio = @logistica["ze"][zona.numero]["mun"][municipio.numero] %>
-
-                  <td class="<%= ultimo+sede %>" >
-                     <%= municipio.nome %><br/>(<%= municipio.numero %>)
-   		         </td>
+            <% end %>
+            
+            <td class="<%= ultimo %>" <%= "style='font-weight: bold'" if unidade.sede %> >
+               <%= municipio.nome %><br/>(<%= municipio.numero %>)
+	         </td>
+	         
+	         <% if @com_nome_chefe %>
+	         <td class="<%= ultimo %>" >
+	            <%= zona.nom_chefe %>
+	         </td>
+	         <% end %>
    		         
-   		         <td class="<%= ultimo %>" >
-   		            <%#= (locais = Place.por_zona(zona.numero).por_municipio(municipio.numero).ativos).size %>
-   		            <%= locais = logistica_municipio["local"].size %>
-   		         </td>
+	         <td class="<%= ultimo %>" >
+	            <%#= (locais = Place.por_zona(zona.numero).por_municipio(municipio.numero).ativos).size %>
+	            <%= unidade.locais.count %>
+	         </td>
    		         
-   		         <td class="<%= ultimo %>" >
-                     <%# lista_numero_secoes_por_local(zona,municipio).each do |secao| %>
-                        <%#= secao %><!--br /><br /-->
-                     <%# end %>
+	         <td class="<%= ultimo %>" >
+               <%# lista_numero_secoes_por_local(zona,municipio).each do |secao| %>
+                  <%#= secao %>
+               <%# end %>
+               
+               <%= unidade.electoral_places.sum(:secoes) %>
+	         </td>
+
+	         <td class="divide <%= ultimo %>" >
+
+               <%# matriz_local_eleitorado(zona, municipio).each do |local| %>
+                  <%#= local %>
+               <%# end %>
+
+               <%= numero unidade.eleitorado %>
+	         </td>
+	         
+	         <td class="<%= ultimo %>" >
+               <%= unidade.agregacoes %>
+	         </td>
+	         
+	         <td class="<%= ultimo %><%= ' divide' unless @com_mrj_elo %>" >
+	            <%= mrj_enviadas = unidade.mrjs_atendidas %>
+	         </td>
+	         
+	         <% if @com_mrj_elo %>
+	         <td class="divide <%= ultimo %>" >
+	            <% mrj_cadastradas = Mrj.por_eleicao_id(@eleicao.id).por_zona(zona.id).por_municipio(municipio.id).count %>
+	            <strong style="color: <% if mrj_cadastradas>mrj_enviadas %>red<% elsif mrj_cadastradas==mrj_enviadas %>DarkGreen<% else %>DarkBlue<% end %>;">
+                  <%= mrj_cadastradas %>
+               </strong>
+	         </td>
+	         <% end %>
+
+	         <td class="<%= ultimo %>" >
+	            <%= unidade.ues_de_secao %>
+	         </td>
+	         
+	         <td class="<%= ultimo %>" >
+	            <%= unidade.ues_de_contingencia %><br />
+	            (<%= (percentual=(unidade.ues_de_contingencia.to_f / unidade.ues_de_secao)*100).ceil %>%)
+	            <% total_percentual += percentual %>
+	         </td>
+	         
+            <td class="<%= ultimo %>" >
+               <strong>
+                  <%= unidade.ues_de_secao + unidade.ues_de_contingencia + unidade.mrjs_atendidas %>
+               </strong>
+            </td>
+            
+            <% if @com_modelos_ues and unidade.sede %>
+            <td class="ultimo" rowspan="<%= muns %>" >
+
+               <% ues = Hash.new %>
+               <% ElectoralUnit.por_eleicao(@eleicao.id).por_zona(zona.id).each do |un| %>
+
+
+                  <% un.modelos_ues.each do |modelo| %>
                      
-                     <strong>
-                        <%#= numero_secoes(zona,municipio) %>
-                        <%= logistica_municipio["secoes"] %>
-                     </strong>
-   		         </td>
+                     <%# inicia se nao iniciado %>
+                     <% ues[modelo.ano] = 0 if not(ues[modelo.ano]) %>
+                     
+                     <%# adiciona no modelo %>
+                     <% ues[modelo.ano] += modelo.qtd %>
 
-   		         <td class="divide <%= ultimo %>" >
-
-                     <%# matriz_local_eleitorado(zona, municipio).each do |local| %>
-                        <%#= local %><!--br /><br /-->
-                     <%# end %>
-
-                     <%= numero logistica_municipio["eleitorado"] %>
-   		         </td>
-   		         
-   		         <td class="<%= ultimo %>" >
-                     <%#= numero_agregacoes_efetivas(zona,municipio) %>
-                     <%= logistica_municipio["agregas"] %>
-   		         </td>
-   		         
-   		         <td class="divide <%= ultimo %>" >
-   		            <%= @log_mrj[ @ul.index([zona.numero,municipio.numero]) ][2] %>
-   		         </td>
-
-   		         <td class="<%= ultimo %>" >
-   		            <%#= numero_urnas_de_secao(zona,municipio) %>
-   		            <%= logistica_municipio["ue"] %>
-   		         </td>
-   		         
-     		         <td class="<%= ultimo %>" >
-   		            <%#= numero_urnas_de_contingencia(zona,municipio) %>
-   		            <%= logistica_municipio["uer"] %>
-   		         </td>
-   		         
-     		         <% if index == 0 %>
-     		         <!--td class="divide ultimo" rowspan='<%= "#{municipios.size}" %>' -->
-   		            <%#= @logistica["ze"][zona.numero]["ues_por_modelo"] %>
-   		         <!--/td-->
-     		         
-  		            <td class="ultimo" rowspan='<%= "#{municipios.size}" %>' >
-  		               <strong>
-  		                  <%#= @ue[zona.numero]+@uer[zona.numero] if index==municipios.size-1 %>
-  		                  <% ue_a_enviar = 0 %>
-  		                  <% @logistica["ze"][zona.numero]["mun"].each do |nmun, log_mun| %>
-  		                     <% ue_a_enviar += log_mun["ue"]+log_mun["uer"]+@log_mrj[ @ul.index([zona.numero, municipio.numero]) ][2] %>
-  		                  <% end %>
-  		                  <%= ue_a_enviar %>
-  		               </strong>
-  		            </td>
-  		            <% end %>
+                  <% end %>
                   
-  		            <% if index != municipios.size-1 %>
-     		            </tr>
-     		            <tr <%= "class='odd'" if indice_zona%2==0 %> >
-  		            <% end %>
+               <% end %>
+               
+               <% soma = 0 %>
+               <% ues.each do |ano,qtd| %>
+                  <% if qtd>0 %>
+                     <%= qtd %>&nbsp;UE<%= ano %><br />
+                  <% end %>
+                  <% soma = soma + qtd %>
+               <% end %>
+               
 
-     		   <% end %>
+               <br />
+               <hr />
+               Subtotal:&nbsp;<strong><%= soma %></strong>
+            </td>
+            <% end %>
+            
+            <%# if index != municipios.size-1 %>
+	            <!--/tr>
+	            <tr < % # = "class='odd'" if indice_zona%2==0 % > -->
+            <%# end %>
          </tr>
       <% end %>
 
-         <tr>
-            <td><strong><%= @eleicao.zonas.size %></strong></td>
-            <td><strong><%= @eleicao.municipios.size %></strong></td>
-            <td><strong><%= numero @logistica["locais"] %></strong></td>
-            <td><strong><%= numero @logistica["secoes"] %></strong></td>
-            <td><strong><%= numero @logistica["eleitorado"] %></strong></td>
-	         <td><strong><%= @logistica["agregas"] %></strong></td>
-	         <td><strong><%= @log_mrj[0][2] %></strong></td>
-	         <td>
-	            <strong>
-	            <%= numero @logistica["ue"] %>
-	            </strong>
-	         </td>
-	         <td>
-	            <strong>
-	            <%= numero @logistica["uer"] %>
-	            </strong>
-	         </td>
-	         <td>
-	            <strong>
-	            <%= numero(@logistica["ue"]+@logistica["uer"]+@log_mrj[0][2]) %>
-	            </strong>
-	         </td>
-         </tr>
+      <tr>
+         <td><strong><%= @eleicao.zonas.count %></strong></td>
+         <td><strong><%= @eleicao.municipios.count %></strong></td>
+         <% if @com_nome_chefe %><td>&nbsp;</td><% end %>
+         <td><strong><%= numero @eleicao.qtd_locais %></strong></td>
+         <td><strong><%= numero @eleicao.qtd_secoes %></strong></td>
+         <td><strong><%= numero @eleicao.eleitorado %></strong></td>
+         <td><strong><%= numero @eleicao.agregacoes %></strong></td>
+         <td><strong><%= numero @eleicao.mrjs %></strong></td>
+         <% if @com_mrj_elo %><td><strong><%= numero Mrj.por_eleicao_id(@eleicao.id).count %></strong></td><% end %>
+         <td>
+            <strong>
+               <%= numero @eleicao.ues_de_secao %>
+            </strong>
+         </td>
+         <td>
+            <strong>
+	            <%= numero @eleicao.ues_de_contingencia %><br /><%#= number_with_precision(total_percentual.to_f/@eleicao.unidades.size, :precision => 2)%>
+	            (<%= (total_percentual.to_f/@eleicao.unidades.size).ceil %>%)
+            </strong>
+         </td>
+         <td <% if @com_modelos_ues %>colspan="2"<% end %> >
+            <strong>
+               <%= numero @eleicao.ues %>
+            </strong>
+         </td>
+      </tr>
       </tbody>
    </table>
+   
+   <strong>Utilização efetiva das UEs</strong><br />
+   <%= ElectoralModel.por_modelo_id(1).sum(:qtd) %> UES 2004<br />
+   <%= ElectoralModel.por_modelo_id(2).sum(:qtd) %> UES 2008<br />
+   <%= ElectoralModel.por_modelo_id(3).sum(:qtd) %> UES 2009<br />
+   <%= ElectoralModel.por_modelo_id(4).sum(:qtd) %> UES 2010<br />
+   <%= ElectoralModel.por_modelo_id(5).sum(:qtd) %> UES 2011<br />     
+   
+   <br />
+   
    <% end %>
    
+   <%# ElectoralUnit.por_eleicao(@eleicao.id).distancia_decrescente.each_with_index do |unidade,index| %>
+         <%#= unidade.municipio.nome %><br />
+   <%# end %>
+      
    <%# Rails.logger.info("==>> #{@logistica.inspect}") %>
 </div>
+
+<script type="text/javascript">
+<!--
+   $("#distribuicao_ue_pdf").css("display","block");
+-->
+</script>

@@ -16,4 +16,8 @@ class Mrj < ActiveRecord::Base
    def self.por_dataeleicao(dataeleicao)
       where(:cod_objeto_dat_eleicao => dataeleicao)
    end
+   
+   def self.por_eleicao_id(eid)
+      where(:cod_objeto_dat_eleicao => Election.find(eid).election_date_id)
+   end
 end

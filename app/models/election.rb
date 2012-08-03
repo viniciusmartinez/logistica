@@ -1,6 +1,7 @@
 class Election < ActiveRecord::Base
 
    has_many :electoral_units
+   has_many :electoral_models
 
    has_many :cities, :through => :electoral_units, :uniq => true
             #:primary_key => :cod_objeto,
@@ -24,35 +25,65 @@ class Election < ActiveRecord::Base
    def unidades
       self.electoral_units
    end
-            
+   
    def municipios
-      if unidades.size == 1 and unidades.first.zone_id == 0
-         return City.bons
-      else
-         municipios_ids = unidades.collect { |m| m.city_id.to_s }
-         return City.where( :cod_objeto => municipios_ids )
-      end
+      municipios_ids = unidades.collect { |m| m.city_id.to_s }
+      return City.where( :cod_objeto => municipios_ids )
    end
    
    def municipios_por_zona(zona)
-      if unidades.first.zone_id == 0
-         return zona.municipios
-      else
-         muns_ids = unidades.select{|m| m.zone_id = zona.id }.collect{ |m| m.city_id.to_s }
-         return City.where( :cod_objeto => muns_ids )
-      end
+      muns_ids = unidades.select{|u| u.zone_id = zona.id }.collect{ |u| u.city_id.to_s }
+      return City.where( :cod_objeto => muns_ids )
    end
    
    def zonas
-      if unidades.size == 1 and unidades.first.zone_id == 0
-         return Zone.boas
-      else
-         zonas_ids = unidades.collect { |m| m.zone_id.to_s }
-         return Zone.where( :cod_objeto => zonas_ids )
-      end
+      zonas_ids = unidades.collect { |m| m.zone_id.to_s }
+      return Zone.where( :cod_objeto => zonas_ids )
    end
    
    def qtos_municipios_por_zona(zid)
       unidades.select{ |u| u.zone_id == zid }.size
+   end
+   
+   def qtd_locais
+      qtd_locais = 0
+      unidades.each { |u| qtd_locais += u.electoral_places.count }
+      return qtd_locais
+   end
+   
+   def qtd_secoes
+      qtd_secoes = 0
+      unidades.each { |u| qtd_secoes += u.electoral_places.sum(:secoes) }
+      return qtd_secoes
+   end
+   
+   def qtd_secoes_por_zona(zona)
+      qtd_secoes = 0
+      ElectoralUnit.por_eleicao(self.id).por_zona(zona.id).each { |u| qtd_secoes += u.qtd_secoes }
+      return qtd_secoes
+   end
+   
+   def eleitorado
+      unidades.sum(:eleitorado)      
+   end
+   
+   def agregacoes
+      unidades.sum(:agregacoes)      
+   end
+   
+   def mrjs
+      unidades.sum(:mrjs_atendidas)      
+   end
+    
+   def ues_de_secao
+      unidades.sum(:ues_de_secao)      
+   end   
+   
+   def ues_de_contingencia
+      unidades.sum(:ues_de_contingencia)      
+   end   
+   
+   def ues
+      unidades.sum(:ues_de_secao)+unidades.sum(:ues_de_contingencia)+unidades.sum(:mrjs_atendidas)
    end
 end

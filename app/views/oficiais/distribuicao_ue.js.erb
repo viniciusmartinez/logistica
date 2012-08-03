@@ -1,4 +1,6 @@
 //alert("distribuicao_ue.js.erb");
 //$("#spinner").toggle();
-$("#distribuicao_ue").replaceWith("<%= escape_javascript( render(:partial => 'distribuicao_ue') ) %>");
-
+$("#carregando").css("display","none");
+$("#limpa").css("display","block");
+$("#tabua").html("<%= escape_javascript( render(:partial => 'distribuicao_ue') ) %>");
+$("#painel").css("display","block");
