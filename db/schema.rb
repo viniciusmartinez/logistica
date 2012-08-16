@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803014710) do
+ActiveRecord::Schema.define(:version => 20120816003422) do
 
   create_table "adjunct_cities", :force => true do |t|
     t.string   "city_id"
@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(:version => 20120803014710) do
     t.integer  "agregacoes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "dificil_acesso"
+    t.boolean  "eletricidade_irregular"
   end
 
   add_index "electoral_places", ["electoral_unit_id"], :name => "index_electoral_places_on_electoral_unit_id"
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(:version => 20120803014710) do
     t.integer  "mrjs_solicitadas",    :default => 0
     t.boolean  "excecao_mrj",         :default => false, :null => false
     t.boolean  "bio"
+    t.integer  "mrjs_cadastradas"
   end
 
   create_table "electronic_ballot_box_models", :force => true do |t|

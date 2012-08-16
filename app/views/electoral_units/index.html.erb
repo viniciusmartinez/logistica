@@ -4,8 +4,10 @@
   <tr>
     <th>Id</th>
     <th>Election</th>
-    <th>City</th>
     <th>Zone</th>
+    <th>City</th>
+    <th></th>
+    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -15,8 +17,13 @@
   <tr>
     <td><%= electoral_unit.id %></td>
     <td><%= electoral_unit.election_id %></td>
-    <td><%= electoral_unit.city_id %></td>
+
     <td><%= electoral_unit.zone_id %></td>
+    <td><%= electoral_unit.city_id %></td>
+
+    <td><%= Zone.find(electoral_unit.zone_id).numero_bonito %></td>
+    <td><%= City.find(electoral_unit.city_id).nome %></td>
+
     <td><%= link_to 'Show', electoral_unit %></td>
     <td><%= link_to 'Edit', edit_electoral_unit_path(electoral_unit) %></td>
     <td><%= link_to 'Destroy', electoral_unit, confirm: 'Are you sure?', method: :delete %></td>

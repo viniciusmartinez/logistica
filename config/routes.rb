@@ -1,4 +1,8 @@
 Logistica::Application.routes.draw do
+  resources :adjunct_zones
+
+  resources :adjunct_places
+
   resources :electoral_models
 
   resources :electronic_ballot_box_models

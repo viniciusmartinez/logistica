@@ -43,6 +43,10 @@ class ElectoralUnit < ActiveRecord::Base
       where("election_id = #{eid}")
    end
    
+   def self.por_unidade(un)
+      por_eleicao(un.election_id).por_zona(un.zone_id).por_municipio(un.city_id)
+   end
+   
    def qtd_secoes
       self.electoral_places.sum(:secoes)
    end

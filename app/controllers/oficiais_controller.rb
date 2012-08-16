@@ -148,7 +148,8 @@ class OficiaisController < ApplicationController
          end
          
          # sobra feita a mao.. arrumar pra distribuir se sobrar multiplos de (eleicao.unidades.size) urnas
-         unidade.ues_de_contingencia += 1
+         # unidade.ues_de_contingencia += 1
+         unidade.ues_de_contingencia += ( ( mun.adjunto.kms_de_cuiaba / 550.to_f ).ceil )
          
          # eleitorado
          unidade.eleitorado = Station.ativas.por_zona(unidade.zona).por_municipio(unidade.municipio).sum(:qtd_aptos)
@@ -186,6 +187,7 @@ class OficiaisController < ApplicationController
 
          # mrj: variavel atendidas ja tera qtd correta daquela unidade
          unidade.mrjs_atendidas = atendidas
+         unidade.mrjs_cadastradas = Mrj.por_eleicao_id(eleicao.id).por_zona(zona.id).por_municipio(mun.id).count # errado, tem que calcular qtas urnas nao somente qtas mrjs
          
          # biometria
          unidade.bio = mun.adjunto.bio # eh bio se municipio for bio
@@ -219,10 +221,31 @@ class OficiaisController < ApplicationController
          ids_modelos << modelo.id
       end
       
-      # itera todas as unidades
+      # itera todas as unidades colocando 2 UE2008 pra cada (quarto modelo)
+      ElectoralUnit.por_eleicao(eleicao.id).where(:sede => true).each do |un|
+      
+         e_modelo = ElectoralModel.new
+         e_modelo.election_id = eleicao.id
+         e_modelo.electoral_unit_id = un.id
+         e_modelo.electronic_ballot_box_model_id = ids_modelos[3]
+         e_modelo.qtd = 2
+         ues_disponiveis[3] -= 2
+         e_modelo.save
+     
+      end
+      
+      # itera todas as unidades distribuindo
       ElectoralUnit.por_eleicao(eleicao.id).distancia_decrescente.each_with_index do |unidade,index|
       
-         urnas_a_enviar = unidade.ues_de_secao + unidade.ues_de_contingencia + unidade.mrjs_atendidas
+         urnas_a_enviar = unidade.ues_de_secao + unidade.ues_de_contingencia + unidade.mrjs_atendidas - ElectoralModel.por_eleicao(eleicao.id).por_unidade(unidade.id).sum(:qtd)
+         
+         #if unidade.sede
+         
+         #   diferenca_mrjs = ElectoralUnit.por_eleicao(eleicao.id).por_zona(unidade.zone_id).sum(:mrjs_atendidas) - ElectoralUnit.por_eleicao(eleicao.id).por_zona(unidade.zone_id).sum(:mrjs_cadastradas)
+            
+         #   urnas_a_enviar -= diferenca_mrjs if diferenca_mrjs > 0
+         
+         #end
          
          modelo = 0
          until urnas_a_enviar == 0 or modelo == ues_disponiveis.size
@@ -247,7 +270,7 @@ class OficiaisController < ApplicationController
          end
       
       end
-      
+     
    end
 =begin
       # logistica
@@ -400,7 +423,7 @@ class OficiaisController < ApplicationController
       regera_banco_logistica = false
       regera_modelo_ues = false
       @com_nome_chefe = false
-      @com_mrj_elo = false
+      @com_mrj_elo = true
       @com_modelos_ues = true
       
 
