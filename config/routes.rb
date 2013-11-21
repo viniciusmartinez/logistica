@@ -1,7 +1,11 @@
 Logistica::Application.routes.draw do
   resources :adjunct_zones
 
-  resources :adjunct_places
+  resources :adjunct_places do
+        member do
+         get :ruraliza
+      end
+  end
 
   resources :electoral_models
 
@@ -66,6 +70,7 @@ Logistica::Application.routes.draw do
          post :distribuicao_ue
          post :distribuicao_tu
          post :distribuicao_me
+         post :distribuicao_lacres
       end
    end  
   

@@ -11,7 +11,7 @@
 	      <tr>
 	         <th scope="col" colspan="<% if @com_nome_chefe %>6<% else %>5<% end %>" class="divide" >Cadastro Eleitoral</th>
 	         <th scope="col" colspan="<% if @com_mrj_elo %>3<% else %>2<% end %>" class="divide" ><%= @eleicao.nome_abreviado %></th>
-	         <th scope="col" colspan="4">UEs</th>
+	         <th scope="col" colspan="5">UEs</th>
 
 	      </tr>
          <tr>
@@ -28,7 +28,10 @@
             <th scope="col">Seção</th>
             <th scope="col" style="margin-left: 10px; margin-right: 10px">Reserva</th>
   	         <th scope="col" colspan="1" ><strong>Subtotal</strong></th>
-  	         <% if @com_modelos_ues %><th scope="col" colspan="1">Modelos</th><% end %>
+  	         <% if @com_modelos_ues %>
+  	            <th scope="col" colspan="1">Modelos</th>
+  	            <th scope="col" colspan="1">Baterias</th>
+  	         <% end %>
          </tr>
       </thead>
       <tbody>
@@ -36,6 +39,9 @@
       <% total_percentual = 0 %>
       <% indice_zona = -1 %>
       <% indice_mun = 1 %>
+      <% zona_atual = 0 %>
+      
+      <% baterias_eleicao = 0 %>
       
       <% @eleicao.unidades.each_with_index do |unidade, uid| %>
       
@@ -43,24 +49,25 @@
          <% zona = unidade.zona %>
          <% municipio = unidade.municipio %>
 
-         <% if unidade.sede %>
+         <% if zona_atual != zona %>
             <% indice_zona += 1 %>
             <% indice_mun = 1 %>
+            <% zona_atual = zona %>
          <% else %>
             <% indice_mun += 1 %>
          <% end %>
          
          <% ultimo = indice_mun == muns ? 'ultimo ' : '' %>
-
+         
          <tr <%= "class='odd'" if indice_zona%2==0 %> >
  
-            <% if unidade.sede %>           
+            <% if indice_mun == 1 %>           
             <td class="ultimo" rowspan="<%= muns %>" >
                <big><strong><%= zona.numero_bonito %></strong></big>
             </td>
             <% end %>
             
-            <td class="<%= ultimo %>" <%= "style='font-weight: bold'" if unidade.sede %> >
+            <td class="<%= ultimo %>" <%= "style='font-weight: bold'" if indice_mun == 1 %> >
                <%= municipio.nome %><br/>(<%= municipio.numero %>)
 	         </td>
 	         
@@ -125,10 +132,14 @@
                </strong>
             </td>
             
-            <% if @com_modelos_ues and unidade.sede %>
+            <% if @com_modelos_ues and indice_mun == 1 %>
             <td class="ultimo" rowspan="<%= muns %>" >
 
                <% ues = Hash.new %>
+               <% cad_local_ids = Array.new %>
+               <% baterias_unidade = 0 %>
+               <% baterias_zona = 0 %>
+               
                <% ElectoralUnit.por_eleicao(@eleicao.id).por_zona(zona.id).each do |un| %>
 
 
@@ -142,26 +153,44 @@
 
                   <% end %>
                   
+                  <% cad_local_ids = un.locais.collect {|l| l.place_id } %>
+                  <% baterias_unidade = AdjunctPlace.where(:place_id => cad_local_ids).where(:rural => true).count %>
+                  <% baterias_unidade += 3 if un.sede %>
+                  <% baterias_zona += baterias_unidade %>
+                  <% baterias_eleicao += baterias_unidade %>                  
+                  
+                                    
                <% end %>
                
                <% soma = 0 %>
                <% ues.each do |ano,qtd| %>
-                  <% if qtd>0 %>
-                     <%= qtd %>&nbsp;UE<%= ano %><br />
-                  <% end %>
+                  <%# if qtd>0 %>
+                     <!-- <#%= qtd %>&nbsp;UE<%#= ano %><br /> -->
+                  <%# end %>
                   <% soma = soma + qtd %>
                <% end %>
                
-
+<!--
                <br />
                <hr />
-               Subtotal:&nbsp;<strong><%= soma %></strong>
+               Subtotal:&nbsp;<strong><%#= soma %></strong> -->
+               <%# if baterias_zona > 0 %>
+                  <!-- <br /><br /> + <%#= baterias_zona %> baterias -->
+               <%# end %>
+               
+               <%= soma %>
             </td>
+            
+            <td class="ultimo" rowspan="<%= muns %>" >
+               <%= baterias_zona %>
+            </td>
+            
+
             <% end %>
             
             <%# if index != municipios.size-1 %>
 	            <!--/tr>
-	            <tr < % # = "class='odd'" if indice_zona%2==0 % > -->
+	            <tr <%#= "class='odd'" if indice_zona%2==0 %> -->
             <%# end %>
          </tr>
       <% end %>
@@ -189,8 +218,11 @@
          </td>
          <td <% if @com_modelos_ues %>colspan="2"<% end %> >
             <strong>
-               <%= numero @eleicao.ues %>
+               <%= numero @eleicao.ues %> UEs<br />
             </strong>
+         </td>
+         <td>
+            <strong><%= baterias_eleicao %> baterias</strong>
          </td>
       </tr>
       </tbody>

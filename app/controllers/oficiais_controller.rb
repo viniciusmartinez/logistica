@@ -10,6 +10,53 @@ class OficiaisController < ApplicationController
       end
       
    end
+
+   def distribuicao_me
+
+      @distribuicao_me = true
+      @eleicao = Election.find(params['election']['id'])
+      
+      #AdjunctPlace.find(:all).each do |adj_local|
+      #   adj_local.dificil_acesso = 1 if adj_local.rural == true
+      #   adj_local.save  
+      #end
+      
+      respond_to do |format|
+        format.js
+        format.html
+        format.xls
+        format.pdf {
+          @template_format = :html
+          html = render_to_string(:layout => false , :action => "distribuicao_me.html.erb")
+          kit = PDFKit.new(html)
+          kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/oficiais.css.scss"
+          send_data(kit.to_pdf, :filename => "DistribuicaoME.pdf", :type => 'application/pdf')
+          return # to avoid double render call
+        }
+      end
+
+   end
+   
+   def distribuicao_lacres
+
+      @distribuicao_lacres = true
+      @eleicao = Election.find(params['election']['id'])
+      
+      respond_to do |format|
+        format.js
+        format.html
+        format.xls
+        format.pdf {
+          @template_format = :html
+          html = render_to_string(:layout => false , :action => "distribuicao_lacres.html.erb")
+          kit = PDFKit.new(html)
+          kit.stylesheets << "#{Rails.root}/app/assets/stylesheets/oficiais.css.scss"
+          send_data(kit.to_pdf, :filename => "DistribuicaoLacres.pdf", :type => 'application/pdf')
+          return # to avoid double render call
+        }
+      end
+
+   end   
    
    def distribuicao_tu
 
@@ -420,13 +467,12 @@ class OficiaisController < ApplicationController
      
       @distribuicao_ue = true
 
-      regera_banco_logistica = false
-      regera_modelo_ues = false
+      regera_banco_logistica = true
+      regera_modelo_ues = true
       @com_nome_chefe = false
-      @com_mrj_elo = true
+      @com_mrj_elo = false
       @com_modelos_ues = true
       
-
       @eleicao = Election.find(params['election']['id'])
       
       logistica if regera_banco_logistica
@@ -438,6 +484,24 @@ class OficiaisController < ApplicationController
       #   adj_mun.city_id = mun.id
       #   adj_mun.kms_de_cuiaba = 0
       #   adj_mun.save
+      #end
+      
+      #Zone.boas.each do |zona|
+      #   zona.cities.each do |mun|
+      #      Place.por_zid_mid(zona.id,mun.id).each do |local|
+      #         adj_local = AdjunctPlace.new
+      #         adj_local.numero = local.numero
+      #         adj_local.place_id = local.id
+      #         adj_local.dificil_acesso = false
+      #         adj_local.eletricidade_irregular = false
+      #         adj_local.save
+      #      end         
+      #   end
+      #end
+      
+      #AdjunctPlace.find(:all).each do |adj_local|
+      #   adj_local.rural = 1 if adj_local.dificil_acesso or adj_local.eletricidade_irregular
+      #   adj_local.save  
       #end
       
       respond_to do |format|

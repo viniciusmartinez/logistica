@@ -8,6 +8,8 @@
          $("#painel").css('display','block');
          $("#distribuicao_tu_pdf").css("display","none");
          $("#distribuicao_ue_pdf").css("display","none");
+         $("#distribuicao_me_pdf").css("display","none");
+         $("#distribuicao_lacres_pdf").css("display","none");
          $("#carregando").css('display','block');
       });
 
@@ -17,6 +19,30 @@
          $("#painel").css('display','block');
          $("#distribuicao_ue_pdf").css("display","none");
          $("#distribuicao_tu_pdf").css("display","none");
+         $("#distribuicao_me_pdf").css("display","none");
+         $("#distribuicao_lacres_pdf").css("display","none");
+         $("#carregando").css('display','block');
+      });
+      
+      $("#me_html").click(function () {
+         $("#tabua").html('');
+         $("#limpa").css('display','none');
+         $("#painel").css('display','block');
+         $("#distribuicao_ue_pdf").css("display","none");
+         $("#distribuicao_tu_pdf").css("display","none");
+         $("#distribuicao_me_pdf").css("display","none");
+         $("#distribuicao_lacres_pdf").css("display","none");
+         $("#carregando").css('display','block');
+      });
+      
+      $("#lacres_html").click(function () {
+         $("#tabua").html('');
+         $("#limpa").css('display','none');
+         $("#painel").css('display','block');
+         $("#distribuicao_ue_pdf").css("display","none");
+         $("#distribuicao_tu_pdf").css("display","none");
+         $("#distribuicao_me_pdf").css("display","none");
+         $("#distribuicao_lacres_pdf").css("display","none");
          $("#carregando").css('display','block');
       });
 
@@ -76,6 +102,22 @@
                <%= ele.submit "Gerar", { :id => "me_html", :class => "ui-button" } %>
          <% end %>
      </div>
+
+     <br style="clear: both;" />
+     <br style="clear: both;" />
+     
+     <span style="float: left; clear: none;" >Distribuição de Lacres e Etiquetas:</span>
+     <div class="botoes">
+         <%= form_for @eleicao,
+            :url => {:action => "distribuicao_lacres" },
+            :html => {:id => "distribuicao_lacres_html" },
+			   :remote => true,
+			   
+	          do |ele| %>
+	            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+               <%= ele.submit "Gerar", { :id => "lacres_html", :class => "ui-button" } %>
+         <% end %>
+     </div>    
            
      <br style="clear: both;" />
 

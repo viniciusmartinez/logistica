@@ -13,6 +13,8 @@ class City < ActiveRecord::Base
    has_many :places,
             :primary_key => :cod_objeto,
             :foreign_key => :cod_objeto_localidade
+            
+   
 
    scope :mt, where("cod_objeto_uf" => "18")
    scope :ativos, where(:situacao => 1).where("nom_localidade != ?","OUTROS MATO GROSSO") #colocar dois CadDescritor.valores_por_descritor_descricoes
@@ -31,6 +33,10 @@ class City < ActiveRecord::Base
    
    def id
       self[:cod_objeto]
+   end
+   
+   def locais
+      places.ordena
    end
    
    def adjunto

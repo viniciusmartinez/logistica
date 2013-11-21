@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816003422) do
+ActiveRecord::Schema.define(:version => 20120820215106) do
 
   create_table "adjunct_cities", :force => true do |t|
     t.string   "city_id"
@@ -19,6 +19,22 @@ ActiveRecord::Schema.define(:version => 20120816003422) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "bio"
+  end
+
+  create_table "adjunct_places", :force => true do |t|
+    t.string   "place_id"
+    t.boolean  "dificil_acesso"
+    t.boolean  "eletricidade_irregular"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "numero"
+    t.boolean  "rural"
+  end
+
+  create_table "adjunct_zones", :force => true do |t|
+    t.string   "zone_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories", :force => true do |t|

@@ -37,6 +37,10 @@ class Station < ActiveRecord::Base
       ativas.where(:cod_objeto_zona => zona).where(:cod_objeto_munic => municipio).order(:cod_objeto_zona).order(:cod_objeto_munic)
    end
    
+   def self.com_audio_por_zid_mid_local(zid, mid)
+      ativas.where(:cod_objeto_zona => zid).where(:cod_objeto_munic => mid).where(:IND_AUDIO => true).select("DISTINCT cod_objeto_local")
+   end
+
    def self.por_zona(zona)
       where(:cod_objeto_zona => zona.id)
    end

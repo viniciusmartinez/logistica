@@ -27,6 +27,10 @@ class ElectoralUnit < ActiveRecord::Base
       self[:city_id]
    end
    
+   def mun_id
+      self[:city_id]
+   end
+   
    def municipio
       City.find(self[:city_id])
    end

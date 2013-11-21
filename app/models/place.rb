@@ -73,6 +73,10 @@ class Place < ActiveRecord::Base
       joins(:city,:zone).order("#{Zone.table_name}.num_zona").order("#{City.table_name}.nom_localidade").ordena
    end
    
+   def self.com_secao_com_audio
+      select("DISTINCT #{table_name}.cod_objeto").joins(:stations).where("#{Station.table_name}.IND_AUDIO = 1")
+   end
+   
    def self.mt
       junta.where("#{Zone.table_name}.cod_objeto_uf = '18'")
    end
@@ -94,12 +98,44 @@ class Place < ActiveRecord::Base
       junta.where("#{Zone.table_name}.num_zona = #{zona}").where("#{City.table_name}.cod_localidade_tse = #{mun}")
    end
 
+   def self.por_zid(zid)
+      where(:cod_objeto_zona => "#{zid}").ordena
+   end
+
    def self.por_zid_mid(zona, mun)
       where(:cod_objeto_zona => "#{zona}").where(:cod_objeto_localidade => "#{mun}").ordena
    end
    
    def self.bons
       return ativos.select { |local| local.eleitorado > 0 }
+   end
+   
+   def self.qtd_com_audio_por_zid_mid(zid, mid)
+      Station.com_audio_por_zid_mid_local(zid, mid).count
+   end
+   
+   def self.qtd_rurais_por_ele_zid(ele, zid)
+      unidades_ids = ElectoralUnit.por_eleicao(ele).por_zona(zid).collect {|u| u.id }
+      cad_locais_ids = ElectoralPlace.where(:electoral_unit_id => unidades_ids).collect {|le| le.place_id }
+      rurais_zona = AdjunctPlace.where(:place_id => cad_locais_ids).where(:rural => true).count
+      
+      return rurais_zona
+   end
+
+   def self.qtd_dificil_acesso_por_ele_zid(ele, zid)
+      unidades_ids = ElectoralUnit.por_eleicao(ele).por_zona(zid).collect {|u| u.id }
+      cad_locais_ids = ElectoralPlace.where(:electoral_unit_id => unidades_ids).collect {|le| le.place_id }
+      dificilacesso_zona = AdjunctPlace.where(:place_id => cad_locais_ids).where(:dificil_acesso => true).count
+      
+      return dificilacesso_zona
+   end
+
+   def self.qtd_eletricidade_irregular_por_ele_zid(ele, zid)
+      unidades_ids = ElectoralUnit.por_eleicao(ele).por_zona(zid).collect {|u| u.id }
+      cad_locais_ids = ElectoralPlace.where(:electoral_unit_id => unidades_ids).collect {|le| le.place_id }
+      eletricidade_zona = AdjunctPlace.where(:place_id => cad_locais_ids).where(:eletricidade_irregular => true).count
+      
+      return eletricidade_zona
    end
 
    #def self.mt

@@ -10,6 +10,8 @@
          $("#limpa").css("display","none");
          $("#distribuicao_tu_pdf").css("display","none");
          $("#distribuicao_ue_pdf").css("display","none");
+         $("#distribuicao_me_pdf").css("display","none");
+         $("#distribuicao_lacres_pdf").css("display","none");
          $("#tabua").html("");
          $("#painel").css('display','none');
       });
@@ -63,6 +65,26 @@
             <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
             <%= ele.submit "PDF", { :class => "ui-button" } %>
       <% end %>
+      
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_me", :format => "pdf"},
+         :html => {:id => "distribuicao_me_pdf", :style => "display: none; float: right; clear: left;" },
+		
+          do |ele| %>
+            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "PDF", { :class => "ui-button" } %>
+      <% end %>
+      
+      <%= form_for @eleicao,
+         :url => {:action => "distribuicao_lacres", :format => "pdf"},
+         :html => {:id => "distribuicao_lacres_pdf", :style => "display: none; float: right; clear: left;" },
+		
+          do |ele| %>
+            <%= ele.hidden_field :id, {:value => @eleicao_escolhida.id} %>
+            <%= ele.submit "PDF", { :class => "ui-button" } %>
+      <% end %>
+
+      
       <input type="button" id="limpa" class="ui-button" style="float: right; clear: left; display: none;" value="Limpar" />
       
       <div id="tabua" class="inner">
